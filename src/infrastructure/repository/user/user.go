@@ -18,10 +18,6 @@ type Repository struct {
 	Collection *mongo.Collection
 }
 
-func NewUserRepository(collection *mongo.Collection) *Repository {
-	return &Repository{Collection: collection}
-}
-
 // GetAll Fetch all user data
 func (r *Repository) GetAll(ctx context.Context) (*[]domainUser.User, error) {
 	var users []domainUser.User
@@ -99,18 +95,17 @@ func (r *Repository) Update(ctx context.Context, id string, userMap map[string]i
 		return nil, domainErrors.NewAppErrorWithType(domainErrors.UnknownError)
 	}
 	userMap["updated_at"] = primitive.NewDateTimeFromTime(time.Now())
-	update := bson.M{"$set": userMap}
-	opts := options.Update()
-	var updatedUser domainUser.User
-	err = r.Collection.FindOne(ctx, bson.M{"_id": objID}).Decode(&updatedUser)
-
-	pass, err := bcrypt.GenerateFromPassword([]byte(updatedUser.HashPassword), bcrypt.DefaultCost)
+	pass, err := bcrypt.GenerateFromPassword([]byte(userMap["hash_password"].(string)), bcrypt.DefaultCost)
 	if err != nil {
 		return nil, domainErrors.NewAppErrorWithType(domainErrors.UnknownError)
 	}
-	updatedUser.HashPassword = string(pass)
+	userMap["hash_password"] = string(pass)
 
-	_, err = r.Collection.UpdateOne(ctx, bson.M{"_id": objID}, update, opts)
+	update := bson.M{"$set": userMap}
+	opts := options.FindOneAndUpdate().SetReturnDocument(options.After)
+	var updatedUser domainUser.User
+	err = r.Collection.FindOneAndUpdate(ctx, bson.M{"_id": objID}, update, opts).Decode(&updatedUser)
+
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
 			return nil, domainErrors.NewAppErrorWithType(domainErrors.NotFound)

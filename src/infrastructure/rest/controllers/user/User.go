@@ -13,11 +13,6 @@ type UserController struct {
 	Service *userService.Service
 }
 
-// NewUserController creates a new UserController
-func NewUserController(service *userService.Service) *UserController {
-	return &UserController{Service: service}
-}
-
 // GetAll godoc
 // @Summary Get all users
 // @Description Get all users
