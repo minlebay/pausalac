@@ -2,13 +2,13 @@
 package routes
 
 import (
-	// swaggerFiles for documentation
 	"github.com/gin-gonic/gin"
-	_ "github.com/minlebay/pausalac/docs"
-	"github.com/minlebay/pausalac/src/infrastructure/rest/adapter"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"go.mongodb.org/mongo-driver/mongo"
+	// swaggerFiles for documentation
+	_ "github.com/minlebay/pausalac/docs"
+	"github.com/minlebay/pausalac/src/infrastructure/rest/adapter"
 )
 
 // Security is a struct that contains the security of the application

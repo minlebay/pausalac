@@ -3,9 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/minlebay/pausalac/src/infrastructure/rest/controllers/errors"
 	"log"
 	"net/http"
+
+	"github.com/minlebay/pausalac/src/infrastructure/rest/controllers/errors"
 	"strings"
 	"time"
 
