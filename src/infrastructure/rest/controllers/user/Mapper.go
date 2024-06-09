@@ -1,26 +1,40 @@
-// Package user contains the user controller
 package user
 
 import (
-	userDomain "go_gin_api_clean/src/domain/user"
+	domainUser "github.com/minlebay/pausalac/src/domain/user"
 )
 
-func domainToResponseMapper(userDomain *userDomain.User) (createUserResponse *ResponseUser) {
-	createUserResponse = &ResponseUser{ID: userDomain.ID, UserName: userDomain.UserName,
-		Email: userDomain.Email, FirstName: userDomain.FirstName, LastName: userDomain.LastName,
-		Status: userDomain.Status, CreatedAt: userDomain.CreatedAt, UpdatedAt: userDomain.UpdatedAt}
-
-	return
-}
-
-func arrayDomainToResponseMapper(usersDomain *[]userDomain.User) *[]ResponseUser {
-	usersResponse := make([]ResponseUser, len(*usersDomain))
-	for i, user := range *usersDomain {
-		usersResponse[i] = *domainToResponseMapper(&user)
+// ToDomainMapper maps NewUser to User
+func ToDomainMapper(newUser *domainUser.NewUser) *domainUser.User {
+	return &domainUser.User{
+		UserName:     newUser.UserName,
+		Email:        newUser.Email,
+		FirstName:    newUser.FirstName,
+		LastName:     newUser.LastName,
+		Role:         newUser.Role,
+		Status:       newUser.Status,
+		HashPassword: newUser.Password, // Обработка хэширования пароля
 	}
-	return &usersResponse
 }
 
-func toUsecaseMapper(user *NewUserRequest) *userDomain.NewUser {
-	return &userDomain.NewUser{UserName: user.UserName, Password: user.Password, Email: user.Email, FirstName: user.FirstName, LastName: user.LastName, Role: user.Role}
+// ToResponse maps User to UserResponse
+func ToResponse(user *domainUser.User) *UserResponse {
+	return &UserResponse{
+		ID:        user.ID.Hex(),
+		UserName:  user.UserName,
+		Email:     user.Email,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		Status:    user.Status,
+		Role:      user.Role,
+	}
+}
+
+// ToDomainArray maps array of Users to array of UserResponses
+func ToDomainArray(users *[]domainUser.User) *[]UserResponse {
+	var responseUsers []UserResponse
+	for _, user := range *users {
+		responseUsers = append(responseUsers, *ToResponse(&user))
+	}
+	return &responseUsers
 }

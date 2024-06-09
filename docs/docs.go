@@ -9,16 +9,7 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "termsOfService": "http://swagger.io/terms/",
-        "contact": {
-            "name": "Alejandro Gabriel Guerrero",
-            "url": "http://github.com/gbrayhan",
-            "email": "gbrayhan@gmail.com"
-        },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        },
+        "contact": {},
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -104,32 +95,24 @@ const docTemplate = `{
                 }
             }
         },
-        "/user": {
+        "/users": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
+                "description": "Get all users",
+                "produces": [
+                    "application/json"
                 ],
-                "description": "Get all Users on the system",
                 "tags": [
-                    "user"
+                    "users"
                 ],
-                "summary": "Get all Users",
+                "summary": "Get all users",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/user.ResponseUser"
+                                "$ref": "#/definitions/user.UserResponse"
                             }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/user.MessageResponse"
                         }
                     },
                     "500": {
@@ -141,12 +124,7 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Create new user on the system",
+                "description": "Create a new user",
                 "consumes": [
                     "application/json"
                 ],
@@ -154,25 +132,25 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "users"
                 ],
-                "summary": "Create New UserName",
+                "summary": "Create a new user",
                 "parameters": [
                     {
-                        "description": "body data",
-                        "name": "data",
+                        "description": "New User",
+                        "name": "user",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/user.NewUserRequest"
+                            "$ref": "#/definitions/user.CreateUserRequest"
                         }
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/user.ResponseUser"
+                            "$ref": "#/definitions/user.UserResponse"
                         }
                     },
                     "400": {
@@ -190,23 +168,67 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/{user_id}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
+        "/users/createadmin": {
+            "post": {
+                "description": "CreateAdmin method creates a new admin user if there are no users in the database",
+                "consumes": [
+                    "application/json"
                 ],
-                "description": "Get Users by ID on the system",
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
-                    "user"
+                    "users"
                 ],
-                "summary": "Get users by ID",
+                "summary": "Create a new admin",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "id of user",
-                        "name": "user_id",
+                        "description": "New User",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.CreateUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/user.UserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/user.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/user.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "description": "Get a single user by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get user by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     }
@@ -215,7 +237,52 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
+                            "$ref": "#/definitions/user.UserResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
                             "$ref": "#/definitions/user.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update an existing user by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Update an existing user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update User",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.UpdateUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/user.UserResponse"
                         }
                     },
                     "400": {
@@ -223,6 +290,33 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/user.MessageResponse"
                         }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/user.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a user by ID",
+                "tags": [
+                    "users"
+                ],
+                "summary": "Delete a user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -259,8 +353,8 @@ const docTemplate = `{
                     "example": "John"
                 },
                 "id": {
-                    "type": "integer",
-                    "example": 123
+                    "type": "string",
+                    "example": "123"
                 },
                 "lastName": {
                     "type": "string",
@@ -289,7 +383,7 @@ const docTemplate = `{
             "properties": {
                 "email": {
                     "type": "string",
-                    "example": "gbrayhan@gmail.com"
+                    "example": "ilshatminnibaev@gmail.com"
                 },
                 "password": {
                     "type": "string",
@@ -305,6 +399,41 @@ const docTemplate = `{
                 }
             }
         },
+        "user.CreateUserRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "first_name",
+                "last_name",
+                "password",
+                "role",
+                "status",
+                "username"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "boolean"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
         "user.MessageResponse": {
             "type": "object",
             "properties": {
@@ -313,98 +442,69 @@ const docTemplate = `{
                 }
             }
         },
-        "user.NewUserRequest": {
+        "user.UpdateUserRequest": {
             "type": "object",
-            "required": [
-                "email",
-                "firstName",
-                "lastName",
-                "password",
-                "role",
-                "user"
-            ],
             "properties": {
                 "email": {
-                    "type": "string",
-                    "example": "mail@mail.com"
+                    "type": "string"
                 },
-                "firstName": {
-                    "type": "string",
-                    "example": "John"
+                "first_name": {
+                    "type": "string"
                 },
-                "lastName": {
-                    "type": "string",
-                    "example": "Doe"
+                "last_name": {
+                    "type": "string"
                 },
                 "password": {
-                    "type": "string",
-                    "example": "Password123"
+                    "type": "string"
                 },
                 "role": {
-                    "type": "string",
-                    "example": "admin"
+                    "type": "string"
                 },
-                "user": {
-                    "type": "string",
-                    "example": "someUser"
+                "status": {
+                    "type": "boolean"
+                },
+                "username": {
+                    "type": "string"
                 }
             }
         },
-        "user.ResponseUser": {
+        "user.UserResponse": {
             "type": "object",
             "properties": {
-                "createdAt": {
-                    "type": "string",
-                    "example": "2021-02-24 20:19:39"
-                },
                 "email": {
-                    "type": "string",
-                    "example": "some@mail.com"
+                    "type": "string"
                 },
-                "firstName": {
-                    "type": "string",
-                    "example": "John"
+                "first_name": {
+                    "type": "string"
                 },
                 "id": {
-                    "type": "integer",
-                    "example": 1099
+                    "type": "string"
                 },
-                "lastName": {
-                    "type": "string",
-                    "example": "Doe"
+                "last_name": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
                 },
                 "status": {
-                    "type": "boolean",
-                    "example": false
+                    "type": "boolean"
                 },
-                "updatedAt": {
-                    "type": "string",
-                    "example": "2021-02-24 20:19:39"
-                },
-                "user": {
-                    "type": "string",
-                    "example": "BossonH"
+                "username": {
+                    "type": "string"
                 }
             }
-        }
-    },
-    "securityDefinitions": {
-        "ApiKeyAuth": {
-            "type": "apiKey",
-            "name": "Authorization",
-            "in": "header"
         }
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "1.2",
-	Host:             "localhost:8080",
-	BasePath:         "/v1",
+	Version:          "",
+	Host:             "",
+	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Boilerplate Golang",
-	Description:      "Documentation's Boilerplate Golang",
+	Title:            "",
+	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

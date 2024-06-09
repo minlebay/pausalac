@@ -30,7 +30,7 @@
       "DatabaseLogs": "name_database"
     },
     "MySQL": {
-      "BoilerplateGo": {
+      "Pausalac": {
         "Read": {
           "Hostname": "mysqldb",
           "Name": "boilerplate_go",

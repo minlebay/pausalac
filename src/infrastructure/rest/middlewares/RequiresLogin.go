@@ -4,6 +4,7 @@ package middlewares
 import (
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
@@ -27,6 +28,9 @@ func AuthJWTMiddleware() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
+
+		// delete 'Bearer ' from token string
+		tokenString = strings.Replace(tokenString, "Bearer ", "", 1)
 
 		claims := jwt.MapClaims{}
 		_, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (any, error) {

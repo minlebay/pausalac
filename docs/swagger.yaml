@@ -1,4 +1,3 @@
-basePath: /v1
 definitions:
   auth.AccessTokenRequest:
     properties:
@@ -17,8 +16,8 @@ definitions:
         example: John
         type: string
       id:
-        example: 123
-        type: integer
+        example: "123"
+        type: string
       lastName:
         example: Doe
         type: string
@@ -35,7 +34,7 @@ definitions:
   auth.LoginRequest:
     properties:
       email:
-        example: gbrayhan@gmail.com
+        example: ilshatminnibaev@gmail.com
         type: string
       password:
         example: Password123
@@ -49,79 +48,72 @@ definitions:
       message:
         type: string
     type: object
+  user.CreateUserRequest:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password:
+        type: string
+      role:
+        type: string
+      status:
+        type: boolean
+      username:
+        type: string
+    required:
+    - email
+    - first_name
+    - last_name
+    - password
+    - role
+    - status
+    - username
+    type: object
   user.MessageResponse:
     properties:
       message:
         type: string
     type: object
-  user.NewUserRequest:
+  user.UpdateUserRequest:
     properties:
       email:
-        example: mail@mail.com
         type: string
-      firstName:
-        example: John
+      first_name:
         type: string
-      lastName:
-        example: Doe
+      last_name:
         type: string
       password:
-        example: Password123
         type: string
       role:
-        example: admin
-        type: string
-      user:
-        example: someUser
-        type: string
-    required:
-    - email
-    - firstName
-    - lastName
-    - password
-    - role
-    - user
-    type: object
-  user.ResponseUser:
-    properties:
-      createdAt:
-        example: "2021-02-24 20:19:39"
-        type: string
-      email:
-        example: some@mail.com
-        type: string
-      firstName:
-        example: John
-        type: string
-      id:
-        example: 1099
-        type: integer
-      lastName:
-        example: Doe
         type: string
       status:
-        example: false
         type: boolean
-      updatedAt:
-        example: "2021-02-24 20:19:39"
-        type: string
-      user:
-        example: BossonH
+      username:
         type: string
     type: object
-host: localhost:8080
+  user.UserResponse:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      role:
+        type: string
+      status:
+        type: boolean
+      username:
+        type: string
+    type: object
 info:
-  contact:
-    email: gbrayhan@gmail.com
-    name: Alejandro Gabriel Guerrero
-    url: http://github.com/gbrayhan
-  description: Documentation's Boilerplate Golang
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
-  title: Boilerplate Golang
-  version: "1.2"
+  contact: {}
 paths:
   /auth/access-token:
     post:
@@ -175,47 +167,43 @@ paths:
       summary: Login UserName
       tags:
       - auth
-  /user:
+  /users:
     get:
-      description: Get all Users on the system
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/user.ResponseUser'
-            type: array
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/user.MessageResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/user.MessageResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: Get all Users
-      tags:
-      - user
-    post:
-      consumes:
-      - application/json
-      description: Create new user on the system
-      parameters:
-      - description: body data
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/user.NewUserRequest'
+      description: Get all users
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/user.ResponseUser'
+            items:
+              $ref: '#/definitions/user.UserResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/user.MessageResponse'
+      summary: Get all users
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Create a new user
+      parameters:
+      - description: New User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/user.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/user.UserResponse'
         "400":
           description: Bad Request
           schema:
@@ -224,25 +212,73 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/user.MessageResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: Create New UserName
+      summary: Create a new user
       tags:
-      - user
-  /user/{user_id}:
-    get:
-      description: Get Users by ID on the system
+      - users
+  /users/{id}:
+    delete:
+      description: Delete a user by ID
       parameters:
-      - description: id of user
+      - description: User ID
         in: path
-        name: user_id
+        name: id
         required: true
-        type: integer
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/user.MessageResponse'
+      summary: Delete a user
+      tags:
+      - users
+    get:
+      description: Get a single user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
       responses:
         "200":
           description: OK
           schema:
+            $ref: '#/definitions/user.UserResponse'
+        "404":
+          description: Not Found
+          schema:
             $ref: '#/definitions/user.MessageResponse'
+      summary: Get user by ID
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Update an existing user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/user.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.UserResponse'
         "400":
           description: Bad Request
           schema:
@@ -251,14 +287,38 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/user.MessageResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: Get users by ID
+      summary: Update an existing user
       tags:
-      - user
-securityDefinitions:
-  ApiKeyAuth:
-    in: header
-    name: Authorization
-    type: apiKey
+      - users
+  /users/createadmin:
+    post:
+      consumes:
+      - application/json
+      description: CreateAdmin method creates a new admin user if there are no users
+        in the database
+      parameters:
+      - description: New User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/user.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/user.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/user.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/user.MessageResponse'
+      summary: Create a new admin
+      tags:
+      - users
 swagger: "2.0"

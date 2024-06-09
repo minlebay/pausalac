@@ -1,7 +1,10 @@
 // Package auth provides the use case for authentication
 package auth
 
-import "time"
+import (
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"time"
+)
 
 // LoginUser is a struct that contains the request body for the login user
 type LoginUser struct {
@@ -11,13 +14,13 @@ type LoginUser struct {
 
 // DataUserAuthenticated is a struct that contains the data for the authenticated user
 type DataUserAuthenticated struct {
-	UserName  string `json:"userName" example:"UserName" gorm:"unique"`
-	Email     string `json:"email" example:"some@mail.com" gorm:"unique"`
-	FirstName string `json:"firstName" example:"John"`
-	LastName  string `json:"lastName" example:"Doe"`
-	Status    bool   `json:"status" example:"1"`
-	Role      string `json:"role" example:"admin"`
-	ID        int    `json:"id" example:"123"`
+	UserName  string             `json:"userName" example:"UserName" gorm:"unique"`
+	Email     string             `json:"email" example:"some@mail.com" gorm:"unique"`
+	FirstName string             `json:"firstName" example:"John"`
+	LastName  string             `json:"lastName" example:"Doe"`
+	Status    bool               `json:"status" example:"1"`
+	Role      string             `json:"role" example:"admin"`
+	ID        primitive.ObjectID `json:"id" example:"123"`
 }
 
 // DataSecurityAuthenticated is a struct that contains the security data for the authenticated user

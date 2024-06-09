@@ -2,15 +2,15 @@
 package adapter
 
 import (
-	authService "go_gin_api_clean/src/application/usecases/auth"
-	userRepository "go_gin_api_clean/src/infrastructure/repository/user"
-	authController "go_gin_api_clean/src/infrastructure/rest/controllers/auth"
-	"gorm.io/gorm"
+	authService "github.com/minlebay/pausalac/src/application/usecases/auth"
+	userRepository "github.com/minlebay/pausalac/src/infrastructure/repository/user"
+	authController "github.com/minlebay/pausalac/src/infrastructure/rest/controllers/auth"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 // AuthAdapter is a function that returns a auth controller
-func AuthAdapter(db *gorm.DB) *authController.Controller {
-	uRepository := userRepository.Repository{DB: db}
+func AuthAdapter(db *mongo.Database) *authController.Controller {
+	uRepository := userRepository.Repository{Collection: db.Collection("users")}
 	service := authService.Service{UserRepository: uRepository}
 	return &authController.Controller{AuthService: service}
 }

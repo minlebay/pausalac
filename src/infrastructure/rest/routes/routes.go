@@ -4,11 +4,11 @@ package routes
 import (
 	// swaggerFiles for documentation
 	"github.com/gin-gonic/gin"
+	_ "github.com/minlebay/pausalac/docs"
+	"github.com/minlebay/pausalac/src/infrastructure/rest/adapter"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	_ "go_gin_api_clean/docs"
-	"go_gin_api_clean/src/infrastructure/rest/adapter"
-	"gorm.io/gorm"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 // Security is a struct that contains the security of the application
@@ -17,14 +17,14 @@ type Security struct {
 	Authorization string `header:"Authorization" json:"Authorization"`
 }
 
-// @title Boilerplate Golang
+// @title Golang Pausalac
 // @version 1.2
-// @description Documentation's Boilerplate Golang
+// @description Documentation's Golang Pausalac
 // @termsOfService http://swagger.io/terms/
 
-// @contact.name Alejandro Gabriel Guerrero
-// @contact.url http://github.com/gbrayhan
-// @contact.email gbrayhan@gmail.com
+// @contact.name Ilshat Minnibaev
+// @contact.url https://github.com/minlebay
+// @contact.email ilshatminnibaev@gmail.com
 
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
@@ -36,16 +36,15 @@ type Security struct {
 // ApplicationV1Router is a function that contains all routes of the application
 // @host localhost:8080
 // @BasePath /v1
-func ApplicationV1Router(router *gin.Engine, db *gorm.DB) {
-	routerV1 := router.Group("/v1")
-
+func ApplicationV1Router(router *gin.Engine, db *mongo.Database) {
+	api := router.Group("/api/v1")
 	{
 		// Documentation Swagger
 		{
-			routerV1.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+			api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 		}
 
-		AuthRoutes(routerV1, adapter.AuthAdapter(db))
-		UserRoutes(routerV1, adapter.UserAdapter(db))
+		AuthRoutes(api, adapter.AuthAdapter(db))
+		UserRoutes(api, adapter.UserAdapter(db))
 	}
 }

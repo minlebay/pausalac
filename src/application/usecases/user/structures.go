@@ -2,7 +2,7 @@
 package user
 
 import (
-	domainUser "go_gin_api_clean/src/domain/user"
+	domainUser "github.com/minlebay/pausalac/src/domain/user"
 )
 
 // PaginationResultUser is the structure for pagination result of user

@@ -2,7 +2,7 @@
 package auth
 
 import (
-	userDomain "go_gin_api_clean/src/domain/user"
+	userDomain "github.com/minlebay/pausalac/src/domain/user"
 )
 
 func secAuthUserMapper(domainUser *userDomain.User, authInfo *Auth) *SecurityAuthenticatedUser {

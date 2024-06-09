@@ -1,11 +1,10 @@
-// Package main is the entry point of the application
 package main
 
 import (
+	"context"
 	"fmt"
-	"go_gin_api_clean/src/infrastructure/repository/config"
-	errorsController "go_gin_api_clean/src/infrastructure/rest/controllers/errors"
-	"go_gin_api_clean/src/infrastructure/rest/middlewares"
+	"github.com/minlebay/pausalac/src/infrastructure/rest/controllers/errors"
+	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -15,33 +14,50 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 
-	"go_gin_api_clean/src/infrastructure/rest/routes"
+	"github.com/minlebay/pausalac/src/infrastructure/rest/middlewares"
+	"github.com/minlebay/pausalac/src/infrastructure/rest/routes"
+
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func main() {
 	router := gin.Default()
 	router.Use(limit.MaxAllowed(200))
 	router.Use(cors.Default())
-	var err error
-	DB, err := config.GormOpen()
-	if err != nil {
-		_ = fmt.Errorf("fatal error in database file: %s", err)
-		panic(err)
-	}
-	router.Use(middlewares.GinBodyLogMiddleware)
-	router.Use(errorsController.Handler)
-	routes.ApplicationV1Router(router, DB)
-	startServer(router)
 
+	viper.SetConfigFile("config.json")
+	if err := viper.ReadInConfig(); err != nil {
+		log.Fatalf("fatal error in config file: %s", err.Error())
+	}
+
+	mongoURI := viper.GetString("Databases.MongoDB.URL")
+	databaseName := viper.GetString("Databases.MongoDB.DatabaseLogs")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	clientOptions := options.Client().ApplyURI(mongoURI)
+	client, err := mongo.Connect(ctx, clientOptions)
+	if err != nil {
+		log.Fatalf("Failed to connect to MongoDB: %v", err)
+	}
+	defer func() {
+		if err := client.Disconnect(ctx); err != nil {
+			log.Fatalf("Failed to disconnect from MongoDB: %v", err)
+		}
+	}()
+
+	db := client.Database(databaseName)
+
+	router.Use(middlewares.GinBodyLogMiddleware)
+	router.Use(errors.Handler)
+	routes.ApplicationV1Router(router, db)
+
+	startServer(router)
 }
 
 func startServer(router http.Handler) {
-	viper.SetConfigFile("config.json")
-	if err := viper.ReadInConfig(); err != nil {
-		_ = fmt.Errorf("fatal error in config file: %s", err.Error())
-		panic(err)
-
-	}
 	serverPort := fmt.Sprintf(":%s", viper.GetString("ServerPort"))
 	s := &http.Server{
 		Addr:           serverPort,
@@ -51,8 +67,6 @@ func startServer(router http.Handler) {
 		MaxHeaderBytes: 1 << 20,
 	}
 	if err := s.ListenAndServe(); err != nil {
-		_ = fmt.Errorf("fatal error description: %s", strings.ToLower(err.Error()))
-		panic(err)
-
+		log.Fatalf("fatal error description: %s", strings.ToLower(err.Error()))
 	}
 }

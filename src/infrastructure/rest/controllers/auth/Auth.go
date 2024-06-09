@@ -3,9 +3,9 @@ package auth
 
 import (
 	"github.com/gin-gonic/gin"
-	useCaseAuth "go_gin_api_clean/src/application/usecases/auth"
-	domainErrors "go_gin_api_clean/src/domain/errors"
-	"go_gin_api_clean/src/infrastructure/rest/controllers"
+	useCaseAuth "github.com/minlebay/pausalac/src/application/usecases/auth"
+	domainErrors "github.com/minlebay/pausalac/src/domain/errors"
+	"github.com/minlebay/pausalac/src/infrastructure/rest/controllers"
 	"net/http"
 )
 
@@ -36,7 +36,7 @@ func (c *Controller) Login(ctx *gin.Context) {
 		Password: request.Password,
 	}
 
-	authDataUser, err := c.AuthService.Login(user)
+	authDataUser, err := c.AuthService.Login(ctx, user)
 	if err != nil {
 		_ = ctx.Error(err)
 		return
@@ -62,7 +62,7 @@ func (c *Controller) GetAccessTokenByRefreshToken(ctx *gin.Context) {
 		return
 	}
 
-	authDataUser, err := c.AuthService.AccessTokenByRefreshToken(request.RefreshToken)
+	authDataUser, err := c.AuthService.AccessTokenByRefreshToken(ctx, request.RefreshToken)
 	if err != nil {
 		_ = ctx.Error(err)
 		return

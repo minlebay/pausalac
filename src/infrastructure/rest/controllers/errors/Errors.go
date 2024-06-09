@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	domainErrors "go_gin_api_clean/src/domain/errors"
+	domainErrors "github.com/minlebay/pausalac/src/domain/errors"
 )
 
 // MessagesResponse is a struct that contains the response body for the message

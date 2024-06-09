@@ -2,12 +2,13 @@
 package auth
 
 import (
+	"context"
 	"errors"
 	"time"
 
-	"go_gin_api_clean/src/application/security/jwt"
-	errorsDomain "go_gin_api_clean/src/domain/errors"
-	userRepository "go_gin_api_clean/src/infrastructure/repository/user"
+	"github.com/minlebay/pausalac/src/application/security/jwt"
+	errorsDomain "github.com/minlebay/pausalac/src/domain/errors"
+	userRepository "github.com/minlebay/pausalac/src/infrastructure/repository/user"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -25,13 +26,13 @@ type Service struct {
 }
 
 // Login implements the login use case
-func (s *Service) Login(user LoginUser) (*SecurityAuthenticatedUser, error) {
+func (s *Service) Login(ctx context.Context, user LoginUser) (*SecurityAuthenticatedUser, error) {
 	userMap := map[string]any{"email": user.Email}
-	domainUser, err := s.UserRepository.GetOneByMap(userMap)
+	domainUser, err := s.UserRepository.GetOneByMap(ctx, userMap)
 	if err != nil {
 		return &SecurityAuthenticatedUser{}, err
 	}
-	if domainUser.ID == 0 {
+	if domainUser.ID.IsZero() {
 		return &SecurityAuthenticatedUser{}, errorsDomain.NewAppError(errors.New("email or password does not match"), errorsDomain.NotAuthorized)
 	}
 
@@ -59,14 +60,14 @@ func (s *Service) Login(user LoginUser) (*SecurityAuthenticatedUser, error) {
 }
 
 // AccessTokenByRefreshToken implements the Access Token By Refresh Token use case
-func (s *Service) AccessTokenByRefreshToken(refreshToken string) (*SecurityAuthenticatedUser, error) {
+func (s *Service) AccessTokenByRefreshToken(ctx context.Context, refreshToken string) (*SecurityAuthenticatedUser, error) {
 	claimsMap, err := jwt.GetClaimsAndVerifyToken(refreshToken, "refresh")
 	if err != nil {
 		return nil, err
 	}
 
 	userMap := map[string]any{"id": claimsMap["id"]}
-	domainUser, err := s.UserRepository.GetOneByMap(userMap)
+	domainUser, err := s.UserRepository.GetOneByMap(ctx, userMap)
 	if err != nil {
 		return nil, err
 

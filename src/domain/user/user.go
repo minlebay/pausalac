@@ -1,20 +1,22 @@
-// Package user contains the business logic for the user entity
 package user
 
-import "time"
+import (
+	"context"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"time"
+)
 
-// User is a struct that contains the user information
 type User struct {
-	ID           int
-	UserName     string
-	Email        string
-	FirstName    string
-	LastName     string
-	Status       bool
-	Role         string
-	HashPassword string
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
+	ID           primitive.ObjectID `bson:"_id,omitempty"`
+	UserName     string             `bson:"username"`
+	Email        string             `bson:"email"`
+	FirstName    string             `bson:"first_name"`
+	LastName     string             `bson:"last_name"`
+	Status       bool               `bson:"status"`
+	Role         string             `bson:"role"`
+	HashPassword string             `bson:"hash_password"`
+	CreatedAt    time.Time          `bson:"created_at"`
+	UpdatedAt    time.Time          `bson:"updated_at"`
 }
 
 type NewUser struct {
@@ -35,15 +37,16 @@ func (newUser *NewUser) ToDomainMapper() *User {
 		FirstName: newUser.FirstName,
 		LastName:  newUser.LastName,
 		Role:      newUser.Role,
+		Status:    newUser.Status,
 	}
 }
 
 // Service is the interface that provides user methods
 type Service interface {
-	GetAll() (*[]User, error)
-	GetByID(id int) (*User, error)
-	Create(newUser *NewUser) (*User, error)
-	GetOneByMap(userMap map[string]interface{}) (*User, error)
-	Delete(id int) error
-	Update(id int, userMap map[string]interface{}) (*User, error)
+	GetAll(context.Context) (*[]User, error)
+	GetByID(ctx context.Context, id string) (*User, error)
+	Create(ctx context.Context, newUser *NewUser) (*User, error)
+	GetOneByMap(ctx context.Context, userMap map[string]interface{}) (*User, error)
+	Delete(ctx context.Context, id string) error
+	Update(ctx context.Context, id string, userMap map[string]interface{}) (*User, error)
 }

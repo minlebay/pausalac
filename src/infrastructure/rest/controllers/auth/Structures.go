@@ -3,7 +3,7 @@ package auth
 
 // LoginRequest is a struct that contains the login request information
 type LoginRequest struct {
-	Email    string `json:"email" example:"gbrayhan@gmail.com" gorm:"unique" binding:"required"`
+	Email    string `json:"email" example:"ilshatminnibaev@gmail.com" gorm:"unique" binding:"required"`
 	Password string `json:"password" example:"Password123" binding:"required"`
 }
 

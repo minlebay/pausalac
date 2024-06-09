@@ -2,15 +2,15 @@
 package adapter
 
 import (
-	userService "go_gin_api_clean/src/application/usecases/user"
-	userRepository "go_gin_api_clean/src/infrastructure/repository/user"
-	userController "go_gin_api_clean/src/infrastructure/rest/controllers/user"
-	"gorm.io/gorm"
+	userService "github.com/minlebay/pausalac/src/application/usecases/user"
+	userRepository "github.com/minlebay/pausalac/src/infrastructure/repository/user"
+	userController "github.com/minlebay/pausalac/src/infrastructure/rest/controllers/user"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 // UserAdapter is a function that returns a user controller
-func UserAdapter(db *gorm.DB) *userController.Controller {
-	uRepository := userRepository.Repository{DB: db}
-	service := userService.Service{UserRepository: uRepository}
-	return &userController.Controller{UserService: service}
+func UserAdapter(db *mongo.Database) *userController.UserController {
+	uRepository := userRepository.Repository{Collection: db.Collection("users")}
+	service := userService.Service{Repo: &uRepository}
+	return &userController.UserController{Service: &service}
 }

@@ -1,163 +1,164 @@
-// Package user contains the user controller
 package user
 
 import (
-	"errors"
+	"context"
+	userService "github.com/minlebay/pausalac/src/application/usecases/user"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
-	useCaseUser "go_gin_api_clean/src/application/usecases/user"
-	domainErrors "go_gin_api_clean/src/domain/errors"
-	"go_gin_api_clean/src/infrastructure/rest/controllers"
 )
 
-// Controller is a struct that contains the user service
-type Controller struct {
-	UserService useCaseUser.Service
+// UserController is a controller for managing users
+type UserController struct {
+	Service *userService.Service
 }
 
-// NewUser godoc
-// @Tags user
-// @Summary Create New UserName
-// @Description Create new user on the system
-// @Security ApiKeyAuth
-// @Accept  json
-// @Produce  json
-// @Param data body NewUserRequest true "body data"
-// @Success 200 {object} ResponseUser
-// @Failure 400 {object} MessageResponse
-// @Failure 500 {object} MessageResponse
-// @Router /user [post]
-func (c *Controller) NewUser(ctx *gin.Context) {
-	var request NewUserRequest
-
-	if err := controllers.BindJSON(ctx, &request); err != nil {
-		appError := domainErrors.NewAppError(err, domainErrors.ValidationError)
-		_ = ctx.Error(appError)
-		return
-	}
-
-	userModel, err := c.UserService.Create(toUsecaseMapper(&request))
-	if err != nil {
-		_ = ctx.Error(err)
-		return
-	}
-	userResponse := domainToResponseMapper(userModel)
-	ctx.JSON(http.StatusOK, userResponse)
+// NewUserController creates a new UserController
+func NewUserController(service *userService.Service) *UserController {
+	return &UserController{Service: service}
 }
 
-// GetAllUsers godoc
-// @Tags user
-// @Summary Get all Users
-// @Security ApiKeyAuth
-// @Description Get all Users on the system
-// @Success 200 {object} []ResponseUser
-// @Failure 400 {object} MessageResponse
+// GetAll godoc
+// @Summary Get all users
+// @Description Get all users
+// @Tags users
+// @Produce json
+// @Success 200 {array} UserResponse
 // @Failure 500 {object} MessageResponse
-// @Router /user [get]
-func (c *Controller) GetAllUsers(ctx *gin.Context) {
-	users, err := c.UserService.GetAll()
+// @Router /users [get]
+func (ctrl *UserController) GetAll(c *gin.Context) {
+	users, err := ctrl.Service.GetAll(context.Background())
 	if err != nil {
-		appError := domainErrors.NewAppErrorWithType(domainErrors.UnknownError)
-		_ = ctx.Error(appError)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-
-	ctx.JSON(http.StatusOK, arrayDomainToResponseMapper(users))
+	c.JSON(http.StatusOK, ToDomainArray(users))
 }
 
-// GetUsersByID godoc
-// @Tags user
-// @Summary Get users by ID
-// @Description Get Users by ID on the system
-// @Param user_id path int true "id of user"
-// @Security ApiKeyAuth
-// @Success 200 {object} ResponseUser
-// @Failure 400 {object} MessageResponse
-// @Failure 500 {object} MessageResponse
-// @Router /user/{user_id} [get]
-func (c *Controller) GetUsersByID(ctx *gin.Context) {
-	userID, err := strconv.Atoi(ctx.Param("id"))
+// GetByID godoc
+// @Summary Get user by ID
+// @Description Get a single user by ID
+// @Tags users
+// @Produce json
+// @Param id path string true "User ID"
+// @Success 200 {object} UserResponse
+// @Failure 404 {object} MessageResponse
+// @Router /users/{id} [get]
+func (ctrl *UserController) GetByID(c *gin.Context) {
+	id := c.Param("id")
+	user, err := ctrl.Service.GetByID(context.Background(), id)
 	if err != nil {
-		appError := domainErrors.NewAppError(errors.New("user id is invalid"), domainErrors.ValidationError)
-		_ = ctx.Error(appError)
+		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
 		return
 	}
-
-	user, err := c.UserService.GetByID(userID)
-	if err != nil {
-		appError := domainErrors.NewAppError(err, domainErrors.ValidationError)
-		_ = ctx.Error(appError)
-		return
-	}
-
-	ctx.JSON(http.StatusOK, domainToResponseMapper(user))
+	c.JSON(http.StatusOK, ToResponse(user))
 }
 
-// UpdateUser godoc
-// @Tags user
-// @Summary Get users by ID
-// @Description Get Users by ID on the system
-// @Param user_id path int true "id of user"
-// @Security ApiKeyAuth
-// @Success 200 {object} ResponseUser
+// CreateAdmin godoc
+// @Summary Create a new admin
+// @Description CreateAdmin method creates a new admin user if there are no users in the database
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body CreateUserRequest true "New User"
+// @Success 201 {object} UserResponse
 // @Failure 400 {object} MessageResponse
 // @Failure 500 {object} MessageResponse
-// @Router /user/{user_id} [get]
-func (c *Controller) UpdateUser(ctx *gin.Context) {
-	userID, err := strconv.Atoi(ctx.Param("id"))
-	if err != nil {
-		appError := domainErrors.NewAppError(errors.New("param id is necessary in the url"), domainErrors.ValidationError)
-		_ = ctx.Error(appError)
+// @Router /users/createadmin [post]
+func (ctrl *UserController) CreateAdmin(c *gin.Context) {
+	var req CreateUserRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	var requestMap map[string]any
-
-	err = controllers.BindJSONMap(ctx, &requestMap)
-	if err != nil {
-		appError := domainErrors.NewAppError(err, domainErrors.ValidationError)
-		_ = ctx.Error(appError)
+	if err := ValidateCreateUserRequest(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	err = updateValidation(requestMap)
+	userDomain := req.ToDomain()
+	user, err := ctrl.Service.CreateAdmin(context.Background(), userDomain)
 	if err != nil {
-		_ = ctx.Error(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-
-	user, err := c.UserService.Update(userID, requestMap)
-	if err != nil {
-		_ = ctx.Error(err)
-		return
-	}
-
-	ctx.JSON(http.StatusOK, domainToResponseMapper(user))
+	c.JSON(http.StatusCreated, ToResponse(user))
 }
 
-// DeleteUser godoc
-// @Tags user
-// @Summary Get users by ID
-// @Description Get Users by ID on the system
-// @Param user_id path int true "id of user"
-// @Security ApiKeyAuth
-// @Success 200 {object} MessageResponse
+// Create godoc
+// @Summary Create a new user
+// @Description Create a new user
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body CreateUserRequest true "New User"
+// @Success 201 {object} UserResponse
 // @Failure 400 {object} MessageResponse
 // @Failure 500 {object} MessageResponse
-// @Router /user/{user_id} [get]
-func (c *Controller) DeleteUser(ctx *gin.Context) {
-	userID, err := strconv.Atoi(ctx.Param("id"))
-	if err != nil {
-		appError := domainErrors.NewAppError(errors.New("param id is necessary in the url"), domainErrors.ValidationError)
-		_ = ctx.Error(appError)
+// @Router /users [post]
+func (ctrl *UserController) Create(c *gin.Context) {
+	var req CreateUserRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	err = c.UserService.Delete(userID)
-	if err != nil {
-		_ = ctx.Error(err)
+	if err := ValidateCreateUserRequest(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"message": "resource deleted successfully"})
+	userDomain := req.ToDomain()
+	user, err := ctrl.Service.Create(context.Background(), userDomain)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusCreated, ToResponse(user))
+}
 
+// Update godoc
+// @Summary Update an existing user
+// @Description Update an existing user by ID
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param id path string true "User ID"
+// @Param user body UpdateUserRequest true "Update User"
+// @Success 200 {object} UserResponse
+// @Failure 400 {object} MessageResponse
+// @Failure 500 {object} MessageResponse
+// @Router /users/{id} [put]
+func (ctrl *UserController) Update(c *gin.Context) {
+	id := c.Param("id")
+	var req UpdateUserRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if err := ValidateUpdateUserRequest(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	userMap := req.ToDomainUpdate()
+	user, err := ctrl.Service.Update(context.Background(), id, userMap)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, ToResponse(user))
+}
+
+// Delete godoc
+// @Summary Delete a user
+// @Description Delete a user by ID
+// @Tags users
+// @Param id path string true "User ID"
+// @Success 204 {object} nil
+// @Failure 500 {object} MessageResponse
+// @Router /users/{id} [delete]
+func (ctrl *UserController) Delete(c *gin.Context) {
+	id := c.Param("id")
+	if err := ctrl.Service.Delete(context.Background(), id); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusNoContent, nil)
 }

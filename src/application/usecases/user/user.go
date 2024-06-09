@@ -1,54 +1,120 @@
-// Package user provides the use case for user
 package user
 
 import (
-	userDomain "go_gin_api_clean/src/domain/user"
-	userRepository "go_gin_api_clean/src/infrastructure/repository/user"
-	"golang.org/x/crypto/bcrypt"
+	"context"
+	errs "github.com/minlebay/pausalac/src/domain/errors"
+	domainUser "github.com/minlebay/pausalac/src/domain/user"
+	userRepository "github.com/minlebay/pausalac/src/infrastructure/repository/user"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"time"
 )
 
-// Service is a struct that contains the repository implementation for user use case
 type Service struct {
-	UserRepository userRepository.Repository
+	Repo *userRepository.Repository
 }
 
-var _ userDomain.Service = &Service{}
-
-// GetAll is a function that returns all users
-func (s *Service) GetAll() (*[]userDomain.User, error) {
-	return s.UserRepository.GetAll()
+func NewService(repo *userRepository.Repository) *Service {
+	return &Service{Repo: repo}
 }
 
-// GetByID is a function that returns a user by id
-func (s *Service) GetByID(id int) (*userDomain.User, error) {
-	return s.UserRepository.GetByID(id)
-}
-
-// Create is a function that creates a new user
-func (s *Service) Create(newUser *userDomain.NewUser) (*userDomain.User, error) {
-	domain := newUser.ToDomainMapper()
-
-	hash, err := bcrypt.GenerateFromPassword([]byte(newUser.Password), bcrypt.DefaultCost)
+func (s *Service) GetAll(ctx context.Context) (*[]domainUser.User, error) {
+	users, err := s.Repo.GetAll(ctx)
 	if err != nil {
-		return &userDomain.User{}, err
+		return nil, err
 	}
-	domain.HashPassword = string(hash)
-	domain.Status = true
-
-	return s.UserRepository.Create(domain)
+	return s.arrayToDomainMapper(users), nil
 }
 
-// GetOneByMap is a function that returns a user by map
-func (s *Service) GetOneByMap(userMap map[string]any) (*userDomain.User, error) {
-	return s.UserRepository.GetOneByMap(userMap)
+func (s *Service) GetByID(ctx context.Context, id string) (*domainUser.User, error) {
+	user, err := s.Repo.GetByID(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	return s.toDomainMapper(user), nil
 }
 
-// Delete is a function that deletes a user by id
-func (s *Service) Delete(id int) error {
-	return s.UserRepository.Delete(id)
+func (s *Service) Create(ctx context.Context, newUser *domainUser.NewUser) (*domainUser.User, error) {
+	user := s.fromDomainMapper(newUser)
+	createdUser, err := s.Repo.Create(ctx, user)
+	if err != nil {
+		return nil, err
+	}
+	return s.toDomainMapper(createdUser), nil
 }
 
-// Update is a function that updates a user by id
-func (s *Service) Update(id int, userMap map[string]any) (*userDomain.User, error) {
-	return s.UserRepository.Update(id, userMap)
+func (s *Service) CreateAdmin(ctx context.Context, newUser *domainUser.NewUser) (*domainUser.User, error) {
+	users, err := s.Repo.GetAll(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	if users != nil && len(*users) > 0 {
+		return nil, errs.NewAppErrorWithType(errs.ResourceAlreadyExists)
+	}
+
+	user := s.fromDomainMapper(newUser)
+	createdUser, err := s.Repo.Create(ctx, user)
+	if err != nil {
+		return nil, err
+	}
+	return s.toDomainMapper(createdUser), nil
+}
+
+func (s *Service) GetOneByMap(ctx context.Context, userMap map[string]interface{}) (*domainUser.User, error) {
+	user, err := s.Repo.GetOneByMap(ctx, userMap)
+	if err != nil {
+		return nil, err
+	}
+	return s.toDomainMapper(user), nil
+}
+
+func (s *Service) Delete(ctx context.Context, id string) error {
+	return s.Repo.Delete(ctx, id)
+}
+
+func (s *Service) Update(ctx context.Context, id string, userMap map[string]interface{}) (*domainUser.User, error) {
+	updatedUser, err := s.Repo.Update(ctx, id, userMap)
+	if err != nil {
+		return nil, err
+	}
+	return s.toDomainMapper(updatedUser), nil
+}
+
+// Мапперы
+func (s *Service) fromDomainMapper(newUser *domainUser.NewUser) *domainUser.User {
+	return &domainUser.User{
+		ID:           primitive.NewObjectID(),
+		UserName:     newUser.UserName,
+		Email:        newUser.Email,
+		FirstName:    newUser.FirstName,
+		LastName:     newUser.LastName,
+		Status:       newUser.Status,
+		Role:         newUser.Role,
+		HashPassword: newUser.Password,
+		CreatedAt:    time.Now(),
+		UpdatedAt:    time.Now(),
+	}
+}
+
+func (s *Service) toDomainMapper(user *domainUser.User) *domainUser.User {
+	return &domainUser.User{
+		ID:           user.ID,
+		UserName:     user.UserName,
+		Email:        user.Email,
+		FirstName:    user.FirstName,
+		LastName:     user.LastName,
+		Status:       user.Status,
+		Role:         user.Role,
+		HashPassword: user.HashPassword,
+		CreatedAt:    user.CreatedAt,
+		UpdatedAt:    user.UpdatedAt,
+	}
+}
+
+func (s *Service) arrayToDomainMapper(users *[]domainUser.User) *[]domainUser.User {
+	var domainUsers []domainUser.User
+	for _, user := range *users {
+		domainUsers = append(domainUsers, *s.toDomainMapper(&user))
+	}
+	return &domainUsers
 }

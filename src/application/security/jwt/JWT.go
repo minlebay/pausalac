@@ -5,11 +5,12 @@ import (
 	"errors"
 	"fmt"
 	"github.com/golang-jwt/jwt/v4"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"strconv"
 	"time"
 
+	domainErrors "github.com/minlebay/pausalac/src/domain/errors"
 	"github.com/spf13/viper"
-	domainErrors "go_gin_api_clean/src/domain/errors"
 )
 
 const (
@@ -26,8 +27,8 @@ type AppToken struct {
 
 // Claims is a struct that contains the claims of the JWT
 type Claims struct {
-	ID   int    `json:"id"`
-	Type string `json:"type"`
+	ID   primitive.ObjectID `json:"id"`
+	Type string             `json:"type"`
 	jwt.RegisteredClaims
 }
 
@@ -44,7 +45,7 @@ var TokenTypeExpTime = map[string]string{
 }
 
 // GenerateJWTToken generates a JWT token (refresh or access)
-func GenerateJWTToken(userID int, tokenType string) (appToken *AppToken, err error) {
+func GenerateJWTToken(userID primitive.ObjectID, tokenType string) (appToken *AppToken, err error) {
 	viper.SetConfigFile("config.json")
 	if err := viper.ReadInConfig(); err != nil {
 		_ = fmt.Errorf("fatal error in config file: %s", err.Error())
