@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/minlebay/pausalac/src/infrastructure/rest/controllers/errors"
+	"pausalac/src/infrastructure/rest/controllers/errors"
 	"strings"
 	"time"
 
@@ -15,8 +15,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 
-	"github.com/minlebay/pausalac/src/infrastructure/rest/middlewares"
-	"github.com/minlebay/pausalac/src/infrastructure/rest/routes"
+	"pausalac/src/infrastructure/rest/middlewares"
+	"pausalac/src/infrastructure/rest/routes"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

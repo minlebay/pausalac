@@ -1,5 +1,5 @@
 // Package errors defines the domain errors used in the application.
-package errors
+package domain
 
 import "errors"
 

@@ -1,8 +1,8 @@
 package user
 
 import (
-	domainUser "github.com/minlebay/pausalac/src/domain/user"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	domainUser "pausalac/src/domain"
 	"time"
 )
 

@@ -1,4 +1,4 @@
-module github.com/minlebay/pausalac
+module pausalac
 
 go 1.22
 

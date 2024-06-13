@@ -2,7 +2,7 @@
 package auth
 
 import (
-	userDomain "github.com/minlebay/pausalac/src/domain/user"
+	userDomain "pausalac/src/domain"
 )
 
 func secAuthUserMapper(domainUser *userDomain.User, authInfo *Auth) *SecurityAuthenticatedUser {

@@ -3,8 +3,8 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	userController "github.com/minlebay/pausalac/src/infrastructure/rest/controllers/user"
-	"github.com/minlebay/pausalac/src/infrastructure/rest/middlewares"
+	userController "pausalac/src/infrastructure/rest/controllers/user"
+	"pausalac/src/infrastructure/rest/middlewares"
 )
 
 // UserRoutes is a function that contains all routes of the user

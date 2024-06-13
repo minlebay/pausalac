@@ -2,15 +2,14 @@ package user
 
 import (
 	"context"
-	userService "github.com/minlebay/pausalac/src/application/usecases/user"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"net/http"
+	usecases "pausalac/src/application/usecases"
 )
 
 // UserController is a controller for managing users
 type UserController struct {
-	Service *userService.Service
+	Service *usecases.UserService
 }
 
 // GetAll godoc

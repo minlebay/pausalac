@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	domainErrors "github.com/minlebay/pausalac/src/domain/errors"
+	domain "pausalac/src/domain"
 )
 
 // MessagesResponse is a struct that contains the response body for the message
@@ -20,26 +20,26 @@ func Handler(c *gin.Context) {
 	errs := c.Errors
 
 	if len(errs) > 0 {
-		err, ok := errs[0].Err.(*domainErrors.AppError)
+		err, ok := errs[0].Err.(*domain.AppError)
 		if ok {
 			resp := MessagesResponse{Message: err.Error()}
 			switch err.Type {
-			case domainErrors.NotFound:
+			case domain.NotFound:
 				c.JSON(http.StatusNotFound, resp)
 				return
-			case domainErrors.ValidationError:
+			case domain.ValidationError:
 				c.JSON(http.StatusBadRequest, resp)
 				return
-			case domainErrors.ResourceAlreadyExists:
+			case domain.ResourceAlreadyExists:
 				c.JSON(http.StatusConflict, resp)
 				return
-			case domainErrors.NotAuthenticated:
+			case domain.NotAuthenticated:
 				c.JSON(http.StatusUnauthorized, resp)
 				return
-			case domainErrors.NotAuthorized:
+			case domain.NotAuthorized:
 				c.JSON(http.StatusForbidden, resp)
 				return
-			case domainErrors.RepositoryError:
+			case domain.RepositoryError:
 				c.JSON(http.StatusInternalServerError, MessagesResponse{Message: "We are working to improve the flow of this request."})
 				return
 			default:

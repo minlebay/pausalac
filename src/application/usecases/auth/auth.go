@@ -4,12 +4,12 @@ package auth
 import (
 	"context"
 	"errors"
+	userRepository "pausalac/src/infrastructure/repository"
 	"time"
 
-	"github.com/minlebay/pausalac/src/application/security/jwt"
-	errorsDomain "github.com/minlebay/pausalac/src/domain/errors"
-	userRepository "github.com/minlebay/pausalac/src/infrastructure/repository/user"
 	"golang.org/x/crypto/bcrypt"
+	"pausalac/src/application/security/jwt"
+	errorsDomain "pausalac/src/domain"
 )
 
 // Auth contains the data of the authentication
@@ -21,12 +21,12 @@ type Auth struct {
 }
 
 // Service is a struct that contains the repository implementation for auth use case
-type Service struct {
-	UserRepository userRepository.Repository
+type AuthService struct {
+	UserRepository userRepository.UserRepository
 }
 
 // Login implements the login use case
-func (s *Service) Login(ctx context.Context, user LoginUser) (*SecurityAuthenticatedUser, error) {
+func (s *AuthService) Login(ctx context.Context, user LoginUser) (*SecurityAuthenticatedUser, error) {
 	userMap := map[string]any{"email": user.Email}
 	domainUser, err := s.UserRepository.GetOneByMap(ctx, userMap)
 	if err != nil {
@@ -60,7 +60,7 @@ func (s *Service) Login(ctx context.Context, user LoginUser) (*SecurityAuthentic
 }
 
 // AccessTokenByRefreshToken implements the Access Token By Refresh Token use case
-func (s *Service) AccessTokenByRefreshToken(ctx context.Context, refreshToken string) (*SecurityAuthenticatedUser, error) {
+func (s *AuthService) AccessTokenByRefreshToken(ctx context.Context, refreshToken string) (*SecurityAuthenticatedUser, error) {
 	claimsMap, err := jwt.GetClaimsAndVerifyToken(refreshToken, "refresh")
 	if err != nil {
 		return nil, err

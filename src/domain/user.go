@@ -1,4 +1,4 @@
-package user
+package domain
 
 import (
 	"context"
@@ -42,7 +42,7 @@ func (newUser *NewUser) ToDomainMapper() *User {
 }
 
 // Service is the interface that provides user methods
-type Service interface {
+type UserService interface {
 	GetAll(context.Context) (*[]User, error)
 	GetByID(ctx context.Context, id string) (*User, error)
 	Create(ctx context.Context, newUser *NewUser) (*User, error)

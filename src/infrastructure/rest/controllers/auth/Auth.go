@@ -3,15 +3,15 @@ package auth
 
 import (
 	"github.com/gin-gonic/gin"
-	useCaseAuth "github.com/minlebay/pausalac/src/application/usecases/auth"
-	domainErrors "github.com/minlebay/pausalac/src/domain/errors"
-	"github.com/minlebay/pausalac/src/infrastructure/rest/controllers"
 	"net/http"
+	useCaseAuth "pausalac/src/application/usecases/auth"
+	domainErrors "pausalac/src/domain"
+	"pausalac/src/infrastructure/rest/controllers"
 )
 
 // Controller is a struct that contains the auth service
 type Controller struct {
-	AuthService useCaseAuth.Service
+	AuthService useCaseAuth.AuthService
 }
 
 // Login godoc

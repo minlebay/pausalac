@@ -7,8 +7,8 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"go.mongodb.org/mongo-driver/mongo"
 	// swaggerFiles for documentation
-	_ "github.com/minlebay/pausalac/docs"
-	"github.com/minlebay/pausalac/src/infrastructure/rest/adapter"
+	_ "pausalac/docs"
+	"pausalac/src/infrastructure/rest/adapter"
 )
 
 // Security is a struct that contains the security of the application
@@ -46,5 +46,6 @@ func ApplicationV1Router(router *gin.Engine, db *mongo.Database) {
 
 		AuthRoutes(api, adapter.AuthAdapter(db))
 		UserRoutes(api, adapter.UserAdapter(db))
+		CustomerRoutes(api, adapter.CustomerAdapter(db))
 	}
 }

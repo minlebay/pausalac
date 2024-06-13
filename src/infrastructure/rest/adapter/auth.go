@@ -2,15 +2,15 @@
 package adapter
 
 import (
-	authService "github.com/minlebay/pausalac/src/application/usecases/auth"
-	userRepository "github.com/minlebay/pausalac/src/infrastructure/repository/user"
-	authController "github.com/minlebay/pausalac/src/infrastructure/rest/controllers/auth"
 	"go.mongodb.org/mongo-driver/mongo"
+	authService "pausalac/src/application/usecases/auth"
+	userRepository "pausalac/src/infrastructure/repository"
+	authController "pausalac/src/infrastructure/rest/controllers/auth"
 )
 
 // AuthAdapter is a function that returns a auth controller
 func AuthAdapter(db *mongo.Database) *authController.Controller {
-	uRepository := userRepository.Repository{Collection: db.Collection("users")}
-	service := authService.Service{UserRepository: uRepository}
+	uRepository := userRepository.UserRepository{Collection: db.Collection("users")}
+	service := authService.AuthService{UserRepository: uRepository}
 	return &authController.Controller{AuthService: service}
 }

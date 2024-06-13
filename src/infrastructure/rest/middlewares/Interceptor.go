@@ -7,11 +7,11 @@ import (
 	"io"
 	"time"
 
-	"github.com/minlebay/pausalac/src/application/services"
+	"pausalac/src/application/services"
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/minlebay/pausalac/utils"
+	"pausalac/utils"
 )
 
 type bodyLogWriter struct {

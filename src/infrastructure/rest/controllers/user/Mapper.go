@@ -1,7 +1,7 @@
 package user
 
 import (
-	domainUser "github.com/minlebay/pausalac/src/domain/user"
+	domainUser "pausalac/src/domain"
 )
 
 // ToDomainMapper maps NewUser to User

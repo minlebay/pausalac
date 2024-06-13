@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"time"
 
-	domainErrors "github.com/minlebay/pausalac/src/domain/errors"
 	"github.com/spf13/viper"
+	domainErrors "pausalac/src/domain"
 )
 
 const (

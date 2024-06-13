@@ -1,23 +1,29 @@
-package user
+package usecases
 
 import (
 	"context"
-	errs "github.com/minlebay/pausalac/src/domain/errors"
-	domainUser "github.com/minlebay/pausalac/src/domain/user"
-	userRepository "github.com/minlebay/pausalac/src/infrastructure/repository/user"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"pausalac/src/domain"
+	repo "pausalac/src/infrastructure/repository"
 	"time"
 )
 
-type Service struct {
-	Repo *userRepository.Repository
+// PaginationResultUser is the structure for pagination result of user
+type PaginationResultUser struct {
+	Data       []domain.User
+	Total      int64
+	Limit      int64
+	Current    int64
+	NextCursor uint
+	PrevCursor uint
+	NumPages   int64
 }
 
-func NewService(repo *userRepository.Repository) *Service {
-	return &Service{Repo: repo}
+type UserService struct {
+	Repo *repo.UserRepository
 }
 
-func (s *Service) GetAll(ctx context.Context) (*[]domainUser.User, error) {
+func (s *UserService) GetAll(ctx context.Context) (*[]domain.User, error) {
 	users, err := s.Repo.GetAll(ctx)
 	if err != nil {
 		return nil, err
@@ -25,7 +31,7 @@ func (s *Service) GetAll(ctx context.Context) (*[]domainUser.User, error) {
 	return s.arrayToDomainMapper(users), nil
 }
 
-func (s *Service) GetByID(ctx context.Context, id string) (*domainUser.User, error) {
+func (s *UserService) GetByID(ctx context.Context, id string) (*domain.User, error) {
 	user, err := s.Repo.GetByID(ctx, id)
 	if err != nil {
 		return nil, err
@@ -33,7 +39,7 @@ func (s *Service) GetByID(ctx context.Context, id string) (*domainUser.User, err
 	return s.toDomainMapper(user), nil
 }
 
-func (s *Service) Create(ctx context.Context, newUser *domainUser.NewUser) (*domainUser.User, error) {
+func (s *UserService) Create(ctx context.Context, newUser *domain.NewUser) (*domain.User, error) {
 	user := s.fromDomainMapper(newUser)
 	createdUser, err := s.Repo.Create(ctx, user)
 	if err != nil {
@@ -42,14 +48,14 @@ func (s *Service) Create(ctx context.Context, newUser *domainUser.NewUser) (*dom
 	return s.toDomainMapper(createdUser), nil
 }
 
-func (s *Service) CreateAdmin(ctx context.Context, newUser *domainUser.NewUser) (*domainUser.User, error) {
+func (s *UserService) CreateAdmin(ctx context.Context, newUser *domain.NewUser) (*domain.User, error) {
 	users, err := s.Repo.GetAll(ctx)
 	if err != nil {
 		return nil, err
 	}
 
 	if users != nil && len(*users) > 0 {
-		return nil, errs.NewAppErrorWithType(errs.ResourceAlreadyExists)
+		return nil, domain.NewAppErrorWithType(domain.ResourceAlreadyExists)
 	}
 
 	user := s.fromDomainMapper(newUser)
@@ -60,7 +66,7 @@ func (s *Service) CreateAdmin(ctx context.Context, newUser *domainUser.NewUser) 
 	return s.toDomainMapper(createdUser), nil
 }
 
-func (s *Service) GetOneByMap(ctx context.Context, userMap map[string]interface{}) (*domainUser.User, error) {
+func (s *UserService) GetOneByMap(ctx context.Context, userMap map[string]interface{}) (*domain.User, error) {
 	user, err := s.Repo.GetOneByMap(ctx, userMap)
 	if err != nil {
 		return nil, err
@@ -68,11 +74,11 @@ func (s *Service) GetOneByMap(ctx context.Context, userMap map[string]interface{
 	return s.toDomainMapper(user), nil
 }
 
-func (s *Service) Delete(ctx context.Context, id string) error {
+func (s *UserService) Delete(ctx context.Context, id string) error {
 	return s.Repo.Delete(ctx, id)
 }
 
-func (s *Service) Update(ctx context.Context, id string, userMap map[string]interface{}) (*domainUser.User, error) {
+func (s *UserService) Update(ctx context.Context, id string, userMap map[string]interface{}) (*domain.User, error) {
 	updatedUser, err := s.Repo.Update(ctx, id, userMap)
 	if err != nil {
 		return nil, err
@@ -81,8 +87,8 @@ func (s *Service) Update(ctx context.Context, id string, userMap map[string]inte
 }
 
 // Мапперы
-func (s *Service) fromDomainMapper(newUser *domainUser.NewUser) *domainUser.User {
-	return &domainUser.User{
+func (s *UserService) fromDomainMapper(newUser *domain.NewUser) *domain.User {
+	return &domain.User{
 		ID:           primitive.NewObjectID(),
 		UserName:     newUser.UserName,
 		Email:        newUser.Email,
@@ -96,8 +102,8 @@ func (s *Service) fromDomainMapper(newUser *domainUser.NewUser) *domainUser.User
 	}
 }
 
-func (s *Service) toDomainMapper(user *domainUser.User) *domainUser.User {
-	return &domainUser.User{
+func (s *UserService) toDomainMapper(user *domain.User) *domain.User {
+	return &domain.User{
 		ID:           user.ID,
 		UserName:     user.UserName,
 		Email:        user.Email,
@@ -111,8 +117,8 @@ func (s *Service) toDomainMapper(user *domainUser.User) *domainUser.User {
 	}
 }
 
-func (s *Service) arrayToDomainMapper(users *[]domainUser.User) *[]domainUser.User {
-	var domainUsers []domainUser.User
+func (s *UserService) arrayToDomainMapper(users *[]domain.User) *[]domain.User {
+	var domainUsers []domain.User
 	for _, user := range *users {
 		domainUsers = append(domainUsers, *s.toDomainMapper(&user))
 	}

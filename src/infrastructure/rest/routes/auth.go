@@ -3,7 +3,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	authController "github.com/minlebay/pausalac/src/infrastructure/rest/controllers/auth"
+	authController "pausalac/src/infrastructure/rest/controllers/auth"
 )
 
 // AuthRoutes is a function that contains all routes of the auth
