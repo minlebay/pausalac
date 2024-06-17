@@ -57,7 +57,7 @@ func (r *UpdateUserRequest) ToDomainUpdate() map[string]interface{} {
 		updateMap["last_name"] = r.LastName
 	}
 	if r.Password != "" {
-		updateMap["hash_password"] = r.Password // Обработка хэширования пароля
+		updateMap["hash_password"] = r.Password
 	}
 	if r.Role != "" {
 		updateMap["role"] = r.Role

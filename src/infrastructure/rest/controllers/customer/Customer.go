@@ -5,11 +5,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	usecases "pausalac/src/application/usecases"
+	"pausalac/src/domain"
 )
 
 // CustomerController handles customer-related endpoints
 type CustomerController struct {
-	Service *usecases.CustomerService
+	Service *usecases.EntityService[domain.Customer, domain.NewCustomer]
 }
 
 // GetAll godoc
@@ -26,7 +27,7 @@ func (ctrl *CustomerController) GetAll(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, ToDomainArray(customers))
+	c.JSON(http.StatusOK, ToResponseArray(customers))
 }
 
 // GetByID godoc
@@ -70,7 +71,7 @@ func (ctrl *CustomerController) Create(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	customer, err := ctrl.Service.Create(context.Background(), req.ToDomain())
+	customer, err := ctrl.Service.Create(context.Background(), ToDomain(&req))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -101,7 +102,7 @@ func (ctrl *CustomerController) Update(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	customerMap := req.ToDomainUpdate()
+	customerMap := ToDomainUpdate(&req)
 	customer, err := ctrl.Service.Update(context.Background(), id, customerMap)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

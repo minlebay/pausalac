@@ -3,6 +3,7 @@ inspired by @gbrayhan (https://github.com/gbrayhan/microservices-go)
 
 plan:
 1. add customer entity - done
+2. add company entity
 2. add invoices entity
 3. add multilanguage support
 4. add calculations

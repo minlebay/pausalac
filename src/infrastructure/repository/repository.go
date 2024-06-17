@@ -11,24 +11,24 @@ import (
 	"time"
 )
 
-type CustomerRepository struct {
+type DefaultRepository[T domain.Types] struct {
 	Collection *mongo.Collection
 }
 
-func (r *CustomerRepository) GetAll(ctx context.Context) (*[]domain.Customer, error) {
-	var customers []domain.Customer
+func (r *DefaultRepository[T]) GetAll(ctx context.Context) (*[]T, error) {
+	var entities []T
 	cursor, err := r.Collection.Find(ctx, bson.M{})
 	if err != nil {
 		return nil, domain.NewAppErrorWithType(domain.UnknownError)
 	}
-	if err := cursor.All(ctx, &customers); err != nil {
+	if err := cursor.All(ctx, &entities); err != nil {
 		return nil, domain.NewAppErrorWithType(domain.UnknownError)
 	}
-	return &customers, nil
+	return &entities, nil
 }
 
-func (r *CustomerRepository) Create(ctx context.Context, customer *domain.Customer) (*domain.Customer, error) {
-	_, err := r.Collection.InsertOne(ctx, customer)
+func (r *DefaultRepository[T]) Create(ctx context.Context, entity *T) (*T, error) {
+	_, err := r.Collection.InsertOne(ctx, entity)
 	if err != nil {
 		var mongoErr mongo.WriteException
 		if errors.As(err, &mongoErr) {
@@ -40,50 +40,50 @@ func (r *CustomerRepository) Create(ctx context.Context, customer *domain.Custom
 		}
 		return nil, domain.NewAppErrorWithType(domain.UnknownError)
 	}
-	return customer, nil
+	return entity, nil
 }
 
-func (r *CustomerRepository) GetByID(ctx context.Context, id string) (*domain.Customer, error) {
+func (r *DefaultRepository[T]) GetByID(ctx context.Context, id string) (*T, error) {
 	objId, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, domain.NewAppErrorWithType(domain.UnknownError)
 	}
-	var customer domain.Customer
-	err = r.Collection.FindOne(ctx, bson.M{"_id": objId}).Decode(&customer)
+	var entity T
+	err = r.Collection.FindOne(ctx, bson.M{"_id": objId}).Decode(&entity)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
 			return nil, domain.NewAppErrorWithType(domain.NotFound)
 		}
 		return nil, domain.NewAppErrorWithType(domain.UnknownError)
 	}
-	return &customer, nil
+	return &entity, nil
 }
 
-func (r *CustomerRepository) Update(ctx context.Context, id string, customerMap map[string]interface{}) (*domain.Customer, error) {
+func (r *DefaultRepository[T]) Update(ctx context.Context, id string, entityMap map[string]interface{}) (*T, error) {
 	objId, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, domain.NewAppErrorWithType(domain.UnknownError)
 	}
-	customerMap["updated_at"] = primitive.NewDateTimeFromTime(time.Now())
-	update := bson.M{"$set": customerMap}
+	entityMap["updated_at"] = primitive.NewDateTimeFromTime(time.Now())
+	update := bson.M{"$set": entityMap}
 	opts := options.FindOneAndUpdate().SetReturnDocument(options.After)
-	var customer domain.Customer
-	err = r.Collection.FindOneAndUpdate(ctx, bson.M{"_id": objId}, update, opts).Decode(&customer)
+	var entity T
+	err = r.Collection.FindOneAndUpdate(ctx, bson.M{"_id": objId}, update, opts).Decode(&entity)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
 			return nil, domain.NewAppErrorWithType(domain.NotFound)
 		}
 		return nil, domain.NewAppErrorWithType(domain.UnknownError)
 	}
-	return &customer, nil
+	return &entity, nil
 }
 
-func (r *CustomerRepository) Delete(ctx context.Context, id string) error {
-	objID, err := primitive.ObjectIDFromHex(id)
+func (r *DefaultRepository[T]) Delete(ctx context.Context, id string) error {
+	objId, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return domain.NewAppErrorWithType(domain.UnknownError)
 	}
-	res, err := r.Collection.DeleteOne(ctx, bson.M{"_id": objID})
+	res, err := r.Collection.DeleteOne(ctx, bson.M{"_id": objId})
 	if err != nil {
 		return domain.NewAppErrorWithType(domain.UnknownError)
 	}

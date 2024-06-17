@@ -15,7 +15,7 @@ const (
 )
 
 type Customer struct {
-	ID                 primitive.ObjectID `bson:"_id,omitempty"`
+	Id                 primitive.ObjectID `bson:"_id,omitempty"`
 	Name               string             `bson:"name" binding:"required"`
 	TaxNumber          string             `bson:"tax_number" binding:"required"`
 	RegistrationNumber string             `bson:"registration_number" binding:"required"`
@@ -43,8 +43,9 @@ type NewCustomer struct {
 	CustomerType       CustomerType
 }
 
-func (newCustomer *NewCustomer) ToDomainMapper() *Customer {
+func (newCustomer *NewCustomer) ToDomainCustomerMapper() *Customer {
 	return &Customer{
+		Id:                 primitive.NewObjectID(),
 		Name:               newCustomer.Name,
 		TaxNumber:          newCustomer.TaxNumber,
 		RegistrationNumber: newCustomer.RegistrationNumber,
@@ -55,6 +56,8 @@ func (newCustomer *NewCustomer) ToDomainMapper() *Customer {
 		Country:            newCustomer.Country,
 		Currency:           newCustomer.Currency,
 		CustomerType:       newCustomer.CustomerType,
+		CreatedAt:          time.Now(),
+		UpdatedAt:          time.Now(),
 	}
 }
 

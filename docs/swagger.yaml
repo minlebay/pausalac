@@ -43,10 +43,591 @@ definitions:
     - email
     - password
     type: object
+  bankaccount.BankAccountResponse:
+    properties:
+      account_number:
+        type: string
+      bank_name:
+        type: string
+      created_at:
+        type: string
+      currency:
+        type: string
+      iban:
+        type: string
+      id:
+        type: string
+      swift_code:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  bankaccount.CreateBankAccountRequest:
+    properties:
+      account_number:
+        type: string
+      bank_name:
+        type: string
+      currency:
+        type: string
+      iban:
+        type: string
+      swift_code:
+        type: string
+      user_id:
+        type: string
+    required:
+    - account_number
+    - bank_name
+    - currency
+    - iban
+    - swift_code
+    - user_id
+    type: object
+  bankaccount.MessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  bankaccount.UpdateBankAccountRequest:
+    properties:
+      account_number:
+        type: string
+      bank_name:
+        type: string
+      currency:
+        type: string
+      iban:
+        type: string
+      swift_code:
+        type: string
+      user_id:
+        type: string
+    type: object
+  company.CompanyResponse:
+    properties:
+      activity_code_id:
+        type: string
+      agency_email:
+        type: string
+      agency_id:
+        type: string
+      call_number:
+        type: string
+      city:
+        type: string
+      created_at:
+        type: string
+      date_of_registration:
+        type: string
+      employed_by_other_firm:
+        type: string
+      employment_changed:
+        type: string
+      employment_type:
+        type: string
+      first_account_number:
+        type: string
+      foreign_exchange_account_number:
+        type: string
+      full_name:
+        type: string
+      iban:
+        type: string
+      id:
+        type: string
+      identification_number:
+        type: string
+      invoice_description:
+        type: string
+      logo:
+        type: string
+      municipality_id:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      pib:
+        type: string
+      second_account_number:
+        type: string
+      signature:
+        type: string
+      street_address:
+        type: string
+      street_number:
+        type: string
+      swift:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  company.CreateCompanyRequest:
+    properties:
+      activity_code_id:
+        type: string
+      agency_email:
+        type: string
+      agency_id:
+        type: string
+      call_number:
+        type: string
+      city:
+        type: string
+      date_of_registration:
+        type: string
+      employed_by_other_firm:
+        type: string
+      employment_changed:
+        type: string
+      employment_type:
+        type: string
+      first_account_number:
+        type: string
+      foreign_exchange_account_number:
+        type: string
+      full_name:
+        type: string
+      iban:
+        type: string
+      identification_number:
+        type: string
+      invoice_description:
+        type: string
+      logo:
+        type: string
+      municipality_id:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      pib:
+        type: string
+      second_account_number:
+        type: string
+      signature:
+        type: string
+      street_address:
+        type: string
+      street_number:
+        type: string
+      swift:
+        type: string
+      user_id:
+        type: string
+    required:
+    - name
+    - user_id
+    type: object
+  company.MessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  company.UpdateCompanyRequest:
+    properties:
+      activity_code_id:
+        type: string
+      agency_email:
+        type: string
+      agency_id:
+        type: string
+      call_number:
+        type: string
+      city:
+        type: string
+      date_of_registration:
+        type: string
+      employed_by_other_firm:
+        type: string
+      employment_changed:
+        type: string
+      employment_type:
+        type: string
+      first_account_number:
+        type: string
+      foreign_exchange_account_number:
+        type: string
+      full_name:
+        type: string
+      iban:
+        type: string
+      identification_number:
+        type: string
+      invoice_description:
+        type: string
+      logo:
+        type: string
+      municipality_id:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      pib:
+        type: string
+      second_account_number:
+        type: string
+      signature:
+        type: string
+      street_address:
+        type: string
+      street_number:
+        type: string
+      swift:
+        type: string
+      user_id:
+        type: string
+    type: object
   controllers.MessageResponse:
     properties:
       message:
         type: string
+    type: object
+  customer.CreateCustomerRequest:
+    properties:
+      address:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+      currency:
+        type: string
+      customer_type:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      phone_number:
+        type: string
+      registration_number:
+        type: string
+      tax_number:
+        type: string
+    required:
+    - address
+    - city
+    - country
+    - currency
+    - customer_type
+    - email
+    - name
+    - phone_number
+    - registration_number
+    - tax_number
+    type: object
+  customer.CustomerResponse:
+    properties:
+      address:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+      currency:
+        type: string
+      customer_type:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      phone_number:
+        type: string
+      registration_number:
+        type: string
+      tax_number:
+        type: string
+    type: object
+  customer.MessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  customer.UpdateCustomerRequest:
+    properties:
+      address:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+      currency:
+        type: string
+      customer_type:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      phone_number:
+        type: string
+      registration_number:
+        type: string
+      tax_number:
+        type: string
+    type: object
+  domain.User:
+    properties:
+      createdAt:
+        type: string
+      email:
+        type: string
+      firstName:
+        type: string
+      hashPassword:
+        type: string
+      id:
+        type: string
+      lastName:
+        type: string
+      role:
+        type: string
+      status:
+        type: boolean
+      updatedAt:
+        type: string
+      userName:
+        type: string
+    type: object
+  invoice.CreateInvoiceRequest:
+    properties:
+      author:
+        $ref: '#/definitions/user.CreateUserRequest'
+      bank_account:
+        $ref: '#/definitions/bankaccount.CreateBankAccountRequest'
+      cancelled:
+        type: string
+      client:
+        $ref: '#/definitions/customer.CreateCustomerRequest'
+      comment:
+        type: string
+      created:
+        type: string
+      currency:
+        type: string
+      date:
+        type: string
+      iban:
+        type: string
+      number:
+        type: string
+      paid_date:
+        type: string
+      paid_value:
+        type: string
+      sent_date:
+        type: string
+      services:
+        items:
+          $ref: '#/definitions/service.CreateServiceRequest'
+        type: array
+      status:
+        type: string
+      swift:
+        type: string
+      trading_date:
+        type: string
+      traiding_place:
+        type: string
+      type:
+        type: string
+      value_in_rsd:
+        type: string
+    required:
+    - author
+    - client
+    - created
+    type: object
+  invoice.InvoiceResponse:
+    properties:
+      author:
+        $ref: '#/definitions/domain.User'
+      bank_account:
+        type: string
+      cancelled:
+        type: boolean
+      client:
+        type: string
+      comment:
+        type: string
+      created:
+        type: string
+      created_at:
+        type: string
+      currency:
+        type: string
+      date:
+        type: string
+      iban:
+        type: string
+      id:
+        type: string
+      number:
+        type: string
+      paid_date:
+        type: string
+      paid_value:
+        type: string
+      sent_date:
+        type: string
+      services:
+        type: string
+      status:
+        type: string
+      swift:
+        type: string
+      trading_date:
+        type: string
+      traiding_place:
+        type: string
+      type:
+        type: string
+      updated_at:
+        type: string
+      value_in_rsd:
+        type: string
+    type: object
+  invoice.MessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  invoice.UpdateInvoiceRequest:
+    properties:
+      author:
+        $ref: '#/definitions/user.UpdateUserRequest'
+      bank_account:
+        $ref: '#/definitions/bankaccount.UpdateBankAccountRequest'
+      cancelled:
+        type: string
+      client:
+        $ref: '#/definitions/customer.UpdateCustomerRequest'
+      comment:
+        type: string
+      created:
+        type: string
+      currency:
+        type: string
+      date:
+        type: string
+      iban:
+        type: string
+      number:
+        type: string
+      paid_date:
+        type: string
+      paid_value:
+        type: string
+      sent_date:
+        type: string
+      services:
+        items:
+          $ref: '#/definitions/service.UpdateServiceRequest'
+        type: array
+      status:
+        type: string
+      swift:
+        type: string
+      trading_date:
+        type: string
+      traiding_place:
+        type: string
+      type:
+        type: string
+      value_in_rsd:
+        type: string
+    required:
+    - author
+    - client
+    - created
+    type: object
+  service.CreateServiceRequest:
+    properties:
+      name:
+        type: string
+      price:
+        type: integer
+      quantity:
+        type: integer
+      total:
+        type: integer
+      unit:
+        type: string
+      user_id:
+        type: string
+    required:
+    - name
+    - price
+    - quantity
+    - total
+    - unit
+    - user_id
+    type: object
+  service.MessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  service.ServiceResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+      quantity:
+        type: integer
+      total:
+        type: integer
+      unit:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    required:
+    - name
+    - price
+    - quantity
+    - total
+    - unit
+    - user_id
+    type: object
+  service.UpdateServiceRequest:
+    properties:
+      name:
+        type: string
+      price:
+        type: integer
+      quantity:
+        type: integer
+      total:
+        type: integer
+      unit:
+        type: string
+      user_id:
+        type: string
+    required:
+    - name
+    - price
+    - quantity
+    - total
+    - unit
+    - user_id
     type: object
   user.CreateUserRequest:
     properties:
@@ -167,6 +748,689 @@ paths:
       summary: Login UserName
       tags:
       - auth
+  /bankaccounts:
+    get:
+      description: Get all bank accounts
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/bankaccount.BankAccountResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/bankaccount.MessageResponse'
+      summary: Get all bank accounts
+      tags:
+      - bankaccounts
+    post:
+      consumes:
+      - application/json
+      description: Create a new bank account
+      parameters:
+      - description: Create Bank Account
+        in: body
+        name: bankaccount
+        required: true
+        schema:
+          $ref: '#/definitions/bankaccount.CreateBankAccountRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/bankaccount.BankAccountResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/bankaccount.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/bankaccount.MessageResponse'
+      summary: Create a new bank account
+      tags:
+      - bankaccounts
+  /bankaccounts/{id}:
+    delete:
+      description: Delete a bank account
+      parameters:
+      - description: Bank Account ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/bankaccount.MessageResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/bankaccount.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/bankaccount.MessageResponse'
+      summary: Delete a bank account
+      tags:
+      - bankaccounts
+    get:
+      description: Get a bank account by ID
+      parameters:
+      - description: Bank Account ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/bankaccount.BankAccountResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/bankaccount.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/bankaccount.MessageResponse'
+      summary: Get a bank account by ID
+      tags:
+      - bankaccounts
+    put:
+      consumes:
+      - application/json
+      description: Update a bank account
+      parameters:
+      - description: Bank Account ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update Bank Account
+        in: body
+        name: bankaccount
+        required: true
+        schema:
+          $ref: '#/definitions/bankaccount.UpdateBankAccountRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/bankaccount.BankAccountResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/bankaccount.MessageResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/bankaccount.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/bankaccount.MessageResponse'
+      summary: Update a bank account
+      tags:
+      - bankaccounts
+  /companies:
+    get:
+      description: Get all companies
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/company.CompanyResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/company.MessageResponse'
+      summary: Get all companies
+      tags:
+      - companies
+    post:
+      consumes:
+      - application/json
+      description: Create a new company
+      parameters:
+      - description: Create Company
+        in: body
+        name: company
+        required: true
+        schema:
+          $ref: '#/definitions/company.CreateCompanyRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/company.CompanyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/company.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/company.MessageResponse'
+      summary: Create a new company
+      tags:
+      - companies
+  /companies/{id}:
+    delete:
+      description: Delete a company
+      parameters:
+      - description: Company ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/company.MessageResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/company.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/company.MessageResponse'
+      summary: Delete a company
+      tags:
+      - companies
+    get:
+      description: Get a company by ID
+      parameters:
+      - description: Company ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/company.CompanyResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/company.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/company.MessageResponse'
+      summary: Get a company by ID
+      tags:
+      - companies
+    put:
+      consumes:
+      - application/json
+      description: Update a company
+      parameters:
+      - description: Company ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update Company
+        in: body
+        name: company
+        required: true
+        schema:
+          $ref: '#/definitions/company.UpdateCompanyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/company.CompanyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/company.MessageResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/company.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/company.MessageResponse'
+      summary: Update a company
+      tags:
+      - companies
+  /customers:
+    get:
+      description: Get all customers
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/customer.CustomerResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/customer.MessageResponse'
+      summary: Get all customers
+      tags:
+      - customers
+    post:
+      consumes:
+      - application/json
+      description: Create a new customer
+      parameters:
+      - description: Create Customer
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/customer.CreateCustomerRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/customer.CustomerResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/customer.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/customer.MessageResponse'
+      summary: Create a new customer
+      tags:
+      - customers
+  /customers/{id}:
+    delete:
+      description: Delete a customer by ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/customer.MessageResponse'
+      summary: Delete a customer
+      tags:
+      - customers
+    get:
+      description: Get a customer by ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/customer.CustomerResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/customer.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/customer.MessageResponse'
+      summary: Get a customer by ID
+      tags:
+      - customers
+    put:
+      consumes:
+      - application/json
+      description: Update an existing customer by ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update Customer
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/customer.UpdateCustomerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/customer.CustomerResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/customer.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/customer.MessageResponse'
+      summary: Update a customer
+      tags:
+      - customers
+  /invoices:
+    get:
+      description: Get all invoices
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/invoice.InvoiceResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/invoice.MessageResponse'
+      summary: Get all invoices
+      tags:
+      - invoices
+    post:
+      consumes:
+      - application/json
+      description: Create a new invoice
+      parameters:
+      - description: Create Invoice
+        in: body
+        name: invoice
+        required: true
+        schema:
+          $ref: '#/definitions/invoice.CreateInvoiceRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/invoice.InvoiceResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/invoice.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/invoice.MessageResponse'
+      summary: Create a new invoice
+      tags:
+      - invoices
+  /invoices/{id}:
+    delete:
+      description: Delete an invoice
+      parameters:
+      - description: Invoice ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/invoice.MessageResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/invoice.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/invoice.MessageResponse'
+      summary: Delete an invoice
+      tags:
+      - invoices
+    get:
+      description: Get an invoice by ID
+      parameters:
+      - description: Invoice ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/invoice.InvoiceResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/invoice.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/invoice.MessageResponse'
+      summary: Get an invoice by ID
+      tags:
+      - invoices
+    put:
+      consumes:
+      - application/json
+      description: Update an invoice
+      parameters:
+      - description: Invoice ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update Invoice
+        in: body
+        name: invoice
+        required: true
+        schema:
+          $ref: '#/definitions/invoice.UpdateInvoiceRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/invoice.InvoiceResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/invoice.MessageResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/invoice.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/invoice.MessageResponse'
+      summary: Update an invoice
+      tags:
+      - invoices
+  /services:
+    get:
+      description: Get all services
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/service.ServiceResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.MessageResponse'
+      summary: Get all services
+      tags:
+      - services
+    post:
+      consumes:
+      - application/json
+      description: Create a new service
+      parameters:
+      - description: Create Service
+        in: body
+        name: service
+        required: true
+        schema:
+          $ref: '#/definitions/service.CreateServiceRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/service.ServiceResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/service.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.MessageResponse'
+      summary: Create a new service
+      tags:
+      - services
+  /services/{id}:
+    delete:
+      description: Delete a service
+      parameters:
+      - description: Service ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.MessageResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/service.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.MessageResponse'
+      summary: Delete a service
+      tags:
+      - services
+    get:
+      description: Get a service by ID
+      parameters:
+      - description: Service ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.ServiceResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/service.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.MessageResponse'
+      summary: Get a service by ID
+      tags:
+      - services
+    put:
+      consumes:
+      - application/json
+      description: Update a service
+      parameters:
+      - description: Service ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update Service
+        in: body
+        name: service
+        required: true
+        schema:
+          $ref: '#/definitions/service.UpdateServiceRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.ServiceResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/service.MessageResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/service.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.MessageResponse'
+      summary: Update a service
+      tags:
+      - services
   /users:
     get:
       description: Get all users

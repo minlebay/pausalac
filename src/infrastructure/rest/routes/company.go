@@ -2,12 +2,13 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	customerController "pausalac/src/infrastructure/rest/controllers/customer"
+	companyController "pausalac/src/infrastructure/rest/controllers/company"
 	"pausalac/src/infrastructure/rest/middlewares"
 )
 
-func CustomerRoutes(router *gin.RouterGroup, controller *customerController.CustomerController) {
-	r := router.Group("/customers")
+// CompanyRoutes defines the routes for the company entity
+func CompanyRoutes(router *gin.RouterGroup, controller *companyController.CompanyController) {
+	r := router.Group("/companies")
 	r.Use(middlewares.AuthJWTMiddleware())
 
 	r.POST("/", controller.Create)

@@ -29,19 +29,21 @@ type NewUser struct {
 	Status    bool
 }
 
-// ToDomainMapper is a function that maps the NewUser struct to User struct
 func (newUser *NewUser) ToDomainMapper() *User {
 	return &User{
-		UserName:  newUser.UserName,
-		Email:     newUser.Email,
-		FirstName: newUser.FirstName,
-		LastName:  newUser.LastName,
-		Role:      newUser.Role,
-		Status:    newUser.Status,
+		ID:           primitive.NewObjectID(),
+		UserName:     newUser.UserName,
+		Email:        newUser.Email,
+		FirstName:    newUser.FirstName,
+		LastName:     newUser.LastName,
+		Status:       newUser.Status,
+		Role:         newUser.Role,
+		HashPassword: newUser.Password,
+		CreatedAt:    time.Now(),
+		UpdatedAt:    time.Now(),
 	}
 }
 
-// Service is the interface that provides user methods
 type UserService interface {
 	GetAll(context.Context) (*[]User, error)
 	GetByID(ctx context.Context, id string) (*User, error)
