@@ -47,5 +47,9 @@ func ApplicationV1Router(router *gin.Engine, db *mongo.Database) {
 		AuthRoutes(api, adapter.AuthAdapter(db))
 		UserRoutes(api, adapter.UserAdapter(db))
 		CustomerRoutes(api, adapter.CustomerAdapter(db))
+		CompanyRoutes(api, adapter.CompanyAdapter(db))
+		BankAccountRoutes(api, adapter.BankAccountAdapter(db))
+		ServiceRoutes(api, adapter.ServiceAdapter(db))
+		InvoiceRoutes(api, adapter.InvoiceAdapter(db))
 	}
 }

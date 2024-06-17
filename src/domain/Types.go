@@ -5,3 +5,11 @@ type DateRangeFilter struct {
 	Start string
 	End   string
 }
+
+type Types interface {
+	Company | Customer | Service | BankAccount | Invoice
+}
+
+type NewTypes interface {
+	NewCompany | NewCustomer | NewService | NewBankAccount | NewInvoice
+}

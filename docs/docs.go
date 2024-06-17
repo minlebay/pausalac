@@ -95,6 +95,1038 @@ const docTemplate = `{
                 }
             }
         },
+        "/bankaccounts": {
+            "get": {
+                "description": "Get all bank accounts",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "bankaccounts"
+                ],
+                "summary": "Get all bank accounts",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/bankaccount.BankAccountResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new bank account",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "bankaccounts"
+                ],
+                "summary": "Create a new bank account",
+                "parameters": [
+                    {
+                        "description": "Create Bank Account",
+                        "name": "bankaccount",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/bankaccount.CreateBankAccountRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/bankaccount.BankAccountResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/bankaccounts/{id}": {
+            "get": {
+                "description": "Get a bank account by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "bankaccounts"
+                ],
+                "summary": "Get a bank account by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bank Account ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/bankaccount.BankAccountResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a bank account",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "bankaccounts"
+                ],
+                "summary": "Update a bank account",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bank Account ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update Bank Account",
+                        "name": "bankaccount",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/bankaccount.UpdateBankAccountRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/bankaccount.BankAccountResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a bank account",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "bankaccounts"
+                ],
+                "summary": "Delete a bank account",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bank Account ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/companies": {
+            "get": {
+                "description": "Get all companies",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "companies"
+                ],
+                "summary": "Get all companies",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/company.CompanyResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/company.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new company",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "companies"
+                ],
+                "summary": "Create a new company",
+                "parameters": [
+                    {
+                        "description": "Create Company",
+                        "name": "company",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/company.CreateCompanyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/company.CompanyResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/company.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/company.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/companies/{id}": {
+            "get": {
+                "description": "Get a company by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "companies"
+                ],
+                "summary": "Get a company by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Company ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/company.CompanyResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/company.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/company.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a company",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "companies"
+                ],
+                "summary": "Update a company",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Company ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update Company",
+                        "name": "company",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/company.UpdateCompanyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/company.CompanyResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/company.MessageResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/company.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/company.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a company",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "companies"
+                ],
+                "summary": "Delete a company",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Company ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/company.MessageResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/company.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/company.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/customers": {
+            "get": {
+                "description": "Get all customers",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "customers"
+                ],
+                "summary": "Get all customers",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/customer.CustomerResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/customer.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new customer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "customers"
+                ],
+                "summary": "Create a new customer",
+                "parameters": [
+                    {
+                        "description": "Create Customer",
+                        "name": "customer",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/customer.CreateCustomerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/customer.CustomerResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/customer.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/customer.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/customers/{id}": {
+            "get": {
+                "description": "Get a customer by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "customers"
+                ],
+                "summary": "Get a customer by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/customer.CustomerResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/customer.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/customer.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update an existing customer by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "customers"
+                ],
+                "summary": "Update a customer",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update Customer",
+                        "name": "customer",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/customer.UpdateCustomerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/customer.CustomerResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/customer.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/customer.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a customer by ID",
+                "tags": [
+                    "customers"
+                ],
+                "summary": "Delete a customer",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/customer.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoices": {
+            "get": {
+                "description": "Get all invoices",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "invoices"
+                ],
+                "summary": "Get all invoices",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/invoice.InvoiceResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/invoice.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new invoice",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "invoices"
+                ],
+                "summary": "Create a new invoice",
+                "parameters": [
+                    {
+                        "description": "Create Invoice",
+                        "name": "invoice",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/invoice.CreateInvoiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/invoice.InvoiceResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/invoice.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/invoice.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoices/{id}": {
+            "get": {
+                "description": "Get an invoice by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "invoices"
+                ],
+                "summary": "Get an invoice by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Invoice ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/invoice.InvoiceResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/invoice.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/invoice.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update an invoice",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "invoices"
+                ],
+                "summary": "Update an invoice",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Invoice ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update Invoice",
+                        "name": "invoice",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/invoice.UpdateInvoiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/invoice.InvoiceResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/invoice.MessageResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/invoice.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/invoice.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete an invoice",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "invoices"
+                ],
+                "summary": "Delete an invoice",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Invoice ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/invoice.MessageResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/invoice.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/invoice.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/services": {
+            "get": {
+                "description": "Get all services",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "services"
+                ],
+                "summary": "Get all services",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/service.ServiceResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/service.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new service",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "services"
+                ],
+                "summary": "Create a new service",
+                "parameters": [
+                    {
+                        "description": "Create Service",
+                        "name": "service",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.CreateServiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/service.ServiceResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/service.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/service.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/services/{id}": {
+            "get": {
+                "description": "Get a service by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "services"
+                ],
+                "summary": "Get a service by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/service.ServiceResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/service.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/service.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a service",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "services"
+                ],
+                "summary": "Update a service",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update Service",
+                        "name": "service",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.UpdateServiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/service.ServiceResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/service.MessageResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/service.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/service.MessageResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a service",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "services"
+                ],
+                "summary": "Delete a service",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/service.MessageResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/service.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/service.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "description": "Get all users",
@@ -391,10 +1423,875 @@ const docTemplate = `{
                 }
             }
         },
+        "bankaccount.BankAccountResponse": {
+            "type": "object",
+            "properties": {
+                "account_number": {
+                    "type": "string"
+                },
+                "bank_name": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "iban": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "swift_code": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "bankaccount.CreateBankAccountRequest": {
+            "type": "object",
+            "required": [
+                "account_number",
+                "bank_name",
+                "currency",
+                "iban",
+                "swift_code",
+                "user_id"
+            ],
+            "properties": {
+                "account_number": {
+                    "type": "string"
+                },
+                "bank_name": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "iban": {
+                    "type": "string"
+                },
+                "swift_code": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "bankaccount.MessageResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "bankaccount.UpdateBankAccountRequest": {
+            "type": "object",
+            "properties": {
+                "account_number": {
+                    "type": "string"
+                },
+                "bank_name": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "iban": {
+                    "type": "string"
+                },
+                "swift_code": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "company.CompanyResponse": {
+            "type": "object",
+            "properties": {
+                "activity_code_id": {
+                    "type": "string"
+                },
+                "agency_email": {
+                    "type": "string"
+                },
+                "agency_id": {
+                    "type": "string"
+                },
+                "call_number": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "date_of_registration": {
+                    "type": "string"
+                },
+                "employed_by_other_firm": {
+                    "type": "string"
+                },
+                "employment_changed": {
+                    "type": "string"
+                },
+                "employment_type": {
+                    "type": "string"
+                },
+                "first_account_number": {
+                    "type": "string"
+                },
+                "foreign_exchange_account_number": {
+                    "type": "string"
+                },
+                "full_name": {
+                    "type": "string"
+                },
+                "iban": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identification_number": {
+                    "type": "string"
+                },
+                "invoice_description": {
+                    "type": "string"
+                },
+                "logo": {
+                    "type": "string"
+                },
+                "municipality_id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "pib": {
+                    "type": "string"
+                },
+                "second_account_number": {
+                    "type": "string"
+                },
+                "signature": {
+                    "type": "string"
+                },
+                "street_address": {
+                    "type": "string"
+                },
+                "street_number": {
+                    "type": "string"
+                },
+                "swift": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "company.CreateCompanyRequest": {
+            "type": "object",
+            "required": [
+                "name",
+                "user_id"
+            ],
+            "properties": {
+                "activity_code_id": {
+                    "type": "string"
+                },
+                "agency_email": {
+                    "type": "string"
+                },
+                "agency_id": {
+                    "type": "string"
+                },
+                "call_number": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "date_of_registration": {
+                    "type": "string"
+                },
+                "employed_by_other_firm": {
+                    "type": "string"
+                },
+                "employment_changed": {
+                    "type": "string"
+                },
+                "employment_type": {
+                    "type": "string"
+                },
+                "first_account_number": {
+                    "type": "string"
+                },
+                "foreign_exchange_account_number": {
+                    "type": "string"
+                },
+                "full_name": {
+                    "type": "string"
+                },
+                "iban": {
+                    "type": "string"
+                },
+                "identification_number": {
+                    "type": "string"
+                },
+                "invoice_description": {
+                    "type": "string"
+                },
+                "logo": {
+                    "type": "string"
+                },
+                "municipality_id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "pib": {
+                    "type": "string"
+                },
+                "second_account_number": {
+                    "type": "string"
+                },
+                "signature": {
+                    "type": "string"
+                },
+                "street_address": {
+                    "type": "string"
+                },
+                "street_number": {
+                    "type": "string"
+                },
+                "swift": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "company.MessageResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "company.UpdateCompanyRequest": {
+            "type": "object",
+            "properties": {
+                "activity_code_id": {
+                    "type": "string"
+                },
+                "agency_email": {
+                    "type": "string"
+                },
+                "agency_id": {
+                    "type": "string"
+                },
+                "call_number": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "date_of_registration": {
+                    "type": "string"
+                },
+                "employed_by_other_firm": {
+                    "type": "string"
+                },
+                "employment_changed": {
+                    "type": "string"
+                },
+                "employment_type": {
+                    "type": "string"
+                },
+                "first_account_number": {
+                    "type": "string"
+                },
+                "foreign_exchange_account_number": {
+                    "type": "string"
+                },
+                "full_name": {
+                    "type": "string"
+                },
+                "iban": {
+                    "type": "string"
+                },
+                "identification_number": {
+                    "type": "string"
+                },
+                "invoice_description": {
+                    "type": "string"
+                },
+                "logo": {
+                    "type": "string"
+                },
+                "municipality_id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "pib": {
+                    "type": "string"
+                },
+                "second_account_number": {
+                    "type": "string"
+                },
+                "signature": {
+                    "type": "string"
+                },
+                "street_address": {
+                    "type": "string"
+                },
+                "street_number": {
+                    "type": "string"
+                },
+                "swift": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
         "controllers.MessageResponse": {
             "type": "object",
             "properties": {
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "customer.CreateCustomerRequest": {
+            "type": "object",
+            "required": [
+                "address",
+                "city",
+                "country",
+                "currency",
+                "customer_type",
+                "email",
+                "name",
+                "phone_number",
+                "registration_number",
+                "tax_number"
+            ],
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "customer_type": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone_number": {
+                    "type": "string"
+                },
+                "registration_number": {
+                    "type": "string"
+                },
+                "tax_number": {
+                    "type": "string"
+                }
+            }
+        },
+        "customer.CustomerResponse": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "customer_type": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone_number": {
+                    "type": "string"
+                },
+                "registration_number": {
+                    "type": "string"
+                },
+                "tax_number": {
+                    "type": "string"
+                }
+            }
+        },
+        "customer.MessageResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "customer.UpdateCustomerRequest": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "customer_type": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone_number": {
+                    "type": "string"
+                },
+                "registration_number": {
+                    "type": "string"
+                },
+                "tax_number": {
+                    "type": "string"
+                }
+            }
+        },
+        "domain.User": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "hashPassword": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "boolean"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "userName": {
+                    "type": "string"
+                }
+            }
+        },
+        "invoice.CreateInvoiceRequest": {
+            "type": "object",
+            "required": [
+                "author",
+                "client",
+                "created"
+            ],
+            "properties": {
+                "author": {
+                    "$ref": "#/definitions/user.CreateUserRequest"
+                },
+                "bank_account": {
+                    "$ref": "#/definitions/bankaccount.CreateBankAccountRequest"
+                },
+                "cancelled": {
+                    "type": "string"
+                },
+                "client": {
+                    "$ref": "#/definitions/customer.CreateCustomerRequest"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "created": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "iban": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "string"
+                },
+                "paid_date": {
+                    "type": "string"
+                },
+                "paid_value": {
+                    "type": "string"
+                },
+                "sent_date": {
+                    "type": "string"
+                },
+                "services": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/service.CreateServiceRequest"
+                    }
+                },
+                "status": {
+                    "type": "string"
+                },
+                "swift": {
+                    "type": "string"
+                },
+                "trading_date": {
+                    "type": "string"
+                },
+                "traiding_place": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "value_in_rsd": {
+                    "type": "string"
+                }
+            }
+        },
+        "invoice.InvoiceResponse": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "$ref": "#/definitions/domain.User"
+                },
+                "bank_account": {
+                    "type": "string"
+                },
+                "cancelled": {
+                    "type": "boolean"
+                },
+                "client": {
+                    "type": "string"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "created": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "iban": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "string"
+                },
+                "paid_date": {
+                    "type": "string"
+                },
+                "paid_value": {
+                    "type": "string"
+                },
+                "sent_date": {
+                    "type": "string"
+                },
+                "services": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "swift": {
+                    "type": "string"
+                },
+                "trading_date": {
+                    "type": "string"
+                },
+                "traiding_place": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "value_in_rsd": {
+                    "type": "string"
+                }
+            }
+        },
+        "invoice.MessageResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "invoice.UpdateInvoiceRequest": {
+            "type": "object",
+            "required": [
+                "author",
+                "client",
+                "created"
+            ],
+            "properties": {
+                "author": {
+                    "$ref": "#/definitions/user.UpdateUserRequest"
+                },
+                "bank_account": {
+                    "$ref": "#/definitions/bankaccount.UpdateBankAccountRequest"
+                },
+                "cancelled": {
+                    "type": "string"
+                },
+                "client": {
+                    "$ref": "#/definitions/customer.UpdateCustomerRequest"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "created": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "iban": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "string"
+                },
+                "paid_date": {
+                    "type": "string"
+                },
+                "paid_value": {
+                    "type": "string"
+                },
+                "sent_date": {
+                    "type": "string"
+                },
+                "services": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/service.UpdateServiceRequest"
+                    }
+                },
+                "status": {
+                    "type": "string"
+                },
+                "swift": {
+                    "type": "string"
+                },
+                "trading_date": {
+                    "type": "string"
+                },
+                "traiding_place": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "value_in_rsd": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.CreateServiceRequest": {
+            "type": "object",
+            "required": [
+                "name",
+                "price",
+                "quantity",
+                "total",
+                "unit",
+                "user_id"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "unit": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.MessageResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.ServiceResponse": {
+            "type": "object",
+            "required": [
+                "name",
+                "price",
+                "quantity",
+                "total",
+                "unit",
+                "user_id"
+            ],
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "unit": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.UpdateServiceRequest": {
+            "type": "object",
+            "required": [
+                "name",
+                "price",
+                "quantity",
+                "total",
+                "unit",
+                "user_id"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "unit": {
+                    "type": "string"
+                },
+                "user_id": {
                     "type": "string"
                 }
             }
