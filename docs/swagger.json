@@ -1,8 +1,22 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "Documentation's Golang Pausalac",
+        "title": "Golang Pausalac",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Ilshat Minnibaev",
+            "url": "https://github.com/minlebay",
+            "email": "ilshatminnibaev@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.2"
     },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
     "paths": {
         "/auth/access-token": {
             "post": {
@@ -66,7 +80,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/auth.DataUserAuthenticated"
+                            "$ref": "#/definitions/auth.SecurityAuthenticatedUser"
                         }
                     },
                     "400": {
@@ -1362,6 +1376,27 @@
                 }
             }
         },
+        "auth.DataSecurityAuthenticated": {
+            "type": "object",
+            "properties": {
+                "expirationAccessDateTime": {
+                    "type": "string",
+                    "example": "2023-02-02T21:03:53.196419-06:00"
+                },
+                "expirationRefreshDateTime": {
+                    "type": "string",
+                    "example": "2023-02-03T06:53:53.196419-06:00"
+                },
+                "jwtAccessToken": {
+                    "type": "string",
+                    "example": "SomeAccessToken"
+                },
+                "jwtRefreshToken": {
+                    "type": "string",
+                    "example": "SomeRefreshToken"
+                }
+            }
+        },
         "auth.DataUserAuthenticated": {
             "type": "object",
             "properties": {
@@ -1409,6 +1444,17 @@
                 "password": {
                     "type": "string",
                     "example": "Password123"
+                }
+            }
+        },
+        "auth.SecurityAuthenticatedUser": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/auth.DataUserAuthenticated"
+                },
+                "security": {
+                    "$ref": "#/definitions/auth.DataSecurityAuthenticated"
                 }
             }
         },
@@ -2379,6 +2425,13 @@
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }
