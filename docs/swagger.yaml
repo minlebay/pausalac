@@ -1,3 +1,4 @@
+basePath: /api/v1
 definitions:
   auth.AccessTokenRequest:
     properties:
@@ -6,6 +7,21 @@ definitions:
         type: string
     required:
     - refreshToken
+    type: object
+  auth.DataSecurityAuthenticated:
+    properties:
+      expirationAccessDateTime:
+        example: "2023-02-02T21:03:53.196419-06:00"
+        type: string
+      expirationRefreshDateTime:
+        example: "2023-02-03T06:53:53.196419-06:00"
+        type: string
+      jwtAccessToken:
+        example: SomeAccessToken
+        type: string
+      jwtRefreshToken:
+        example: SomeRefreshToken
+        type: string
     type: object
   auth.DataUserAuthenticated:
     properties:
@@ -42,6 +58,13 @@ definitions:
     required:
     - email
     - password
+    type: object
+  auth.SecurityAuthenticatedUser:
+    properties:
+      data:
+        $ref: '#/definitions/auth.DataUserAuthenticated'
+      security:
+        $ref: '#/definitions/auth.DataSecurityAuthenticated'
     type: object
   bankaccount.BankAccountResponse:
     properties:
@@ -693,8 +716,19 @@ definitions:
       username:
         type: string
     type: object
+host: localhost:8080
 info:
-  contact: {}
+  contact:
+    email: ilshatminnibaev@gmail.com
+    name: Ilshat Minnibaev
+    url: https://github.com/minlebay
+  description: Documentation's Golang Pausalac
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Golang Pausalac
+  version: "1.2"
 paths:
   /auth/access-token:
     post:
@@ -736,7 +770,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/auth.DataUserAuthenticated'
+            $ref: '#/definitions/auth.SecurityAuthenticatedUser'
         "400":
           description: Bad Request
           schema:
@@ -1585,4 +1619,9 @@ paths:
       summary: Create a new admin
       tags:
       - users
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

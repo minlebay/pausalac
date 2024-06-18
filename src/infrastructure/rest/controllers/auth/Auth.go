@@ -19,7 +19,7 @@ type Controller struct {
 // @Summary Login UserName
 // @Description Auth user by email and password
 // @Param data body LoginRequest true "body data"
-// @Success 200 {object} useCaseAuth.DataUserAuthenticated
+// @Success 200 {object} SecurityAuthenticatedUser
 // @Failure 400 {object} controllers.MessageResponse
 // @Failure 500 {object} controllers.MessageResponse
 // @Router /auth/login [post]

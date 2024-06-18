@@ -9,7 +9,16 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "contact": {},
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Ilshat Minnibaev",
+            "url": "https://github.com/minlebay",
+            "email": "ilshatminnibaev@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -77,7 +86,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/auth.DataUserAuthenticated"
+                            "$ref": "#/definitions/auth.SecurityAuthenticatedUser"
                         }
                     },
                     "400": {
@@ -1373,6 +1382,27 @@ const docTemplate = `{
                 }
             }
         },
+        "auth.DataSecurityAuthenticated": {
+            "type": "object",
+            "properties": {
+                "expirationAccessDateTime": {
+                    "type": "string",
+                    "example": "2023-02-02T21:03:53.196419-06:00"
+                },
+                "expirationRefreshDateTime": {
+                    "type": "string",
+                    "example": "2023-02-03T06:53:53.196419-06:00"
+                },
+                "jwtAccessToken": {
+                    "type": "string",
+                    "example": "SomeAccessToken"
+                },
+                "jwtRefreshToken": {
+                    "type": "string",
+                    "example": "SomeRefreshToken"
+                }
+            }
+        },
         "auth.DataUserAuthenticated": {
             "type": "object",
             "properties": {
@@ -1420,6 +1450,17 @@ const docTemplate = `{
                 "password": {
                     "type": "string",
                     "example": "Password123"
+                }
+            }
+        },
+        "auth.SecurityAuthenticatedUser": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/auth.DataUserAuthenticated"
+                },
+                "security": {
+                    "$ref": "#/definitions/auth.DataSecurityAuthenticated"
                 }
             }
         },
@@ -2391,17 +2432,24 @@ const docTemplate = `{
                 }
             }
         }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "",
-	Host:             "",
-	BasePath:         "",
+	Version:          "1.2",
+	Host:             "localhost:8080",
+	BasePath:         "/api/v1",
 	Schemes:          []string{},
-	Title:            "",
-	Description:      "",
+	Title:            "Golang Pausalac",
+	Description:      "Documentation's Golang Pausalac",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

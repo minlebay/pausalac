@@ -22,6 +22,25 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+// @title Golang Pausalac
+// @version 1.2
+// @description Documentation's Golang Pausalac
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name Ilshat Minnibaev
+// @contact.url https://github.com/minlebay
+// @contact.email ilshatminnibaev@gmail.com
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
+
+// ApplicationV1Router is a function that contains all routes of the application
+// @host localhost:8080
+// @BasePath /api/v1
 func main() {
 	router := gin.Default()
 	router.Use(limit.MaxAllowed(200))
