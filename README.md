@@ -1,5 +1,5 @@
 
-inspired by @gbrayhan (https://github.com/gbrayhan/microservices-go)
+based on https://github.com/gbrayhan/microservices-go by @gbrayhan
 
 plan:
 1. add customer entity - done
