@@ -14,6 +14,7 @@ import (
 
 // Auth contains the data of the authentication
 type Auth struct {
+	Email                     string
 	AccessToken               string
 	RefreshToken              string
 	ExpirationAccessDateTime  time.Time
@@ -32,7 +33,7 @@ func (s *AuthService) Login(ctx context.Context, user LoginUser) (*SecurityAuthe
 	if err != nil {
 		return &SecurityAuthenticatedUser{}, err
 	}
-	if domainUser.ID.IsZero() {
+	if domainUser.Id.IsZero() {
 		return &SecurityAuthenticatedUser{}, errorsDomain.NewAppError(errors.New("email or password does not match"), errorsDomain.NotAuthorized)
 	}
 
@@ -42,11 +43,11 @@ func (s *AuthService) Login(ctx context.Context, user LoginUser) (*SecurityAuthe
 		return &SecurityAuthenticatedUser{}, errorsDomain.NewAppError(errors.New("email or password does not match"), errorsDomain.NotAuthorized)
 	}
 
-	accessTokenClaims, err := jwt.GenerateJWTToken(domainUser.ID, "access")
+	accessTokenClaims, err := jwt.GenerateJWTToken(domainUser.Id, "access")
 	if err != nil {
 		return &SecurityAuthenticatedUser{}, err
 	}
-	refreshTokenClaims, err := jwt.GenerateJWTToken(domainUser.ID, "refresh")
+	refreshTokenClaims, err := jwt.GenerateJWTToken(domainUser.Id, "refresh")
 	if err != nil {
 		return &SecurityAuthenticatedUser{}, err
 	}
@@ -73,7 +74,7 @@ func (s *AuthService) AccessTokenByRefreshToken(ctx context.Context, refreshToke
 
 	}
 
-	accessTokenClaims, err := jwt.GenerateJWTToken(domainUser.ID, "access")
+	accessTokenClaims, err := jwt.GenerateJWTToken(domainUser.Id, "access")
 	if err != nil {
 		return &SecurityAuthenticatedUser{}, err
 	}

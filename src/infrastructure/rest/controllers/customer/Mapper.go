@@ -6,26 +6,10 @@ import (
 	"time"
 )
 
-// ToDomainMapper maps NewCustomer to Customer
-func ToDomainMapper(newCustomer *domain.NewCustomer) *domain.Customer {
-	return &domain.Customer{
-		Name:               newCustomer.Name,
-		TaxNumber:          newCustomer.TaxNumber,
-		RegistrationNumber: newCustomer.RegistrationNumber,
-		PhoneNumber:        newCustomer.PhoneNumber,
-		Email:              newCustomer.Email,
-		Address:            newCustomer.Address,
-		City:               newCustomer.City,
-		Country:            newCustomer.Country,
-		Currency:           newCustomer.Currency,
-		CustomerType:       newCustomer.CustomerType,
-	}
-}
-
 // ToResponse maps Customer to CustomerResponse
 func ToResponse(customer *domain.Customer) *CustomerResponse {
 	return &CustomerResponse{
-		ID:                 customer.Id.Hex(),
+		Id:                 customer.Id.Hex(),
 		Name:               customer.Name,
 		TaxNumber:          customer.TaxNumber,
 		RegistrationNumber: customer.RegistrationNumber,
@@ -52,6 +36,7 @@ func ToResponseArray(customers *[]domain.Customer) *[]CustomerResponse {
 func ToDomain(req *CreateCustomerRequest) *domain.NewCustomer {
 	return &domain.NewCustomer{
 		Name:               req.Name,
+		Author:             req.Author,
 		TaxNumber:          req.TaxNumber,
 		RegistrationNumber: req.RegistrationNumber,
 		PhoneNumber:        req.PhoneNumber,

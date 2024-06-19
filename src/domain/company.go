@@ -7,99 +7,88 @@ import (
 )
 
 type Company struct {
-	ID                           primitive.ObjectID `bson:"_id,omitempty"`
-	UserID                       string             `bson:"user_id" binding:"required"`
-	AgencyID                     string             `bson:"agency_id"`
+	Id                           primitive.ObjectID `bson:"_id,omitempty"`
+	Author                       string             `bson:"author" binding:"required"`
+	AgencyId                     string             `bson:"agency_id"`
 	Name                         string             `bson:"name" binding:"required"`
 	FullName                     string             `bson:"full_name"`
 	PIB                          string             `bson:"pib"`
 	IdentificationNumber         string             `bson:"identification_number"`
-	FirstAccountNumber           string             `bson:"first_account_number"`
-	SecondAccountNumber          string             `bson:"second_account_number"`
 	ForeignExchangeAccountNumber string             `bson:"foreign_exchange_account_number"`
 	CallNumber                   string             `bson:"call_number"`
 	DateOfRegistration           string             `bson:"date_of_registration"`
 	City                         string             `bson:"city"`
-	ActivityCodeID               string             `bson:"activity_code_id"`
-	MunicipalityID               string             `bson:"municipality_id"`
-	EmployedByOtherFirm          string             `bson:"employed_by_other_firm"`
-	EmploymentChanged            string             `bson:"employment_changed"`
+	ActivityCodeId               string             `bson:"activity_code_id"`
+	MunicipalityId               string             `bson:"municipality_id"`
 	Logo                         string             `bson:"logo"`
 	StreetAddress                string             `bson:"street_address"`
 	StreetNumber                 string             `bson:"street_number"`
 	Phone                        string             `bson:"phone"`
 	AgencyEmail                  string             `bson:"agency_email"`
-	SWIFT                        string             `bson:"swift"`
-	IBAN                         string             `bson:"iban"`
 	Signature                    string             `bson:"signature"`
 	EmploymentType               string             `bson:"employment_type"`
 	InvoiceDescription           string             `bson:"invoice_description"`
 	CreatedAt                    time.Time          `bson:"created_at"`
 	UpdatedAt                    time.Time          `bson:"updated_at"`
-	User                         User               `bson:"user"`
 	BankAccounts                 []BankAccount      `bson:"bank_accounts"`
 }
 
 type NewCompany struct {
-	UserID                       string
-	AgencyID                     string
+	Author                       string
+	AgencyId                     string
 	Name                         string
 	FullName                     string
 	PIB                          string
 	IdentificationNumber         string
-	FirstAccountNumber           string
-	SecondAccountNumber          string
 	ForeignExchangeAccountNumber string
 	CallNumber                   string
 	DateOfRegistration           string
 	City                         string
-	ActivityCodeID               string
-	MunicipalityID               string
-	EmployedByOtherFirm          string
-	EmploymentChanged            string
+	ActivityCodeId               string
+	MunicipalityId               string
 	Logo                         string
 	StreetAddress                string
 	StreetNumber                 string
 	Phone                        string
 	AgencyEmail                  string
-	SWIFT                        string
-	IBAN                         string
 	Signature                    string
 	EmploymentType               string
 	InvoiceDescription           string
+	BankAccounts                 []NewBankAccount
 }
 
 func (newCompany *NewCompany) ToDomainCompanyMapper() *Company {
+
+	var bankAccounts []BankAccount
+	for _, bankAccount := range newCompany.BankAccounts {
+		bankAccounts = append(bankAccounts, *bankAccount.ToDomainBankAccountMapper())
+	}
+
 	return &Company{
-		ID:                           primitive.NewObjectID(),
+		Id:                           primitive.NewObjectID(),
 		CreatedAt:                    time.Now(),
 		UpdatedAt:                    time.Now(),
-		UserID:                       newCompany.UserID,
-		AgencyID:                     newCompany.AgencyID,
+		Author:                       newCompany.Author,
+		AgencyId:                     newCompany.AgencyId,
 		Name:                         newCompany.Name,
 		FullName:                     newCompany.FullName,
 		PIB:                          newCompany.PIB,
 		IdentificationNumber:         newCompany.IdentificationNumber,
-		FirstAccountNumber:           newCompany.FirstAccountNumber,
-		SecondAccountNumber:          newCompany.SecondAccountNumber,
 		ForeignExchangeAccountNumber: newCompany.ForeignExchangeAccountNumber,
 		CallNumber:                   newCompany.CallNumber,
 		DateOfRegistration:           newCompany.DateOfRegistration,
 		City:                         newCompany.City,
-		ActivityCodeID:               newCompany.ActivityCodeID,
-		MunicipalityID:               newCompany.MunicipalityID,
-		EmployedByOtherFirm:          newCompany.EmployedByOtherFirm,
-		EmploymentChanged:            newCompany.EmploymentChanged,
+		ActivityCodeId:               newCompany.ActivityCodeId,
+		MunicipalityId:               newCompany.MunicipalityId,
 		Logo:                         newCompany.Logo,
 		StreetAddress:                newCompany.StreetAddress,
 		StreetNumber:                 newCompany.StreetNumber,
 		Phone:                        newCompany.Phone,
 		AgencyEmail:                  newCompany.AgencyEmail,
-		SWIFT:                        newCompany.SWIFT,
-		IBAN:                         newCompany.IBAN,
 		Signature:                    newCompany.Signature,
 		EmploymentType:               newCompany.EmploymentType,
 		InvoiceDescription:           newCompany.InvoiceDescription,
+		BankAccounts:                 bankAccounts,
 	}
 }
 

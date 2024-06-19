@@ -15,7 +15,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 
-	"pausalac/src/infrastructure/rest/middlewares"
 	"pausalac/src/infrastructure/rest/routes"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -70,7 +69,6 @@ func main() {
 
 	db := client.Database(databaseName)
 
-	router.Use(middlewares.GinBodyLogMiddleware)
 	router.Use(errors.Handler)
 	routes.ApplicationV1Router(router, db)
 

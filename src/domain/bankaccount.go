@@ -8,7 +8,7 @@ import (
 
 type BankAccount struct {
 	Id            primitive.ObjectID `bson:"_id,omitempty"`
-	UserID        string             `bson:"user_id" binding:"required"`
+	Author        string             `bson:"author" binding:"required"`
 	AccountNumber string             `bson:"account_number" binding:"required"`
 	BankName      string             `bson:"bank_name" binding:"required"`
 	SwiftCode     string             `bson:"swift_code" binding:"required"`
@@ -19,7 +19,7 @@ type BankAccount struct {
 }
 
 type NewBankAccount struct {
-	UserID        string
+	Author        string
 	AccountNumber string
 	BankName      string
 	SwiftCode     string
@@ -30,7 +30,7 @@ type NewBankAccount struct {
 func (newBankAccount *NewBankAccount) ToDomainBankAccountMapper() *BankAccount {
 	return &BankAccount{
 		Id:            primitive.NewObjectID(),
-		UserID:        newBankAccount.UserID,
+		Author:        newBankAccount.Author,
 		AccountNumber: newBankAccount.AccountNumber,
 		BankName:      newBankAccount.BankName,
 		SwiftCode:     newBankAccount.SwiftCode,

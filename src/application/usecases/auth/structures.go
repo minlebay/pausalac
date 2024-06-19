@@ -20,7 +20,7 @@ type DataUserAuthenticated struct {
 	LastName  string             `json:"lastName" example:"Doe"`
 	Status    bool               `json:"status" example:"1"`
 	Role      string             `json:"role" example:"admin"`
-	ID        primitive.ObjectID `json:"id" example:"123"`
+	Id        primitive.ObjectID `json:"id" example:"123"`
 }
 
 // DataSecurityAuthenticated is a struct that contains the security data for the authenticated user

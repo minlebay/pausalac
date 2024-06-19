@@ -12,7 +12,7 @@ func secAuthUserMapper(domainUser *userDomain.User, authInfo *Auth) *SecurityAut
 			Email:     domainUser.Email,
 			FirstName: domainUser.FirstName,
 			LastName:  domainUser.LastName,
-			ID:        domainUser.ID,
+			Id:        domainUser.Id,
 			Status:    domainUser.Status,
 		},
 		Security: DataSecurityAuthenticated{

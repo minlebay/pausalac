@@ -2,7 +2,7 @@ package bankaccount
 
 // CreateBankAccountRequest defines the request payload for creating a bank account
 type CreateBankAccountRequest struct {
-	UserID        string `json:"user_id" binding:"required"`
+	Author        string `json:"-"`
 	AccountNumber string `json:"account_number" binding:"required"`
 	BankName      string `json:"bank_name" binding:"required"`
 	SwiftCode     string `json:"swift_code" binding:"required"`
@@ -12,7 +12,6 @@ type CreateBankAccountRequest struct {
 
 // UpdateBankAccountRequest defines the request payload for updating a bank account
 type UpdateBankAccountRequest struct {
-	UserID        string `json:"user_id"`
 	AccountNumber string `json:"account_number"`
 	BankName      string `json:"bank_name"`
 	SwiftCode     string `json:"swift_code"`

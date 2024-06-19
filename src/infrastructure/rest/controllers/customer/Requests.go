@@ -3,6 +3,7 @@ package customer
 // CreateCustomerRequest defines the request payload for creating a customer
 type CreateCustomerRequest struct {
 	Name               string `json:"name" binding:"required"`
+	Author             string `json:"-"`
 	TaxNumber          string `json:"tax_number" binding:"required"`
 	RegistrationNumber string `json:"registration_number" binding:"required"`
 	PhoneNumber        string `json:"phone_number" binding:"required"`

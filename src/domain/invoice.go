@@ -18,13 +18,10 @@ type Invoice struct {
 	Id            primitive.ObjectID `bson:"_id,omitempty"`
 	Cancelled     bool               `bson:"cancelled"`
 	Comment       string             `bson:"comment"`
-	Currency      string             `bson:"currency"`
-	IBAN          string             `bson:"iban"`
 	Number        string             `bson:"number"`
-	SWIFT         string             `bson:"swift"`
 	TraidingPlace string             `bson:"traiding_place"`
 	Type          string             `bson:"type"`
-	Author        User               `bson:"author" binding:"required"`
+	Author        string             `bson:"author" binding:"required"`
 	Client        Customer           `bson:"client" binding:"required"`
 	BankAccount   BankAccount        `bson:"bank_account"`
 	Status        InvoiceStatus      `bson:"status"`
@@ -41,15 +38,13 @@ type Invoice struct {
 }
 
 type NewInvoice struct {
-	Author        User
+	Author        string
 	Created       time.Time
 	BankAccount   BankAccount
 	Cancelled     bool
 	Client        Customer
 	CreatedAt     time.Time
 	Comment       string
-	Currency      string
-	IBAN          string
 	Date          time.Time
 	Number        string
 	PaidDate      time.Time
@@ -57,7 +52,6 @@ type NewInvoice struct {
 	SentDate      time.Time
 	Services      []Service
 	Status        InvoiceStatus
-	SWIFT         string
 	TradingDate   time.Time
 	TraidingPlace string
 	Type          string
@@ -73,8 +67,6 @@ func (newInvoice *NewInvoice) ToDomainInvoiceMapper() *Invoice {
 		Cancelled:     newInvoice.Cancelled,
 		Client:        newInvoice.Client,
 		Comment:       newInvoice.Comment,
-		Currency:      newInvoice.Currency,
-		IBAN:          newInvoice.IBAN,
 		Date:          newInvoice.Date,
 		Number:        newInvoice.Number,
 		PaidDate:      newInvoice.PaidDate,
@@ -82,7 +74,6 @@ func (newInvoice *NewInvoice) ToDomainInvoiceMapper() *Invoice {
 		SentDate:      newInvoice.SentDate,
 		Services:      newInvoice.Services,
 		Status:        newInvoice.Status,
-		SWIFT:         newInvoice.SWIFT,
 		TradingDate:   newInvoice.TradingDate,
 		TraidingPlace: newInvoice.TraidingPlace,
 		Type:          newInvoice.Type,

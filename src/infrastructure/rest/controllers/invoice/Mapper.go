@@ -6,7 +6,6 @@ import (
 	bankAccountController "pausalac/src/infrastructure/rest/controllers/bankaccount"
 	customerController "pausalac/src/infrastructure/rest/controllers/customer"
 	serviceController "pausalac/src/infrastructure/rest/controllers/service"
-	"pausalac/src/infrastructure/rest/controllers/user"
 	"strconv"
 	"time"
 )
@@ -30,8 +29,6 @@ func ToResponse(invoice *domain.Invoice) *domain.Invoice {
 		Client:        invoice.Client,
 		CreatedAt:     invoice.CreatedAt,
 		Comment:       invoice.Comment,
-		Currency:      invoice.Currency,
-		IBAN:          invoice.IBAN,
 		Date:          invoice.Date,
 		Number:        invoice.Number,
 		PaidDate:      invoice.PaidDate,
@@ -39,7 +36,6 @@ func ToResponse(invoice *domain.Invoice) *domain.Invoice {
 		SentDate:      invoice.SentDate,
 		Services:      invoice.Services,
 		Status:        invoice.Status,
-		SWIFT:         invoice.SWIFT,
 		TradingDate:   invoice.TradingDate,
 		TraidingPlace: invoice.TraidingPlace,
 		Type:          invoice.Type,
@@ -99,14 +95,12 @@ func ToDomain(r *CreateInvoiceRequest) *domain.NewInvoice {
 	}
 
 	return &domain.NewInvoice{
-		Author:        *r.Author.ToDomain().ToDomainMapper(),
+		Author:        r.Author,
 		Created:       created,
 		BankAccount:   *bankAccountController.ToDomain(&r.BankAccount).ToDomainBankAccountMapper(),
 		Cancelled:     canceled,
 		Client:        *customerController.ToDomain(&r.Client).ToDomainCustomerMapper(),
 		Comment:       r.Comment,
-		Currency:      r.Currency,
-		IBAN:          r.IBAN,
 		Date:          date,
 		Number:        r.Number,
 		PaidDate:      paidDate,
@@ -114,7 +108,6 @@ func ToDomain(r *CreateInvoiceRequest) *domain.NewInvoice {
 		SentDate:      sentDate,
 		Services:      serviceController.ToDomainArray(&r.Services).ToDomainServiceArrayMapper(),
 		Status:        domain.InvoiceStatus(r.Status),
-		SWIFT:         r.SWIFT,
 		TradingDate:   tradingDate,
 		TraidingPlace: r.TraidingPlace,
 		Type:          r.Type,
@@ -125,9 +118,6 @@ func ToDomain(r *CreateInvoiceRequest) *domain.NewInvoice {
 func ToDomainUpdate(r *UpdateInvoiceRequest) map[string]interface{} {
 
 	invoiceMap := make(map[string]interface{})
-	if r.Author != (user.UpdateUserRequest{}) {
-		invoiceMap["author"] = r.Author.ToDomainUpdate()
-	}
 	if r.BankAccount != (bankAccountController.UpdateBankAccountRequest{}) {
 		invoiceMap["bank_account"] = bankAccountController.ToDomainUpdate(&r.BankAccount)
 	}
@@ -139,12 +129,6 @@ func ToDomainUpdate(r *UpdateInvoiceRequest) map[string]interface{} {
 	}
 	if r.Comment != "" {
 		invoiceMap["comment"] = r.Comment
-	}
-	if r.Currency != "" {
-		invoiceMap["currency"] = r.Currency
-	}
-	if r.IBAN != "" {
-		invoiceMap["iban"] = r.IBAN
 	}
 	if r.Date != "" {
 		invoiceMap["date"] = r.Date
@@ -166,9 +150,6 @@ func ToDomainUpdate(r *UpdateInvoiceRequest) map[string]interface{} {
 	}
 	if r.Status != "" {
 		invoiceMap["status"] = r.Status
-	}
-	if r.SWIFT != "" {
-		invoiceMap["swift"] = r.SWIFT
 	}
 	if r.TradingDate != "" {
 		invoiceMap["trading_date"] = r.TradingDate

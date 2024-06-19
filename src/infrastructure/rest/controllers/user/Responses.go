@@ -7,7 +7,7 @@ type MessageResponse struct {
 
 // UserResponse defines the response payload for a user
 type UserResponse struct {
-	ID        string `json:"id"`
+	Id        string `json:"id"`
 	UserName  string `json:"username"`
 	Email     string `json:"email"`
 	FirstName string `json:"first_name"`

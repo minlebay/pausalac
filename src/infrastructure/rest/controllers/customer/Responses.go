@@ -2,7 +2,8 @@ package customer
 
 // CustomerResponse defines the response payload for a customer
 type CustomerResponse struct {
-	ID                 string `json:"id"`
+	Id                 string `json:"id"`
+	Author             string `json:"author"`
 	Name               string `json:"name"`
 	TaxNumber          string `json:"tax_number"`
 	RegistrationNumber string `json:"registration_number"`

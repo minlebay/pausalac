@@ -43,6 +43,8 @@ func AuthJWTMiddleware() gin.HandlerFunc {
 			return
 		}
 
+		c.Set("user_id", claims["id"])
+
 		c.Next()
 	}
 }

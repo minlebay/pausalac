@@ -7,7 +7,8 @@ import (
 )
 
 type User struct {
-	ID           primitive.ObjectID `bson:"_id,omitempty"`
+	Id           primitive.ObjectID `bson:"_id,omitempty"`
+	Author       string             `bson:"author" binding:"required"`
 	UserName     string             `bson:"username"`
 	Email        string             `bson:"email"`
 	FirstName    string             `bson:"first_name"`
@@ -21,6 +22,7 @@ type User struct {
 
 type NewUser struct {
 	UserName  string
+	Author    string
 	Email     string
 	FirstName string
 	LastName  string
@@ -31,7 +33,8 @@ type NewUser struct {
 
 func (newUser *NewUser) ToDomainMapper() *User {
 	return &User{
-		ID:           primitive.NewObjectID(),
+		Id:           primitive.NewObjectID(),
+		Author:       newUser.Author,
 		UserName:     newUser.UserName,
 		Email:        newUser.Email,
 		FirstName:    newUser.FirstName,

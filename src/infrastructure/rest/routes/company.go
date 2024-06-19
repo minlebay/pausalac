@@ -8,12 +8,12 @@ import (
 
 // CompanyRoutes defines the routes for the company entity
 func CompanyRoutes(router *gin.RouterGroup, controller *companyController.CompanyController) {
-	r := router.Group("/companies")
-	r.Use(middlewares.AuthJWTMiddleware())
+	company := router.Group("/companies")
+	company.Use(middlewares.AuthJWTMiddleware())
 
-	r.POST("/", controller.Create)
-	r.GET("/:id", controller.GetByID)
-	r.GET("/", controller.GetAll)
-	r.PUT("/:id", controller.Update)
-	r.DELETE("/:id", controller.Delete)
+	company.POST("/", controller.Create)
+	company.GET("/:id", controller.GetByID)
+	company.GET("/", controller.GetAll)
+	company.PUT("/:id", controller.Update)
+	company.DELETE("/:id", controller.Delete)
 }

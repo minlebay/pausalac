@@ -5,7 +5,7 @@ import "time"
 // BankAccountResponse defines the response payload for a bank account
 type BankAccountResponse struct {
 	Id            string    `json:"id"`
-	UserID        string    `json:"user_id"`
+	Author        string    `json:"author"`
 	AccountNumber string    `json:"account_number"`
 	BankName      string    `json:"bank_name"`
 	SwiftCode     string    `json:"swift_code"`

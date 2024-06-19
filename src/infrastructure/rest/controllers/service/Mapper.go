@@ -17,23 +17,16 @@ func ToResponseArray(services *[]domain.Service) []ServiceResponse {
 // ToResponse maps Service to ServiceResponse
 func ToResponse(service *domain.Service) ServiceResponse {
 	return ServiceResponse{
-		Id:       service.Id.Hex(),
-		UserId:   service.UserId,
-		Name:     service.Name,
-		Unit:     service.Unit,
-		Quantity: service.Quantity,
-		Price:    service.Price,
+		Id:     service.Id.Hex(),
+		Author: service.Author,
+		Name:   service.Name,
 	}
 }
 
 func ToDomain(req *CreateServiceRequest) *domain.NewService {
 	return &domain.NewService{
-		UserId:   req.UserId,
-		Name:     req.Name,
-		Unit:     req.Unit,
-		Price:    req.Price,
-		Quantity: req.Quantity,
-		Total:    req.Total,
+		Author: req.Author,
+		Name:   req.Name,
 	}
 }
 
@@ -65,17 +58,8 @@ func ToDomainUpdateArray(req *UpdateServiceArrayRequest) []map[string]interface{
 // ToMap maps UpdateServiceRequest to a map for updating the service
 func ToDomainUpdate(req *UpdateServiceRequest) map[string]interface{} {
 	serviceMap := make(map[string]interface{})
-	if req.UserId != "" {
-		serviceMap["user_id"] = req.UserId
-	}
 	if req.Name != "" {
 		serviceMap["name"] = req.Name
-	}
-	if req.Unit != "" {
-		serviceMap["unit"] = req.Unit
-	}
-	if req.Price != 0 {
-		serviceMap["price"] = req.Price
 	}
 	serviceMap["updated_at"] = time.Now()
 	return serviceMap

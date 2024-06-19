@@ -27,6 +27,13 @@ func (ctrl *CompanyController) GetAll(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+	if companies == nil {
+		for _, company := range *companies {
+			if company.BankAccounts == nil {
+				company.BankAccounts = []domain.BankAccount{}
+			}
+		}
+	}
 	c.JSON(http.StatusOK, ToResponseArray(companies))
 }
 
@@ -46,6 +53,9 @@ func (ctrl *CompanyController) GetByID(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
+	}
+	if company.BankAccounts == nil {
+		company.BankAccounts = []domain.BankAccount{}
 	}
 	c.JSON(http.StatusOK, ToResponse(company))
 }
@@ -71,6 +81,13 @@ func (ctrl *CompanyController) Create(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	author, exists := c.Get("user_id")
+	if !exists {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "User not found"})
+		return
+	}
+	req.Author = author.(string)
+
 	company, err := ctrl.Service.Create(context.Background(), ToDomain(&req))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

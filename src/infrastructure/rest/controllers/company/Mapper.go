@@ -2,41 +2,44 @@ package company
 
 import (
 	"pausalac/src/domain"
+	"pausalac/src/infrastructure/rest/controllers/bankaccount"
 	"time"
 )
 
 // ToResponse maps Company to CompanyResponse
 func ToResponse(company *domain.Company) *CompanyResponse {
+
+	var bankAccounts []bankaccount.BankAccountResponse
+	for _, bankAccount := range company.BankAccounts {
+		bankAccountResponse := bankaccount.ToResponse(&bankAccount)
+		bankAccounts = append(bankAccounts, bankAccountResponse)
+	}
+
 	return &CompanyResponse{
-		ID:                           company.ID.Hex(),
-		UserID:                       company.UserID,
-		AgencyID:                     company.AgencyID,
+		Id:                           company.Id.Hex(),
+		Author:                       company.Author,
+		AgencyId:                     company.AgencyId,
 		Name:                         company.Name,
 		FullName:                     company.FullName,
 		PIB:                          company.PIB,
 		IdentificationNumber:         company.IdentificationNumber,
-		FirstAccountNumber:           company.FirstAccountNumber,
-		SecondAccountNumber:          company.SecondAccountNumber,
 		ForeignExchangeAccountNumber: company.ForeignExchangeAccountNumber,
 		CallNumber:                   company.CallNumber,
 		DateOfRegistration:           company.DateOfRegistration,
 		City:                         company.City,
-		ActivityCodeID:               company.ActivityCodeID,
-		MunicipalityID:               company.MunicipalityID,
-		EmployedByOtherFirm:          company.EmployedByOtherFirm,
-		EmploymentChanged:            company.EmploymentChanged,
+		ActivityCodeId:               company.ActivityCodeId,
+		MunicipalityId:               company.MunicipalityId,
 		Logo:                         company.Logo,
 		StreetAddress:                company.StreetAddress,
 		StreetNumber:                 company.StreetNumber,
 		Phone:                        company.Phone,
 		AgencyEmail:                  company.AgencyEmail,
-		SWIFT:                        company.SWIFT,
-		IBAN:                         company.IBAN,
 		Signature:                    company.Signature,
 		EmploymentType:               company.EmploymentType,
 		InvoiceDescription:           company.InvoiceDescription,
 		CreatedAt:                    company.CreatedAt,
 		UpdatedAt:                    company.UpdatedAt,
+		BankAccounts:                 bankAccounts,
 	}
 }
 
@@ -51,33 +54,35 @@ func ToResponseArray(companies *[]domain.Company) []CompanyResponse {
 
 // ToDomain converts CreateCompanyRequest to domain Company
 func ToDomain(req *CreateCompanyRequest) *domain.NewCompany {
+
+	var bankAccounts []domain.NewBankAccount
+	for _, bankAccount := range req.BankAccounts {
+		bankAccountDomain := bankaccount.ToDomain(&bankAccount)
+		bankAccounts = append(bankAccounts, *bankAccountDomain)
+	}
+
 	return &domain.NewCompany{
-		UserID:                       req.UserID,
-		AgencyID:                     req.AgencyID,
+		Author:                       req.Author,
+		AgencyId:                     req.AgencyId,
 		Name:                         req.Name,
 		FullName:                     req.FullName,
 		PIB:                          req.PIB,
 		IdentificationNumber:         req.IdentificationNumber,
-		FirstAccountNumber:           req.FirstAccountNumber,
-		SecondAccountNumber:          req.SecondAccountNumber,
 		ForeignExchangeAccountNumber: req.ForeignExchangeAccountNumber,
 		CallNumber:                   req.CallNumber,
 		DateOfRegistration:           req.DateOfRegistration,
 		City:                         req.City,
-		ActivityCodeID:               req.ActivityCodeID,
-		MunicipalityID:               req.MunicipalityID,
-		EmployedByOtherFirm:          req.EmployedByOtherFirm,
-		EmploymentChanged:            req.EmploymentChanged,
+		ActivityCodeId:               req.ActivityCodeId,
+		MunicipalityId:               req.MunicipalityId,
 		Logo:                         req.Logo,
 		StreetAddress:                req.StreetAddress,
 		StreetNumber:                 req.StreetNumber,
 		Phone:                        req.Phone,
 		AgencyEmail:                  req.AgencyEmail,
-		SWIFT:                        req.SWIFT,
-		IBAN:                         req.IBAN,
 		Signature:                    req.Signature,
 		EmploymentType:               req.EmploymentType,
 		InvoiceDescription:           req.InvoiceDescription,
+		BankAccounts:                 bankAccounts,
 	}
 }
 
@@ -99,12 +104,6 @@ func ToDomainUpdate(req *UpdateCompanyRequest) map[string]interface{} {
 	if req.FirstAccountNumber != "" {
 		companyMap["first_account_number"] = req.FirstAccountNumber
 	}
-	if req.SecondAccountNumber != "" {
-		companyMap["second_account_number"] = req.SecondAccountNumber
-	}
-	if req.ForeignExchangeAccountNumber != "" {
-		companyMap["foreign_exchange_account_number"] = req.ForeignExchangeAccountNumber
-	}
 	if req.CallNumber != "" {
 		companyMap["call_number"] = req.CallNumber
 	}
@@ -114,17 +113,11 @@ func ToDomainUpdate(req *UpdateCompanyRequest) map[string]interface{} {
 	if req.City != "" {
 		companyMap["city"] = req.City
 	}
-	if req.ActivityCodeID != "" {
-		companyMap["activity_code_id"] = req.ActivityCodeID
+	if req.ActivityCodeId != "" {
+		companyMap["activity_code_id"] = req.ActivityCodeId
 	}
-	if req.MunicipalityID != "" {
-		companyMap["municipality_id"] = req.MunicipalityID
-	}
-	if req.EmployedByOtherFirm != "" {
-		companyMap["employed_by_other_firm"] = req.EmployedByOtherFirm
-	}
-	if req.EmploymentChanged != "" {
-		companyMap["employment_changed"] = req.EmploymentChanged
+	if req.MunicipalityId != "" {
+		companyMap["municipality_id"] = req.MunicipalityId
 	}
 	if req.Logo != "" {
 		companyMap["logo"] = req.Logo
@@ -140,12 +133,6 @@ func ToDomainUpdate(req *UpdateCompanyRequest) map[string]interface{} {
 	}
 	if req.AgencyEmail != "" {
 		companyMap["agency_email"] = req.AgencyEmail
-	}
-	if req.SWIFT != "" {
-		companyMap["swift"] = req.SWIFT
-	}
-	if req.IBAN != "" {
-		companyMap["iban"] = req.IBAN
 	}
 	if req.Signature != "" {
 		companyMap["signature"] = req.Signature

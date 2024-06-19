@@ -71,11 +71,19 @@ func (ctrl *BankAccountController) Create(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	author, exists := c.Get("user_id")
+	if !exists {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "User not found"})
+		return
+	}
+	req.Author = author.(string)
+
 	bankAccount, err := ctrl.Service.Create(context.Background(), ToDomain(&req))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
 	c.JSON(http.StatusCreated, ToResponse(bankAccount))
 }
 

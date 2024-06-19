@@ -1470,6 +1470,9 @@ const docTemplate = `{
                 "account_number": {
                     "type": "string"
                 },
+                "author": {
+                    "type": "string"
+                },
                 "bank_name": {
                     "type": "string"
                 },
@@ -1490,9 +1493,6 @@ const docTemplate = `{
                 },
                 "updated_at": {
                     "type": "string"
-                },
-                "user_id": {
-                    "type": "string"
                 }
             }
         },
@@ -1503,8 +1503,7 @@ const docTemplate = `{
                 "bank_name",
                 "currency",
                 "iban",
-                "swift_code",
-                "user_id"
+                "swift_code"
             ],
             "properties": {
                 "account_number": {
@@ -1520,9 +1519,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "swift_code": {
-                    "type": "string"
-                },
-                "user_id": {
                     "type": "string"
                 }
             }
@@ -1552,9 +1548,6 @@ const docTemplate = `{
                 },
                 "swift_code": {
                     "type": "string"
-                },
-                "user_id": {
-                    "type": "string"
                 }
             }
         },
@@ -1569,6 +1562,12 @@ const docTemplate = `{
                 },
                 "agency_id": {
                     "type": "string"
+                },
+                "bank_accounts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/bankaccount.BankAccountResponse"
+                    }
                 },
                 "call_number": {
                     "type": "string"
@@ -1653,8 +1652,7 @@ const docTemplate = `{
         "company.CreateCompanyRequest": {
             "type": "object",
             "required": [
-                "name",
-                "user_id"
+                "name"
             ],
             "properties": {
                 "activity_code_id": {
@@ -1666,6 +1664,12 @@ const docTemplate = `{
                 "agency_id": {
                     "type": "string"
                 },
+                "bank_accounts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/bankaccount.CreateBankAccountRequest"
+                    }
+                },
                 "call_number": {
                     "type": "string"
                 },
@@ -1675,25 +1679,13 @@ const docTemplate = `{
                 "date_of_registration": {
                     "type": "string"
                 },
-                "employed_by_other_firm": {
-                    "type": "string"
-                },
-                "employment_changed": {
-                    "type": "string"
-                },
                 "employment_type": {
-                    "type": "string"
-                },
-                "first_account_number": {
                     "type": "string"
                 },
                 "foreign_exchange_account_number": {
                     "type": "string"
                 },
                 "full_name": {
-                    "type": "string"
-                },
-                "iban": {
                     "type": "string"
                 },
                 "identification_number": {
@@ -1717,9 +1709,6 @@ const docTemplate = `{
                 "pib": {
                     "type": "string"
                 },
-                "second_account_number": {
-                    "type": "string"
-                },
                 "signature": {
                     "type": "string"
                 },
@@ -1727,12 +1716,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "street_number": {
-                    "type": "string"
-                },
-                "swift": {
-                    "type": "string"
-                },
-                "user_id": {
                     "type": "string"
                 }
             }
@@ -1757,6 +1740,15 @@ const docTemplate = `{
                 "agency_id": {
                     "type": "string"
                 },
+                "author": {
+                    "type": "string"
+                },
+                "bank_accounts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/bankaccount.UpdateBankAccountRequest"
+                    }
+                },
                 "call_number": {
                     "type": "string"
                 },
@@ -1766,25 +1758,13 @@ const docTemplate = `{
                 "date_of_registration": {
                     "type": "string"
                 },
-                "employed_by_other_firm": {
-                    "type": "string"
-                },
-                "employment_changed": {
-                    "type": "string"
-                },
                 "employment_type": {
                     "type": "string"
                 },
                 "first_account_number": {
                     "type": "string"
                 },
-                "foreign_exchange_account_number": {
-                    "type": "string"
-                },
                 "full_name": {
-                    "type": "string"
-                },
-                "iban": {
                     "type": "string"
                 },
                 "identification_number": {
@@ -1808,9 +1788,6 @@ const docTemplate = `{
                 "pib": {
                     "type": "string"
                 },
-                "second_account_number": {
-                    "type": "string"
-                },
                 "signature": {
                     "type": "string"
                 },
@@ -1818,12 +1795,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "street_number": {
-                    "type": "string"
-                },
-                "swift": {
-                    "type": "string"
-                },
-                "user_id": {
                     "type": "string"
                 }
             }
@@ -1887,6 +1858,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "address": {
+                    "type": "string"
+                },
+                "author": {
                     "type": "string"
                 },
                 "city": {
@@ -1964,52 +1938,13 @@ const docTemplate = `{
                 }
             }
         },
-        "domain.User": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "firstName": {
-                    "type": "string"
-                },
-                "hashPassword": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "lastName": {
-                    "type": "string"
-                },
-                "role": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "boolean"
-                },
-                "updatedAt": {
-                    "type": "string"
-                },
-                "userName": {
-                    "type": "string"
-                }
-            }
-        },
         "invoice.CreateInvoiceRequest": {
             "type": "object",
             "required": [
-                "author",
                 "client",
                 "created"
             ],
             "properties": {
-                "author": {
-                    "$ref": "#/definitions/user.CreateUserRequest"
-                },
                 "bank_account": {
                     "$ref": "#/definitions/bankaccount.CreateBankAccountRequest"
                 },
@@ -2029,9 +1964,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "date": {
-                    "type": "string"
-                },
-                "iban": {
                     "type": "string"
                 },
                 "number": {
@@ -2055,9 +1987,6 @@ const docTemplate = `{
                 "status": {
                     "type": "string"
                 },
-                "swift": {
-                    "type": "string"
-                },
                 "trading_date": {
                     "type": "string"
                 },
@@ -2076,7 +2005,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "author": {
-                    "$ref": "#/definitions/domain.User"
+                    "type": "string"
                 },
                 "bank_account": {
                     "type": "string"
@@ -2157,14 +2086,10 @@ const docTemplate = `{
         "invoice.UpdateInvoiceRequest": {
             "type": "object",
             "required": [
-                "author",
                 "client",
                 "created"
             ],
             "properties": {
-                "author": {
-                    "$ref": "#/definitions/user.UpdateUserRequest"
-                },
                 "bank_account": {
                     "$ref": "#/definitions/bankaccount.UpdateBankAccountRequest"
                 },
@@ -2184,9 +2109,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "date": {
-                    "type": "string"
-                },
-                "iban": {
                     "type": "string"
                 },
                 "number": {
@@ -2210,9 +2132,6 @@ const docTemplate = `{
                 "status": {
                     "type": "string"
                 },
-                "swift": {
-                    "type": "string"
-                },
                 "trading_date": {
                     "type": "string"
                 },
@@ -2230,30 +2149,10 @@ const docTemplate = `{
         "service.CreateServiceRequest": {
             "type": "object",
             "required": [
-                "name",
-                "price",
-                "quantity",
-                "total",
-                "unit",
-                "user_id"
+                "name"
             ],
             "properties": {
                 "name": {
-                    "type": "string"
-                },
-                "price": {
-                    "type": "integer"
-                },
-                "quantity": {
-                    "type": "integer"
-                },
-                "total": {
-                    "type": "integer"
-                },
-                "unit": {
-                    "type": "string"
-                },
-                "user_id": {
                     "type": "string"
                 }
             }
@@ -2269,14 +2168,13 @@ const docTemplate = `{
         "service.ServiceResponse": {
             "type": "object",
             "required": [
-                "name",
-                "price",
-                "quantity",
-                "total",
-                "unit",
-                "user_id"
+                "author",
+                "name"
             ],
             "properties": {
+                "author": {
+                    "type": "string"
+                },
                 "created_at": {
                     "type": "string"
                 },
@@ -2286,22 +2184,7 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
-                "price": {
-                    "type": "integer"
-                },
-                "quantity": {
-                    "type": "integer"
-                },
-                "total": {
-                    "type": "integer"
-                },
-                "unit": {
-                    "type": "string"
-                },
                 "updated_at": {
-                    "type": "string"
-                },
-                "user_id": {
                     "type": "string"
                 }
             }
@@ -2309,30 +2192,10 @@ const docTemplate = `{
         "service.UpdateServiceRequest": {
             "type": "object",
             "required": [
-                "name",
-                "price",
-                "quantity",
-                "total",
-                "unit",
-                "user_id"
+                "name"
             ],
             "properties": {
                 "name": {
-                    "type": "string"
-                },
-                "price": {
-                    "type": "integer"
-                },
-                "quantity": {
-                    "type": "integer"
-                },
-                "total": {
-                    "type": "integer"
-                },
-                "unit": {
-                    "type": "string"
-                },
-                "user_id": {
                     "type": "string"
                 }
             }

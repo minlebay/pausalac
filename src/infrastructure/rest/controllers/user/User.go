@@ -69,7 +69,14 @@ func (ctrl *UserController) CreateAdmin(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	userDomain := req.ToDomain()
+	author, exists := c.Get("user_id")
+	if !exists {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Admin user already exists"})
+		return
+	}
+	req.Author = author.(string)
+
+	userDomain := ToDomain(&req)
 	user, err := ctrl.Service.CreateAdmin(context.Background(), userDomain)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -99,7 +106,14 @@ func (ctrl *UserController) Create(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	userDomain := req.ToDomain()
+	author, exists := c.Get("user_id")
+	if !exists {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Admin user already exists"})
+		return
+	}
+	req.Author = author.(string)
+
+	userDomain := ToDomain(&req)
 	user, err := ctrl.Service.Create(context.Background(), userDomain)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -131,7 +145,7 @@ func (ctrl *UserController) Update(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	userMap := req.ToDomainUpdate()
+	userMap := ToDomainUpdate(&req)
 	user, err := ctrl.Service.Update(context.Background(), id, userMap)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

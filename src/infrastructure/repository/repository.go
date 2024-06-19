@@ -64,6 +64,7 @@ func (r *DefaultRepository[T]) Update(ctx context.Context, id string, entityMap 
 	if err != nil {
 		return nil, domain.NewAppErrorWithType(domain.UnknownError)
 	}
+	entityMap["user_id"] = ctx.Value("user_id")
 	entityMap["updated_at"] = primitive.NewDateTimeFromTime(time.Now())
 	update := bson.M{"$set": entityMap}
 	opts := options.FindOneAndUpdate().SetReturnDocument(options.After)

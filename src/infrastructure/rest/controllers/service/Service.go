@@ -71,6 +71,14 @@ func (ctrl *ServiceController) Create(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	author, exists := c.Get("user_id")
+	if !exists {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Author not found"})
+		return
+	}
+	req.Author = author.(string)
+
 	service, err := ctrl.Service.Create(context.Background(), ToDomain(&req))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -103,6 +111,7 @@ func (ctrl *ServiceController) Update(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
 	service, err := ctrl.Service.Update(context.Background(), id, ToDomainUpdate(&req))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

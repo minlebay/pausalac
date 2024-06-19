@@ -7,9 +7,9 @@ type DateRangeFilter struct {
 }
 
 type Types interface {
-	Company | Customer | Service | BankAccount | Invoice
+	User | Company | Customer | Service | BankAccount | Invoice
 }
 
 type NewTypes interface {
-	NewCompany | NewCustomer | NewService | NewBankAccount | NewInvoice
+	NewUser | NewCompany | NewCustomer | NewService | NewBankAccount | NewInvoice
 }

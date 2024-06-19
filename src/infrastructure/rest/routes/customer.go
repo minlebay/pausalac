@@ -7,12 +7,12 @@ import (
 )
 
 func CustomerRoutes(router *gin.RouterGroup, controller *customerController.CustomerController) {
-	r := router.Group("/customers")
-	r.Use(middlewares.AuthJWTMiddleware())
+	customers := router.Group("/customers")
+	customers.Use(middlewares.AuthJWTMiddleware())
 
-	r.POST("/", controller.Create)
-	r.GET("/:id", controller.GetByID)
-	r.GET("/", controller.GetAll)
-	r.PUT("/:id", controller.Update)
-	r.DELETE("/:id", controller.Delete)
+	customers.POST("/", controller.Create)
+	customers.GET("/:id", controller.GetByID)
+	customers.GET("/", controller.GetAll)
+	customers.PUT("/:id", controller.Update)
+	customers.DELETE("/:id", controller.Delete)
 }

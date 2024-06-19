@@ -9,7 +9,7 @@ import (
 func ToResponse(bankAccount *domain.BankAccount) BankAccountResponse {
 	return BankAccountResponse{
 		Id:            bankAccount.Id.Hex(),
-		UserID:        bankAccount.UserID,
+		Author:        bankAccount.Author,
 		AccountNumber: bankAccount.AccountNumber,
 		BankName:      bankAccount.BankName,
 		SwiftCode:     bankAccount.SwiftCode,
@@ -31,7 +31,7 @@ func ToResponseArray(bankAccounts *[]domain.BankAccount) []BankAccountResponse {
 
 func ToDomain(req *CreateBankAccountRequest) *domain.NewBankAccount {
 	return &domain.NewBankAccount{
-		UserID:        req.UserID,
+		Author:        req.Author,
 		AccountNumber: req.AccountNumber,
 		BankName:      req.BankName,
 		SwiftCode:     req.SwiftCode,
@@ -42,9 +42,6 @@ func ToDomain(req *CreateBankAccountRequest) *domain.NewBankAccount {
 
 func ToDomainUpdate(req *UpdateBankAccountRequest) map[string]interface{} {
 	bankAccountMap := make(map[string]interface{})
-	if req.UserID != "" {
-		bankAccountMap["user_id"] = req.UserID
-	}
 	if req.AccountNumber != "" {
 		bankAccountMap["account_number"] = req.AccountNumber
 	}

@@ -8,12 +8,8 @@ import (
 
 type Service struct {
 	Id        primitive.ObjectID `bson:"_id,omitempty"`
-	UserId    string             `bson:"user_id" binding:"required"`
+	Author    string             `bson:"author" binding:"required"`
 	Name      string             `bson:"name" binding:"required"`
-	Unit      string             `bson:"unit" binding:"required"`
-	Price     int64              `bson:"price" binding:"required"`
-	Quantity  int64              `bson:"quantity" binding:"required"`
-	Total     int64              `bson:"total" binding:"required"`
 	Create_at primitive.DateTime `bson:"create_at"`
 	Update_at primitive.DateTime `bson:"update_at"`
 }
@@ -21,12 +17,8 @@ type Service struct {
 type ServiceArray []Service
 
 type NewService struct {
-	UserId   string
-	Name     string
-	Unit     string
-	Price    int64
-	Quantity int64
-	Total    int64
+	Author string
+	Name   string
 }
 
 type NewServiceArray []NewService
@@ -44,10 +36,6 @@ func (newService *NewService) ToDomainServiceMapper() *Service {
 	return &Service{
 		Id:        primitive.NewObjectID(),
 		Name:      newService.Name,
-		Unit:      newService.Unit,
-		Price:     newService.Price,
-		Quantity:  newService.Quantity,
-		Total:     newService.Total,
 		Create_at: primitive.NewDateTimeFromTime(time.Now()),
 		Update_at: primitive.NewDateTimeFromTime(time.Now()),
 	}
