@@ -58,6 +58,15 @@ func (r *UserRepository) GetOneByMap(ctx context.Context, userMap map[string]int
 	var user domain.User
 	filter := bson.M{}
 	for key, value := range userMap {
+		if key == "id" {
+			objId, err := primitive.ObjectIDFromHex(value.(string))
+			if err != nil {
+				return nil, domain.NewAppErrorWithType(domain.UnknownError)
+			}
+			filter["_id"] = objId
+			continue
+		}
+
 		filter[key] = value
 	}
 	err := r.Collection.FindOne(ctx, filter).Decode(&user)
