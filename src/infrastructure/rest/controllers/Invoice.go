@@ -181,11 +181,8 @@ func toDomainInvoice(swaggerInvoice domain.SwaggerInvoice) *domain.Invoice {
 	paidDate, _ := time.Parse(time.RFC3339, swaggerInvoice.PaidDate)
 	sentDate, _ := time.Parse(time.RFC3339, swaggerInvoice.SentDate)
 	tradingDate, _ := time.Parse(time.RFC3339, swaggerInvoice.TradingDate)
-	createdAt, _ := time.Parse(time.RFC3339, swaggerInvoice.CreatedAt)
-	updatedAt, _ := time.Parse(time.RFC3339, swaggerInvoice.UpdatedAt)
 
 	return &domain.Invoice{
-		Id:            primitive.NewObjectID(),
 		Comment:       swaggerInvoice.Comment,
 		Number:        swaggerInvoice.Number,
 		TraidingPlace: swaggerInvoice.TraidingPlace,
@@ -201,7 +198,5 @@ func toDomainInvoice(swaggerInvoice domain.SwaggerInvoice) *domain.Invoice {
 		PaidDate:      primitive.NewDateTimeFromTime(paidDate),
 		SentDate:      primitive.NewDateTimeFromTime(sentDate),
 		TradingDate:   primitive.NewDateTimeFromTime(tradingDate),
-		CreatedAt:     primitive.NewDateTimeFromTime(createdAt),
-		UpdatedAt:     primitive.NewDateTimeFromTime(updatedAt),
 	}
 }
