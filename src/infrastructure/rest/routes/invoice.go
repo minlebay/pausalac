@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	invoiceController "pausalac/src/infrastructure/rest/controllers/invoice"
+	invoiceController "pausalac/src/infrastructure/rest/controllers"
 	"pausalac/src/infrastructure/rest/middlewares"
 )
 
@@ -13,7 +13,7 @@ func InvoiceRoutes(router *gin.RouterGroup, controller *invoiceController.Invoic
 
 	{
 		invoices.GET("/", controller.GetAll)
-		invoices.GET("/:id", controller.GetByID)
+		invoices.GET("/:id", controller.GetById)
 		invoices.POST("/", controller.Create)
 		invoices.PUT("/:id", controller.Update)
 		invoices.DELETE("/:id", controller.Delete)

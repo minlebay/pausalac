@@ -3,7 +3,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	userController "pausalac/src/infrastructure/rest/controllers/user"
+	userController "pausalac/src/infrastructure/rest/controllers"
 	"pausalac/src/infrastructure/rest/middlewares"
 )
 
@@ -15,7 +15,7 @@ func UserRoutes(router *gin.RouterGroup, controller *userController.UserControll
 	routerUser.Use(middlewares.AuthJWTMiddleware())
 	{
 		routerUser.POST("/", controller.Create)
-		routerUser.GET("/:id", controller.GetByID)
+		routerUser.GET("/:id", controller.GetById)
 		routerUser.GET("/", controller.GetAll)
 		routerUser.PUT("/:id", controller.Update)
 		routerUser.DELETE("/:id", controller.Delete)

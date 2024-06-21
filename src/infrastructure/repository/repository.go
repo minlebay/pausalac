@@ -8,15 +8,14 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"pausalac/src/domain"
-	"time"
 )
 
 type DefaultRepository[T domain.Types] struct {
 	Collection *mongo.Collection
 }
 
-func (r *DefaultRepository[T]) GetAll(ctx context.Context) (*[]T, error) {
-	var entities []T
+func (r *DefaultRepository[T]) GetAll(ctx context.Context) ([]*T, error) {
+	var entities []*T
 	cursor, err := r.Collection.Find(ctx, bson.M{})
 	if err != nil {
 		return nil, domain.NewAppErrorWithType(domain.UnknownError)
@@ -24,7 +23,7 @@ func (r *DefaultRepository[T]) GetAll(ctx context.Context) (*[]T, error) {
 	if err := cursor.All(ctx, &entities); err != nil {
 		return nil, domain.NewAppErrorWithType(domain.UnknownError)
 	}
-	return &entities, nil
+	return entities, nil
 }
 
 func (r *DefaultRepository[T]) Create(ctx context.Context, entity *T) (*T, error) {
@@ -43,7 +42,7 @@ func (r *DefaultRepository[T]) Create(ctx context.Context, entity *T) (*T, error
 	return entity, nil
 }
 
-func (r *DefaultRepository[T]) GetByID(ctx context.Context, id string) (*T, error) {
+func (r *DefaultRepository[T]) GetById(ctx context.Context, id string) (*T, error) {
 	objId, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, domain.NewAppErrorWithType(domain.UnknownError)
@@ -59,24 +58,27 @@ func (r *DefaultRepository[T]) GetByID(ctx context.Context, id string) (*T, erro
 	return &entity, nil
 }
 
-func (r *DefaultRepository[T]) Update(ctx context.Context, id string, entityMap map[string]interface{}) (*T, error) {
+func (r *DefaultRepository[T]) Update(ctx context.Context, id string, entity *T) (*T, error) {
 	objId, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, domain.NewAppErrorWithType(domain.UnknownError)
 	}
-	entityMap["user_id"] = ctx.Value("user_id")
-	entityMap["updated_at"] = primitive.NewDateTimeFromTime(time.Now())
-	update := bson.M{"$set": entityMap}
+
+	update := bson.M{"$set": entity}
 	opts := options.FindOneAndUpdate().SetReturnDocument(options.After)
-	var entity T
-	err = r.Collection.FindOneAndUpdate(ctx, bson.M{"_id": objId}, update, opts).Decode(&entity)
-	if err != nil {
-		if err == mongo.ErrNoDocuments {
+	result := r.Collection.FindOneAndUpdate(ctx, bson.M{"_id": objId}, update, opts)
+	if err = result.Err(); err != nil {
+		if errors.Is(err, mongo.ErrNoDocuments) {
 			return nil, domain.NewAppErrorWithType(domain.NotFound)
 		}
 		return nil, domain.NewAppErrorWithType(domain.UnknownError)
 	}
-	return &entity, nil
+
+	err = result.Decode(&entity)
+	if err != nil {
+		return nil, domain.NewAppErrorWithType(domain.UnknownError)
+	}
+	return entity, nil
 }
 
 func (r *DefaultRepository[T]) Delete(ctx context.Context, id string) error {

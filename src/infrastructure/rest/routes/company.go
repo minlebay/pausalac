@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	companyController "pausalac/src/infrastructure/rest/controllers/company"
+	companyController "pausalac/src/infrastructure/rest/controllers"
 	"pausalac/src/infrastructure/rest/middlewares"
 )
 
@@ -12,7 +12,7 @@ func CompanyRoutes(router *gin.RouterGroup, controller *companyController.Compan
 	company.Use(middlewares.AuthJWTMiddleware())
 
 	company.POST("/", controller.Create)
-	company.GET("/:id", controller.GetByID)
+	company.GET("/:id", controller.GetById)
 	company.GET("/", controller.GetAll)
 	company.PUT("/:id", controller.Update)
 	company.DELETE("/:id", controller.Delete)

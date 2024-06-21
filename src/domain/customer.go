@@ -3,7 +3,6 @@ package domain
 import (
 	"context"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"time"
 )
 
 type CustomerType string
@@ -15,59 +14,26 @@ const (
 )
 
 type Customer struct {
-	Id                 primitive.ObjectID `bson:"_id,omitempty"`
-	Author             string             `bson:"author" binding:"required"`
-	Name               string             `bson:"name" binding:"required"`
-	TaxNumber          string             `bson:"tax_number" binding:"required"`
-	RegistrationNumber string             `bson:"registration_number" binding:"required"`
-	PhoneNumber        string             `bson:"phone_number"`
-	Email              string             `bson:"email"`
-	Address            string             `bson:"address"`
-	City               string             `bson:"city"`
-	Country            string             `bson:"country"`
-	Currency           string             `bson:"currency"`
-	CustomerType       CustomerType       `bson:"type" binding:"required"` // internal, foreign, inactive
-	CreatedAt          time.Time          `bson:"created_at"`
-	UpdatedAt          time.Time          `bson:"updated_at"`
-}
-
-type NewCustomer struct {
-	Name               string
-	Author             string
-	TaxNumber          string
-	RegistrationNumber string
-	PhoneNumber        string
-	Email              string
-	Address            string
-	City               string
-	Country            string
-	Currency           string
-	CustomerType       CustomerType
-}
-
-func (newCustomer *NewCustomer) ToDomainCustomerMapper() *Customer {
-	return &Customer{
-		Id:                 primitive.NewObjectID(),
-		Author:             newCustomer.Author,
-		Name:               newCustomer.Name,
-		TaxNumber:          newCustomer.TaxNumber,
-		RegistrationNumber: newCustomer.RegistrationNumber,
-		PhoneNumber:        newCustomer.PhoneNumber,
-		Email:              newCustomer.Email,
-		Address:            newCustomer.Address,
-		City:               newCustomer.City,
-		Country:            newCustomer.Country,
-		Currency:           newCustomer.Currency,
-		CustomerType:       newCustomer.CustomerType,
-		CreatedAt:          time.Now(),
-		UpdatedAt:          time.Now(),
-	}
+	Id                 primitive.ObjectID `bson:"_id,omitempty" json:"id"`
+	Author             string             `bson:"author" binding:"required" json:"author"`
+	Name               string             `bson:"name" binding:"required" json:"name"`
+	TaxNumber          string             `bson:"tax_number" binding:"required" json:"tax_number"`
+	RegistrationNumber string             `bson:"registration_number" binding:"required" json:"registration_number"`
+	PhoneNumber        string             `bson:"phone_number" json:"phone_number"`
+	Email              string             `bson:"email" json:"email"`
+	Address            string             `bson:"address" json:"address"`
+	City               string             `bson:"city" json:"city"`
+	Country            string             `bson:"country" json:"country"`
+	Currency           string             `bson:"currency" json:"currency"`
+	CustomerType       CustomerType       `bson:"type" binding:"required" json:"customer_type"`
+	CreatedAt          primitive.DateTime `bson:"created_at" json:"-"`
+	UpdatedAt          primitive.DateTime `bson:"updated_at" json:"-"`
 }
 
 type CustomerService interface {
-	GetAll(context.Context) (*[]Customer, error)
-	GetByID(ctx context.Context, id string) (*Customer, error)
-	Create(ctx context.Context, newCustomer *NewCustomer) (*Customer, error)
-	Update(ctx context.Context, id string, customerMap map[string]interface{}) (*Customer, error)
+	GetAll(context.Context) ([]*Customer, error)
+	GetById(ctx context.Context, id string) (*Customer, error)
+	Create(ctx context.Context, newCustomer *Customer) (*Customer, error)
+	Update(ctx context.Context, id string, customer *Customer) (*Customer, error)
 	Delete(ctx context.Context, id string) error
 }

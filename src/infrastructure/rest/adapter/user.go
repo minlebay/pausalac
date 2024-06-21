@@ -3,14 +3,17 @@ package adapter
 
 import (
 	"go.mongodb.org/mongo-driver/mongo"
-	userService "pausalac/src/application/usecases"
-	userRepository "pausalac/src/infrastructure/repository"
-	userController "pausalac/src/infrastructure/rest/controllers/user"
+	service "pausalac/src/application/usecases"
+	"pausalac/src/domain"
+	repo "pausalac/src/infrastructure/repository"
+	controller "pausalac/src/infrastructure/rest/controllers"
 )
 
 // UserAdapter is a function that returns a user controller
-func UserAdapter(db *mongo.Database) *userController.UserController {
-	uRepository := userRepository.UserRepository{Collection: db.Collection("users")}
-	service := userService.UserService{Repo: &uRepository}
-	return &userController.UserController{Service: &service}
+func UserAdapter(db *mongo.Database) *controller.UserController {
+	repository := repo.DefaultRepository[domain.User]{Collection: db.Collection("users")}
+	service := service.UserService{
+		EntityService: service.EntityService[domain.User]{Repo: &repository},
+	}
+	return &controller.UserController{Service: &service}
 }

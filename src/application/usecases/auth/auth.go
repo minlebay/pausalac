@@ -4,7 +4,7 @@ package auth
 import (
 	"context"
 	"errors"
-	userRepository "pausalac/src/infrastructure/repository"
+	service "pausalac/src/application/usecases"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -23,13 +23,12 @@ type Auth struct {
 
 // Service is a struct that contains the repository implementation for auth use case
 type AuthService struct {
-	UserRepository userRepository.UserRepository
+	UserService service.UserService
 }
 
 // Login implements the login use case
 func (s *AuthService) Login(ctx context.Context, user LoginUser) (*SecurityAuthenticatedUser, error) {
-	userMap := map[string]any{"email": user.Email}
-	domainUser, err := s.UserRepository.GetOneByMap(ctx, userMap)
+	domainUser, err := s.UserService.GetByEmail(ctx, user.Email)
 	if err != nil {
 		return &SecurityAuthenticatedUser{}, err
 	}
@@ -67,8 +66,8 @@ func (s *AuthService) AccessTokenByRefreshToken(ctx context.Context, refreshToke
 		return nil, err
 	}
 
-	userMap := map[string]any{"id": claimsMap["id"]}
-	domainUser, err := s.UserRepository.GetOneByMap(ctx, userMap)
+	id := claimsMap["id"].(string)
+	domainUser, err := s.UserService.GetById(ctx, id)
 	if err != nil {
 		return nil, err
 

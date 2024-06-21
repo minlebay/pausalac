@@ -9,7 +9,3 @@ type DateRangeFilter struct {
 type Types interface {
 	User | Company | Customer | Service | BankAccount | Invoice
 }
-
-type NewTypes interface {
-	NewUser | NewCompany | NewCustomer | NewService | NewBankAccount | NewInvoice
-}
