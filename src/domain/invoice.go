@@ -13,6 +13,7 @@ const (
 	CANCELLED InvoiceStatus = "cancelled"
 )
 
+// Invoice represents the invoice structure for MongoDB
 type Invoice struct {
 	Id            primitive.ObjectID `bson:"_id,omitempty" json:"id"`
 	Comment       string             `bson:"comment" json:"comment"`
@@ -37,13 +38,24 @@ type Invoice struct {
 // SwaggerInvoice represents the invoice structure for Swagger documentation
 // swagger:model
 type SwaggerInvoice struct {
-	Invoice
-	Date        string `json:"date" swaggertype:"string" format:"date-time" example:"2022-03-07T13:45:00Z"`
-	PaidDate    string `json:"paid_date" swaggertype:"string" format:"date-time" example:"2022-03-07T13:45:00Z"`
-	SentDate    string `json:"sent_date" swaggertype:"string" format:"date-time" example:"2022-03-07T13:45:00Z"`
-	TradingDate string `json:"trading_date" swaggertype:"string" format:"date-time" example:"2022-03-07T13:45:00Z"`
-	CreatedAt   string `json:"created_at" swaggertype:"string" format:"date-time" example:"2022-03-07T13:45:00Z"`
-	UpdatedAt   string `json:"updated_at" swaggertype:"string" format:"date-time" example:"2022-03-07T13:45:00Z"`
+	Id            string        `json:"id" example:"5f8d04b2e8b2e7f8b2e8b2e8"`
+	Comment       string        `json:"comment" example:"This is a comment"`
+	Number        string        `json:"number" example:"INV-001"`
+	TraidingPlace string        `json:"traiding_place" example:"Online"`
+	Type          string        `json:"type" example:"Type1"`
+	Author        string        `json:"author" example:"AuthorName"`
+	Client        Customer      `json:"client"`
+	BankAccount   BankAccount   `json:"bank_account"`
+	Status        InvoiceStatus `json:"status"`
+	Services      []Service     `json:"services"`
+	PaidValue     int64         `json:"paid_value" example:"1000"`
+	ValueInRSD    float64       `json:"value_in_rsd" example:"1000.50"`
+	Date          string        `json:"date" swaggertype:"string" format:"date-time" example:"2022-03-07T13:45:00Z"`
+	PaidDate      string        `json:"paid_date" swaggertype:"string" format:"date-time" example:"2022-03-07T13:45:00Z"`
+	SentDate      string        `json:"sent_date" swaggertype:"string" format:"date-time" example:"2022-03-07T13:45:00Z"`
+	TradingDate   string        `json:"trading_date" swaggertype:"string" format:"date-time" example:"2022-03-07T13:45:00Z"`
+	CreatedAt     string        `json:"created_at" swaggertype:"string" format:"date-time" example:"2022-03-07T13:45:00Z"`
+	UpdatedAt     string        `json:"updated_at" swaggertype:"string" format:"date-time" example:"2022-03-07T13:45:00Z"`
 }
 
 type InvoiceService interface {

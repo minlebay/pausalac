@@ -120,14 +120,14 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/bankaccount.BankAccountResponse"
+                                "$ref": "#/definitions/domain.BankAccount"
                             }
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -151,7 +151,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/bankaccount.CreateBankAccountRequest"
+                            "$ref": "#/definitions/domain.BankAccount"
                         }
                     }
                 ],
@@ -159,19 +159,19 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/bankaccount.BankAccountResponse"
+                            "$ref": "#/definitions/domain.BankAccount"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -200,19 +200,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/bankaccount.BankAccountResponse"
+                            "$ref": "#/definitions/domain.BankAccount"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -243,7 +243,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/bankaccount.UpdateBankAccountRequest"
+                            "$ref": "#/definitions/domain.BankAccount"
                         }
                     }
                 ],
@@ -251,25 +251,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/bankaccount.BankAccountResponse"
+                            "$ref": "#/definitions/domain.BankAccount"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -296,19 +296,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/bankaccount.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -330,14 +330,14 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/company.CompanyResponse"
+                                "$ref": "#/definitions/domain.Company"
                             }
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/company.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -361,7 +361,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/company.CreateCompanyRequest"
+                            "$ref": "#/definitions/domain.Company"
                         }
                     }
                 ],
@@ -369,19 +369,19 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/company.CompanyResponse"
+                            "$ref": "#/definitions/domain.Company"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/company.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/company.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -410,19 +410,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/company.CompanyResponse"
+                            "$ref": "#/definitions/domain.Company"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/company.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/company.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -453,7 +453,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/company.UpdateCompanyRequest"
+                            "$ref": "#/definitions/domain.Company"
                         }
                     }
                 ],
@@ -461,25 +461,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/company.CompanyResponse"
+                            "$ref": "#/definitions/domain.Company"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/company.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/company.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/company.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -506,19 +506,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/company.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/company.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/company.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -540,14 +540,14 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/customer.CustomerResponse"
+                                "$ref": "#/definitions/domain.Customer"
                             }
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/customer.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -571,7 +571,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/customer.CreateCustomerRequest"
+                            "$ref": "#/definitions/domain.Customer"
                         }
                     }
                 ],
@@ -579,19 +579,19 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/customer.CustomerResponse"
+                            "$ref": "#/definitions/domain.Customer"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/customer.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/customer.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -620,19 +620,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/customer.CustomerResponse"
+                            "$ref": "#/definitions/domain.Customer"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/customer.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/customer.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -663,7 +663,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/customer.UpdateCustomerRequest"
+                            "$ref": "#/definitions/domain.Customer"
                         }
                     }
                 ],
@@ -671,19 +671,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/customer.CustomerResponse"
+                            "$ref": "#/definitions/domain.Customer"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/customer.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/customer.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -710,7 +710,7 @@ const docTemplate = `{
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/customer.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -732,14 +732,14 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/invoice.InvoiceResponse"
+                                "$ref": "#/definitions/domain.SwaggerInvoice"
                             }
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/invoice.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -763,7 +763,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/invoice.CreateInvoiceRequest"
+                            "$ref": "#/definitions/domain.SwaggerInvoice"
                         }
                     }
                 ],
@@ -771,19 +771,19 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/invoice.InvoiceResponse"
+                            "$ref": "#/definitions/domain.SwaggerInvoice"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/invoice.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/invoice.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -812,19 +812,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/invoice.InvoiceResponse"
+                            "$ref": "#/definitions/domain.SwaggerInvoice"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/invoice.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/invoice.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -855,7 +855,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/invoice.UpdateInvoiceRequest"
+                            "$ref": "#/definitions/domain.SwaggerInvoice"
                         }
                     }
                 ],
@@ -863,25 +863,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/invoice.InvoiceResponse"
+                            "$ref": "#/definitions/domain.SwaggerInvoice"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/invoice.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/invoice.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/invoice.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -908,19 +908,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/invoice.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/invoice.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/invoice.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -942,14 +942,14 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/service.ServiceResponse"
+                                "$ref": "#/definitions/domain.Service"
                             }
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/service.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -973,7 +973,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/service.CreateServiceRequest"
+                            "$ref": "#/definitions/domain.Service"
                         }
                     }
                 ],
@@ -981,19 +981,19 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/service.ServiceResponse"
+                            "$ref": "#/definitions/domain.Service"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/service.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/service.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -1022,19 +1022,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/service.ServiceResponse"
+                            "$ref": "#/definitions/domain.Service"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/service.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/service.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -1065,7 +1065,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/service.UpdateServiceRequest"
+                            "$ref": "#/definitions/domain.Service"
                         }
                     }
                 ],
@@ -1073,25 +1073,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/service.ServiceResponse"
+                            "$ref": "#/definitions/domain.Service"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/service.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/service.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/service.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -1118,19 +1118,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/service.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/service.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/service.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -1152,14 +1152,14 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/user.UserResponse"
+                                "$ref": "#/definitions/domain.User"
                             }
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/user.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -1183,7 +1183,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/user.CreateUserRequest"
+                            "$ref": "#/definitions/domain.User"
                         }
                     }
                 ],
@@ -1191,19 +1191,19 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/user.UserResponse"
+                            "$ref": "#/definitions/domain.User"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/user.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/user.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -1229,7 +1229,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/user.CreateUserRequest"
+                            "$ref": "#/definitions/domain.User"
                         }
                     }
                 ],
@@ -1237,19 +1237,19 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/user.UserResponse"
+                            "$ref": "#/definitions/domain.User"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/user.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/user.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -1278,13 +1278,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/user.UserResponse"
+                            "$ref": "#/definitions/domain.User"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/user.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -1315,7 +1315,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/user.UpdateUserRequest"
+                            "$ref": "#/definitions/domain.User"
                         }
                     }
                 ],
@@ -1323,19 +1323,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/user.UserResponse"
+                            "$ref": "#/definitions/domain.User"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/user.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/user.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -1362,7 +1362,7 @@ const docTemplate = `{
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/user.MessageResponse"
+                            "$ref": "#/definitions/controllers.MessageResponse"
                         }
                     }
                 }
@@ -1464,42 +1464,19 @@ const docTemplate = `{
                 }
             }
         },
-        "bankaccount.BankAccountResponse": {
+        "controllers.MessageResponse": {
             "type": "object",
             "properties": {
-                "account_number": {
-                    "type": "string"
-                },
-                "author": {
-                    "type": "string"
-                },
-                "bank_name": {
-                    "type": "string"
-                },
-                "created_at": {
-                    "type": "string"
-                },
-                "currency": {
-                    "type": "string"
-                },
-                "iban": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "swift_code": {
-                    "type": "string"
-                },
-                "updated_at": {
+                "message": {
                     "type": "string"
                 }
             }
         },
-        "bankaccount.CreateBankAccountRequest": {
+        "domain.BankAccount": {
             "type": "object",
             "required": [
                 "account_number",
+                "author",
                 "bank_name",
                 "currency",
                 "iban",
@@ -1509,32 +1486,7 @@ const docTemplate = `{
                 "account_number": {
                     "type": "string"
                 },
-                "bank_name": {
-                    "type": "string"
-                },
-                "currency": {
-                    "type": "string"
-                },
-                "iban": {
-                    "type": "string"
-                },
-                "swift_code": {
-                    "type": "string"
-                }
-            }
-        },
-        "bankaccount.MessageResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "bankaccount.UpdateBankAccountRequest": {
-            "type": "object",
-            "properties": {
-                "account_number": {
+                "author": {
                     "type": "string"
                 },
                 "bank_name": {
@@ -1546,13 +1498,20 @@ const docTemplate = `{
                 "iban": {
                     "type": "string"
                 },
+                "id": {
+                    "type": "string"
+                },
                 "swift_code": {
                     "type": "string"
                 }
             }
         },
-        "company.CompanyResponse": {
+        "domain.Company": {
             "type": "object",
+            "required": [
+                "author",
+                "name"
+            ],
             "properties": {
                 "activity_code_id": {
                     "type": "string"
@@ -1563,10 +1522,13 @@ const docTemplate = `{
                 "agency_id": {
                     "type": "string"
                 },
+                "author": {
+                    "type": "string"
+                },
                 "bank_accounts": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/bankaccount.BankAccountResponse"
+                        "$ref": "#/definitions/domain.BankAccount"
                     }
                 },
                 "call_number": {
@@ -1575,31 +1537,16 @@ const docTemplate = `{
                 "city": {
                     "type": "string"
                 },
-                "created_at": {
-                    "type": "string"
-                },
                 "date_of_registration": {
                     "type": "string"
                 },
-                "employed_by_other_firm": {
-                    "type": "string"
-                },
-                "employment_changed": {
-                    "type": "string"
-                },
                 "employment_type": {
-                    "type": "string"
-                },
-                "first_account_number": {
                     "type": "string"
                 },
                 "foreign_exchange_account_number": {
                     "type": "string"
                 },
                 "full_name": {
-                    "type": "string"
-                },
-                "iban": {
                     "type": "string"
                 },
                 "id": {
@@ -1626,9 +1573,6 @@ const docTemplate = `{
                 "pib": {
                     "type": "string"
                 },
-                "second_account_number": {
-                    "type": "string"
-                },
                 "signature": {
                     "type": "string"
                 },
@@ -1637,187 +1581,15 @@ const docTemplate = `{
                 },
                 "street_number": {
                     "type": "string"
-                },
-                "swift": {
-                    "type": "string"
-                },
-                "updated_at": {
-                    "type": "string"
-                },
-                "user_id": {
-                    "type": "string"
                 }
             }
         },
-        "company.CreateCompanyRequest": {
+        "domain.Customer": {
             "type": "object",
             "required": [
-                "name"
-            ],
-            "properties": {
-                "activity_code_id": {
-                    "type": "string"
-                },
-                "agency_email": {
-                    "type": "string"
-                },
-                "agency_id": {
-                    "type": "string"
-                },
-                "bank_accounts": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/bankaccount.CreateBankAccountRequest"
-                    }
-                },
-                "call_number": {
-                    "type": "string"
-                },
-                "city": {
-                    "type": "string"
-                },
-                "date_of_registration": {
-                    "type": "string"
-                },
-                "employment_type": {
-                    "type": "string"
-                },
-                "foreign_exchange_account_number": {
-                    "type": "string"
-                },
-                "full_name": {
-                    "type": "string"
-                },
-                "identification_number": {
-                    "type": "string"
-                },
-                "invoice_description": {
-                    "type": "string"
-                },
-                "logo": {
-                    "type": "string"
-                },
-                "municipality_id": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "phone": {
-                    "type": "string"
-                },
-                "pib": {
-                    "type": "string"
-                },
-                "signature": {
-                    "type": "string"
-                },
-                "street_address": {
-                    "type": "string"
-                },
-                "street_number": {
-                    "type": "string"
-                }
-            }
-        },
-        "company.MessageResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "company.UpdateCompanyRequest": {
-            "type": "object",
-            "properties": {
-                "activity_code_id": {
-                    "type": "string"
-                },
-                "agency_email": {
-                    "type": "string"
-                },
-                "agency_id": {
-                    "type": "string"
-                },
-                "author": {
-                    "type": "string"
-                },
-                "bank_accounts": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/bankaccount.UpdateBankAccountRequest"
-                    }
-                },
-                "call_number": {
-                    "type": "string"
-                },
-                "city": {
-                    "type": "string"
-                },
-                "date_of_registration": {
-                    "type": "string"
-                },
-                "employment_type": {
-                    "type": "string"
-                },
-                "first_account_number": {
-                    "type": "string"
-                },
-                "full_name": {
-                    "type": "string"
-                },
-                "identification_number": {
-                    "type": "string"
-                },
-                "invoice_description": {
-                    "type": "string"
-                },
-                "logo": {
-                    "type": "string"
-                },
-                "municipality_id": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "phone": {
-                    "type": "string"
-                },
-                "pib": {
-                    "type": "string"
-                },
-                "signature": {
-                    "type": "string"
-                },
-                "street_address": {
-                    "type": "string"
-                },
-                "street_number": {
-                    "type": "string"
-                }
-            }
-        },
-        "controllers.MessageResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "customer.CreateCustomerRequest": {
-            "type": "object",
-            "required": [
-                "address",
-                "city",
-                "country",
-                "currency",
+                "author",
                 "customer_type",
-                "email",
                 "name",
-                "phone_number",
                 "registration_number",
                 "tax_number"
             ],
@@ -1825,41 +1597,6 @@ const docTemplate = `{
                 "address": {
                     "type": "string"
                 },
-                "city": {
-                    "type": "string"
-                },
-                "country": {
-                    "type": "string"
-                },
-                "currency": {
-                    "type": "string"
-                },
-                "customer_type": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "phone_number": {
-                    "type": "string"
-                },
-                "registration_number": {
-                    "type": "string"
-                },
-                "tax_number": {
-                    "type": "string"
-                }
-            }
-        },
-        "customer.CustomerResponse": {
-            "type": "object",
-            "properties": {
-                "address": {
-                    "type": "string"
-                },
                 "author": {
                     "type": "string"
                 },
@@ -1873,7 +1610,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "customer_type": {
-                    "type": "string"
+                    "$ref": "#/definitions/domain.CustomerType"
                 },
                 "email": {
                     "type": "string"
@@ -1895,277 +1632,33 @@ const docTemplate = `{
                 }
             }
         },
-        "customer.MessageResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "customer.UpdateCustomerRequest": {
-            "type": "object",
-            "properties": {
-                "address": {
-                    "type": "string"
-                },
-                "city": {
-                    "type": "string"
-                },
-                "country": {
-                    "type": "string"
-                },
-                "currency": {
-                    "type": "string"
-                },
-                "customer_type": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "phone_number": {
-                    "type": "string"
-                },
-                "registration_number": {
-                    "type": "string"
-                },
-                "tax_number": {
-                    "type": "string"
-                }
-            }
-        },
-        "invoice.CreateInvoiceRequest": {
-            "type": "object",
-            "required": [
-                "client",
-                "created"
+        "domain.CustomerType": {
+            "type": "string",
+            "enum": [
+                "internal",
+                "foreign",
+                "inactive"
             ],
-            "properties": {
-                "bank_account": {
-                    "$ref": "#/definitions/bankaccount.CreateBankAccountRequest"
-                },
-                "cancelled": {
-                    "type": "string"
-                },
-                "client": {
-                    "$ref": "#/definitions/customer.CreateCustomerRequest"
-                },
-                "comment": {
-                    "type": "string"
-                },
-                "created": {
-                    "type": "string"
-                },
-                "currency": {
-                    "type": "string"
-                },
-                "date": {
-                    "type": "string"
-                },
-                "number": {
-                    "type": "string"
-                },
-                "paid_date": {
-                    "type": "string"
-                },
-                "paid_value": {
-                    "type": "string"
-                },
-                "sent_date": {
-                    "type": "string"
-                },
-                "services": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/service.CreateServiceRequest"
-                    }
-                },
-                "status": {
-                    "type": "string"
-                },
-                "trading_date": {
-                    "type": "string"
-                },
-                "traiding_place": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                },
-                "value_in_rsd": {
-                    "type": "string"
-                }
-            }
+            "x-enum-varnames": [
+                "INTERNAL",
+                "FOREIGN",
+                "INACTIVE"
+            ]
         },
-        "invoice.InvoiceResponse": {
-            "type": "object",
-            "properties": {
-                "author": {
-                    "type": "string"
-                },
-                "bank_account": {
-                    "type": "string"
-                },
-                "cancelled": {
-                    "type": "boolean"
-                },
-                "client": {
-                    "type": "string"
-                },
-                "comment": {
-                    "type": "string"
-                },
-                "created": {
-                    "type": "string"
-                },
-                "created_at": {
-                    "type": "string"
-                },
-                "currency": {
-                    "type": "string"
-                },
-                "date": {
-                    "type": "string"
-                },
-                "iban": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "number": {
-                    "type": "string"
-                },
-                "paid_date": {
-                    "type": "string"
-                },
-                "paid_value": {
-                    "type": "string"
-                },
-                "sent_date": {
-                    "type": "string"
-                },
-                "services": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "string"
-                },
-                "swift": {
-                    "type": "string"
-                },
-                "trading_date": {
-                    "type": "string"
-                },
-                "traiding_place": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                },
-                "updated_at": {
-                    "type": "string"
-                },
-                "value_in_rsd": {
-                    "type": "string"
-                }
-            }
-        },
-        "invoice.MessageResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "invoice.UpdateInvoiceRequest": {
-            "type": "object",
-            "required": [
-                "client",
-                "created"
+        "domain.InvoiceStatus": {
+            "type": "string",
+            "enum": [
+                "pending",
+                "paid",
+                "cancelled"
             ],
-            "properties": {
-                "bank_account": {
-                    "$ref": "#/definitions/bankaccount.UpdateBankAccountRequest"
-                },
-                "cancelled": {
-                    "type": "string"
-                },
-                "client": {
-                    "$ref": "#/definitions/customer.UpdateCustomerRequest"
-                },
-                "comment": {
-                    "type": "string"
-                },
-                "created": {
-                    "type": "string"
-                },
-                "currency": {
-                    "type": "string"
-                },
-                "date": {
-                    "type": "string"
-                },
-                "number": {
-                    "type": "string"
-                },
-                "paid_date": {
-                    "type": "string"
-                },
-                "paid_value": {
-                    "type": "string"
-                },
-                "sent_date": {
-                    "type": "string"
-                },
-                "services": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/service.UpdateServiceRequest"
-                    }
-                },
-                "status": {
-                    "type": "string"
-                },
-                "trading_date": {
-                    "type": "string"
-                },
-                "traiding_place": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                },
-                "value_in_rsd": {
-                    "type": "string"
-                }
-            }
+            "x-enum-varnames": [
+                "PENDING",
+                "PAID",
+                "CANCELLED"
+            ]
         },
-        "service.CreateServiceRequest": {
-            "type": "object",
-            "required": [
-                "name"
-            ],
-            "properties": {
-                "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "service.MessageResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "service.ServiceResponse": {
+        "domain.Service": {
             "type": "object",
             "required": [
                 "author",
@@ -2175,103 +1668,105 @@ const docTemplate = `{
                 "author": {
                     "type": "string"
                 },
-                "created_at": {
-                    "type": "string"
-                },
                 "id": {
                     "type": "string"
                 },
                 "name": {
                     "type": "string"
+                }
+            }
+        },
+        "domain.SwaggerInvoice": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string",
+                    "example": "AuthorName"
+                },
+                "bank_account": {
+                    "$ref": "#/definitions/domain.BankAccount"
+                },
+                "client": {
+                    "$ref": "#/definitions/domain.Customer"
+                },
+                "comment": {
+                    "type": "string",
+                    "example": "This is a comment"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2022-03-07T13:45:00Z"
+                },
+                "date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2022-03-07T13:45:00Z"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "5f8d04b2e8b2e7f8b2e8b2e8"
+                },
+                "number": {
+                    "type": "string",
+                    "example": "INV-001"
+                },
+                "paid_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2022-03-07T13:45:00Z"
+                },
+                "paid_value": {
+                    "type": "integer",
+                    "example": 1000
+                },
+                "sent_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2022-03-07T13:45:00Z"
+                },
+                "services": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/domain.Service"
+                    }
+                },
+                "status": {
+                    "$ref": "#/definitions/domain.InvoiceStatus"
+                },
+                "trading_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2022-03-07T13:45:00Z"
+                },
+                "traiding_place": {
+                    "type": "string",
+                    "example": "Online"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "Type1"
                 },
                 "updated_at": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2022-03-07T13:45:00Z"
+                },
+                "value_in_rsd": {
+                    "type": "number",
+                    "example": 1000.5
                 }
             }
         },
-        "service.UpdateServiceRequest": {
+        "domain.User": {
             "type": "object",
             "required": [
-                "name"
+                "author"
             ],
             "properties": {
-                "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "user.CreateUserRequest": {
-            "type": "object",
-            "required": [
-                "email",
-                "first_name",
-                "last_name",
-                "password",
-                "role",
-                "status",
-                "username"
-            ],
-            "properties": {
-                "email": {
+                "author": {
                     "type": "string"
                 },
-                "first_name": {
-                    "type": "string"
-                },
-                "last_name": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "role": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "boolean"
-                },
-                "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "user.MessageResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "user.UpdateUserRequest": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "first_name": {
-                    "type": "string"
-                },
-                "last_name": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "role": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "boolean"
-                },
-                "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "user.UserResponse": {
-            "type": "object",
-            "properties": {
                 "email": {
                     "type": "string"
                 },
@@ -2282,6 +1777,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "last_name": {
+                    "type": "string"
+                },
+                "password": {
                     "type": "string"
                 },
                 "role": {

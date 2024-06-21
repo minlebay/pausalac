@@ -28,7 +28,14 @@ func (ctrl *InvoiceController) GetAll(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(http.StatusOK, invoices)
+
+	// Convert invoices to SwaggerInvoice format
+	var swaggerInvoices []domain.SwaggerInvoice
+	for _, inv := range invoices {
+		swaggerInvoices = append(swaggerInvoices, toSwaggerInvoice(*inv))
+	}
+
+	ctx.JSON(http.StatusOK, swaggerInvoices)
 }
 
 // GetById godoc
@@ -48,7 +55,8 @@ func (ctrl *InvoiceController) GetById(ctx *gin.Context) {
 		ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(http.StatusOK, invoice)
+
+	ctx.JSON(http.StatusOK, toSwaggerInvoice(*invoice))
 }
 
 // Create godoc
@@ -63,29 +71,31 @@ func (ctrl *InvoiceController) GetById(ctx *gin.Context) {
 // @Failure 500 {object} controllers.MessageResponse
 // @Router /invoices [post]
 func (ctrl *InvoiceController) Create(ctx *gin.Context) {
-	var i domain.Invoice
-	if err := ctx.ShouldBindJSON(&i); err != nil {
+	var swaggerInvoice domain.SwaggerInvoice
+	if err := ctx.ShouldBindJSON(&swaggerInvoice); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	i.Id = primitive.NewObjectID()
-	i.CreatedAt = primitive.NewDateTimeFromTime(time.Now())
-	i.UpdatedAt = primitive.NewDateTimeFromTime(time.Now())
+	invoice := toDomainInvoice(swaggerInvoice)
+	invoice.Id = primitive.NewObjectID()
+	invoice.CreatedAt = primitive.NewDateTimeFromTime(time.Now())
+	invoice.UpdatedAt = primitive.NewDateTimeFromTime(time.Now())
 
 	author, exists := ctx.Get("user_id")
 	if !exists {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Author not found"})
 		return
 	}
-	i.Author = author.(string)
+	invoice.Author = author.(string)
 
-	invoice, err := ctrl.Service.Create(ctx, &i)
+	createdInvoice, err := ctrl.Service.Create(ctx, invoice)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(http.StatusCreated, invoice)
+
+	ctx.JSON(http.StatusCreated, toSwaggerInvoice(*createdInvoice))
 }
 
 // Update godoc
@@ -103,20 +113,22 @@ func (ctrl *InvoiceController) Create(ctx *gin.Context) {
 // @Router /invoices/{id} [put]
 func (ctrl *InvoiceController) Update(ctx *gin.Context) {
 	id := ctx.Param("id")
-	var i domain.Invoice
-	if err := ctx.ShouldBindJSON(&i); err != nil {
+	var swaggerInvoice domain.SwaggerInvoice
+	if err := ctx.ShouldBindJSON(&swaggerInvoice); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	i.UpdatedAt = primitive.NewDateTimeFromTime(time.Now())
+	invoice := toDomainInvoice(swaggerInvoice)
+	invoice.UpdatedAt = primitive.NewDateTimeFromTime(time.Now())
 
-	invoice, err := ctrl.Service.Update(ctx, id, &i)
+	updatedInvoice, err := ctrl.Service.Update(ctx, id, invoice)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(http.StatusOK, invoice)
+
+	ctx.JSON(http.StatusOK, toSwaggerInvoice(*updatedInvoice))
 }
 
 // Delete godoc
@@ -137,4 +149,59 @@ func (ctrl *InvoiceController) Delete(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, MessageResponse{Message: "Invoice deleted successfully"})
+}
+
+// Convert domain.Invoice to domain.SwaggerInvoice
+func toSwaggerInvoice(invoice domain.Invoice) domain.SwaggerInvoice {
+	return domain.SwaggerInvoice{
+		Id:            invoice.Id.Hex(),
+		Comment:       invoice.Comment,
+		Number:        invoice.Number,
+		TraidingPlace: invoice.TraidingPlace,
+		Type:          invoice.Type,
+		Author:        invoice.Author,
+		Client:        invoice.Client,
+		BankAccount:   invoice.BankAccount,
+		Status:        invoice.Status,
+		Services:      invoice.Services,
+		PaidValue:     invoice.PaidValue,
+		ValueInRSD:    invoice.ValueInRSD,
+		Date:          invoice.Date.Time().Format(time.RFC3339),
+		PaidDate:      invoice.PaidDate.Time().Format(time.RFC3339),
+		SentDate:      invoice.SentDate.Time().Format(time.RFC3339),
+		TradingDate:   invoice.TradingDate.Time().Format(time.RFC3339),
+		CreatedAt:     invoice.CreatedAt.Time().Format(time.RFC3339),
+		UpdatedAt:     invoice.UpdatedAt.Time().Format(time.RFC3339),
+	}
+}
+
+// Convert domain.SwaggerInvoice to domain.Invoice
+func toDomainInvoice(swaggerInvoice domain.SwaggerInvoice) *domain.Invoice {
+	date, _ := time.Parse(time.RFC3339, swaggerInvoice.Date)
+	paidDate, _ := time.Parse(time.RFC3339, swaggerInvoice.PaidDate)
+	sentDate, _ := time.Parse(time.RFC3339, swaggerInvoice.SentDate)
+	tradingDate, _ := time.Parse(time.RFC3339, swaggerInvoice.TradingDate)
+	createdAt, _ := time.Parse(time.RFC3339, swaggerInvoice.CreatedAt)
+	updatedAt, _ := time.Parse(time.RFC3339, swaggerInvoice.UpdatedAt)
+
+	return &domain.Invoice{
+		Id:            primitive.NewObjectID(),
+		Comment:       swaggerInvoice.Comment,
+		Number:        swaggerInvoice.Number,
+		TraidingPlace: swaggerInvoice.TraidingPlace,
+		Type:          swaggerInvoice.Type,
+		Author:        swaggerInvoice.Author,
+		Client:        swaggerInvoice.Client,
+		BankAccount:   swaggerInvoice.BankAccount,
+		Status:        swaggerInvoice.Status,
+		Services:      swaggerInvoice.Services,
+		PaidValue:     swaggerInvoice.PaidValue,
+		ValueInRSD:    swaggerInvoice.ValueInRSD,
+		Date:          primitive.NewDateTimeFromTime(date),
+		PaidDate:      primitive.NewDateTimeFromTime(paidDate),
+		SentDate:      primitive.NewDateTimeFromTime(sentDate),
+		TradingDate:   primitive.NewDateTimeFromTime(tradingDate),
+		CreatedAt:     primitive.NewDateTimeFromTime(createdAt),
+		UpdatedAt:     primitive.NewDateTimeFromTime(updatedAt),
+	}
 }
