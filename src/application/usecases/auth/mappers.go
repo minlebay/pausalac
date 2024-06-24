@@ -1,4 +1,3 @@
-// Package auth provides the use case for authentication
 package auth
 
 import (
@@ -8,7 +7,6 @@ import (
 func secAuthUserMapper(domainUser *userDomain.User, authInfo *Auth) *SecurityAuthenticatedUser {
 	return &SecurityAuthenticatedUser{
 		Data: DataUserAuthenticated{
-			UserName:  domainUser.UserName,
 			Email:     domainUser.Email,
 			FirstName: domainUser.FirstName,
 			LastName:  domainUser.LastName,

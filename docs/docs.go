@@ -26,11 +26,11 @@ const docTemplate = `{
     "paths": {
         "/auth/access-token": {
             "post": {
-                "description": "Auth user by email and password",
+                "description": "Get access token by refresh token",
                 "tags": [
                     "auth"
                 ],
-                "summary": "GetAccessTokenByRefreshToken UserName",
+                "summary": "GetAccessTokenByRefreshToken Email",
                 "parameters": [
                     {
                         "description": "body data",
@@ -46,7 +46,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/auth.DataUserAuthenticated"
+                            "$ref": "#/definitions/auth.SecurityAuthenticatedUser"
                         }
                     },
                     "400": {
@@ -70,7 +70,7 @@ const docTemplate = `{
                 "tags": [
                     "auth"
                 ],
-                "summary": "Login UserName",
+                "summary": "Login Email",
                 "parameters": [
                     {
                         "description": "body data",
@@ -1429,10 +1429,6 @@ const docTemplate = `{
                 "status": {
                     "type": "boolean",
                     "example": true
-                },
-                "userName": {
-                    "type": "string",
-                    "example": "UserName"
                 }
             }
         },
@@ -1787,9 +1783,6 @@ const docTemplate = `{
                 },
                 "status": {
                     "type": "boolean"
-                },
-                "username": {
-                    "type": "string"
                 }
             }
         }

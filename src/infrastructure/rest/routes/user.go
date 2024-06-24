@@ -7,7 +7,6 @@ import (
 	"pausalac/src/infrastructure/rest/middlewares"
 )
 
-// UserRoutes is a function that contains all routes of the user
 func UserRoutes(router *gin.RouterGroup, controller *userController.UserController) {
 	routerUser := router.Group("/users")
 	routerUser.POST("/createadmin", controller.CreateAdmin)

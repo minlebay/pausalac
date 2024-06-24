@@ -6,11 +6,9 @@ import (
 	"pausalac/src/infrastructure/rest/middlewares"
 )
 
-// InvoiceRoutes defines the routes for the invoice entity
 func InvoiceRoutes(router *gin.RouterGroup, controller *invoiceController.InvoiceController) {
 	invoices := router.Group("/invoices")
 	invoices.Use(middlewares.AuthJWTMiddleware())
-
 	{
 		invoices.GET("/", controller.GetAll)
 		invoices.GET("/:id", controller.GetById)

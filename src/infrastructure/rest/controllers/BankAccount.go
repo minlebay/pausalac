@@ -9,7 +9,6 @@ import (
 	"time"
 )
 
-// BankAccountController handles bank account-related endpoints
 type BankAccountController struct {
 	Service *usecases.EntityService[domain.BankAccount]
 }

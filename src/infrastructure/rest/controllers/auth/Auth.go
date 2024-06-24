@@ -1,4 +1,3 @@
-// Package auth contains the auth controller
 package auth
 
 import (
@@ -9,14 +8,13 @@ import (
 	"pausalac/src/infrastructure/rest/controllers"
 )
 
-// Controller is a struct that contains the auth service
 type Controller struct {
 	AuthService useCaseAuth.AuthService
 }
 
 // Login godoc
 // @Tags auth
-// @Summary Login UserName
+// @Summary Login Email
 // @Description Auth user by email and password
 // @Param data body LoginRequest true "body data"
 // @Success 200 {object} SecurityAuthenticatedUser
@@ -46,10 +44,10 @@ func (c *Controller) Login(ctx *gin.Context) {
 
 // GetAccessTokenByRefreshToken godoc
 // @Tags auth
-// @Summary GetAccessTokenByRefreshToken UserName
-// @Description Auth user by email and password
+// @Summary GetAccessTokenByRefreshToken Email
+// @Description Get access token by refresh token
 // @Param data body AccessTokenRequest true "body data"
-// @Success 200 {object} useCaseAuth.DataUserAuthenticated
+// @Success 200 {object} SecurityAuthenticatedUser
 // @Failure 400 {object} controllers.MessageResponse
 // @Failure 500 {object} controllers.MessageResponse
 // @Router /auth/access-token [post]

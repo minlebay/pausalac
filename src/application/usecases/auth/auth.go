@@ -12,7 +12,6 @@ import (
 	errorsDomain "pausalac/src/domain"
 )
 
-// Auth contains the data of the authentication
 type Auth struct {
 	Email                     string
 	AccessToken               string
@@ -21,12 +20,10 @@ type Auth struct {
 	ExpirationRefreshDateTime time.Time
 }
 
-// Service is a struct that contains the repository implementation for auth use case
 type AuthService struct {
 	UserService service.UserService
 }
 
-// Login implements the login use case
 func (s *AuthService) Login(ctx context.Context, user LoginUser) (*SecurityAuthenticatedUser, error) {
 	domainUser, err := s.UserService.GetByEmail(ctx, user.Email)
 	if err != nil {
@@ -59,7 +56,6 @@ func (s *AuthService) Login(ctx context.Context, user LoginUser) (*SecurityAuthe
 	}), err
 }
 
-// AccessTokenByRefreshToken implements the Access Token By Refresh Token use case
 func (s *AuthService) AccessTokenByRefreshToken(ctx context.Context, refreshToken string) (*SecurityAuthenticatedUser, error) {
 	claimsMap, err := jwt.GetClaimsAndVerifyToken(refreshToken, "refresh")
 	if err != nil {
@@ -88,7 +84,6 @@ func (s *AuthService) AccessTokenByRefreshToken(ctx context.Context, refreshToke
 	}), nil
 }
 
-// CheckPasswordHash compares a bcrypt hashed password with its possible plaintext equivalent.
 func CheckPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil

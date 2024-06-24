@@ -6,7 +6,6 @@ import (
 	"pausalac/src/infrastructure/rest/middlewares"
 )
 
-// ServiceRoutes defines the routes for the service entity
 func ServiceRoutes(router *gin.RouterGroup, controller *serviceController.ServiceController) {
 	services := router.Group("/services")
 	services.Use(middlewares.AuthJWTMiddleware())

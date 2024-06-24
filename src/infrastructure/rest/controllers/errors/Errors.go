@@ -1,4 +1,3 @@
-// Package errors contains the error handler controller
 package errors
 
 import (
@@ -8,14 +7,12 @@ import (
 	domain "pausalac/src/domain"
 )
 
-// MessagesResponse is a struct that contains the response body for the message
 type MessagesResponse struct {
 	Message string `json:"message"`
 }
 
 // Handler is Gin middleware to handle errors.
 func Handler(c *gin.Context) {
-	// Execute request handlers and then handle any errors
 	c.Next()
 	errs := c.Errors
 

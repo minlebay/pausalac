@@ -9,7 +9,6 @@ import (
 	"time"
 )
 
-// CompanyController handles company-related endpoints
 type CompanyController struct {
 	Service *usecases.EntityService[domain.Company]
 }
@@ -74,21 +73,22 @@ func (ctrl *CompanyController) GetById(ctx *gin.Context) {
 // @Router /companies [post]
 func (ctrl *CompanyController) Create(ctx *gin.Context) {
 	var c domain.Company
-	if err := ctx.ShouldBindJSON(&c); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
 
-	c.Id = primitive.NewObjectID()
 	c.CreatedAt = primitive.NewDateTimeFromTime(time.Now())
 	c.UpdatedAt = primitive.NewDateTimeFromTime(time.Now())
-
 	author, exists := ctx.Get("user_id")
 	if !exists {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Author not found"})
 		return
 	}
 	c.Author = author.(string)
+
+	if err := ctx.ShouldBindJSON(&c); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.Id = primitive.NewObjectID()
 
 	company, err := ctrl.Service.Create(ctx, &c)
 	if err != nil {

@@ -1,7 +1,4 @@
 
-based on https://github.com/gbrayhan/microservices-go by @gbrayhan
-
-plan:
 1. add customer entity - done
 2. add company entity
 2. add invoices entity

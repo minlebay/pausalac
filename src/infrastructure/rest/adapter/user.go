@@ -1,4 +1,3 @@
-// Package adapter is a layer that connects the infrastructure with the application layer
 package adapter
 
 import (
@@ -9,7 +8,6 @@ import (
 	controller "pausalac/src/infrastructure/rest/controllers"
 )
 
-// UserAdapter is a function that returns a user controller
 func UserAdapter(db *mongo.Database) *controller.UserController {
 	repository := repo.DefaultRepository[domain.User]{Collection: db.Collection("users")}
 	service := service.UserService{

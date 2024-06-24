@@ -9,7 +9,6 @@ import (
 	"time"
 )
 
-// UserController is a controller for managing users
 type UserController struct {
 	Service *usecases.UserService
 }

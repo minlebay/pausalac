@@ -13,7 +13,6 @@ const (
 	CANCELLED InvoiceStatus = "cancelled"
 )
 
-// Invoice represents the invoice structure for MongoDB
 type Invoice struct {
 	Id            primitive.ObjectID `bson:"_id,omitempty" json:"id"`
 	Comment       string             `bson:"comment" json:"comment"`

@@ -9,7 +9,6 @@ import (
 	"time"
 )
 
-// CustomerController handles customer-related endpoints
 type CustomerController struct {
 	Service *usecases.EntityService[domain.Customer]
 }

@@ -77,7 +77,12 @@ func (ctrl *InvoiceController) Create(ctx *gin.Context) {
 		return
 	}
 
-	invoice := toDomainInvoice(swaggerInvoice)
+	invoice, err := toDomainInvoice(swaggerInvoice)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
 	invoice.Id = primitive.NewObjectID()
 	invoice.CreatedAt = primitive.NewDateTimeFromTime(time.Now())
 	invoice.UpdatedAt = primitive.NewDateTimeFromTime(time.Now())
@@ -119,7 +124,11 @@ func (ctrl *InvoiceController) Update(ctx *gin.Context) {
 		return
 	}
 
-	invoice := toDomainInvoice(swaggerInvoice)
+	invoice, err := toDomainInvoice(swaggerInvoice)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 	invoice.UpdatedAt = primitive.NewDateTimeFromTime(time.Now())
 
 	updatedInvoice, err := ctrl.Service.Update(ctx, id, invoice)
@@ -176,11 +185,23 @@ func toSwaggerInvoice(invoice domain.Invoice) domain.SwaggerInvoice {
 }
 
 // Convert domain.SwaggerInvoice to domain.Invoice
-func toDomainInvoice(swaggerInvoice domain.SwaggerInvoice) *domain.Invoice {
-	date, _ := time.Parse(time.RFC3339, swaggerInvoice.Date)
-	paidDate, _ := time.Parse(time.RFC3339, swaggerInvoice.PaidDate)
-	sentDate, _ := time.Parse(time.RFC3339, swaggerInvoice.SentDate)
-	tradingDate, _ := time.Parse(time.RFC3339, swaggerInvoice.TradingDate)
+func toDomainInvoice(swaggerInvoice domain.SwaggerInvoice) (*domain.Invoice, error) {
+	date, err := time.Parse(time.RFC3339, swaggerInvoice.Date)
+	if err != nil {
+		return nil, err
+	}
+	paidDate, err := time.Parse(time.RFC3339, swaggerInvoice.PaidDate)
+	if err != nil {
+		return nil, err
+	}
+	sentDate, err := time.Parse(time.RFC3339, swaggerInvoice.SentDate)
+	if err != nil {
+		return nil, err
+	}
+	tradingDate, err := time.Parse(time.RFC3339, swaggerInvoice.TradingDate)
+	if err != nil {
+		return nil, err
+	}
 
 	return &domain.Invoice{
 		Comment:       swaggerInvoice.Comment,
@@ -198,5 +219,5 @@ func toDomainInvoice(swaggerInvoice domain.SwaggerInvoice) *domain.Invoice {
 		PaidDate:      primitive.NewDateTimeFromTime(paidDate),
 		SentDate:      primitive.NewDateTimeFromTime(sentDate),
 		TradingDate:   primitive.NewDateTimeFromTime(tradingDate),
-	}
+	}, nil
 }

@@ -43,9 +43,6 @@ definitions:
       status:
         example: true
         type: boolean
-      userName:
-        example: UserName
-        type: string
     type: object
   auth.LoginRequest:
     properties:
@@ -291,8 +288,6 @@ definitions:
         type: string
       status:
         type: boolean
-      username:
-        type: string
     required:
     - author
     type: object
@@ -312,7 +307,7 @@ info:
 paths:
   /auth/access-token:
     post:
-      description: Auth user by email and password
+      description: Get access token by refresh token
       parameters:
       - description: body data
         in: body
@@ -324,7 +319,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/auth.DataUserAuthenticated'
+            $ref: '#/definitions/auth.SecurityAuthenticatedUser'
         "400":
           description: Bad Request
           schema:
@@ -333,7 +328,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/controllers.MessageResponse'
-      summary: GetAccessTokenByRefreshToken UserName
+      summary: GetAccessTokenByRefreshToken Email
       tags:
       - auth
   /auth/login:
@@ -359,7 +354,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/controllers.MessageResponse'
-      summary: Login UserName
+      summary: Login Email
       tags:
       - auth
   /bankaccounts:

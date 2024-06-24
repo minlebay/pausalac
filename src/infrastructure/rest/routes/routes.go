@@ -1,4 +1,3 @@
-// Package routes contains all routes of the application
 package routes
 
 import (
@@ -11,8 +10,6 @@ import (
 	"pausalac/src/infrastructure/rest/adapter"
 )
 
-// Security is a struct that contains the security of the application
-// @SecurityDefinitions.jwt
 type Security struct {
 	Authorization string `header:"Authorization" json:"Authorization"`
 }

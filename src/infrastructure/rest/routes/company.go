@@ -6,14 +6,14 @@ import (
 	"pausalac/src/infrastructure/rest/middlewares"
 )
 
-// CompanyRoutes defines the routes for the company entity
 func CompanyRoutes(router *gin.RouterGroup, controller *companyController.CompanyController) {
 	company := router.Group("/companies")
 	company.Use(middlewares.AuthJWTMiddleware())
-
-	company.POST("/", controller.Create)
-	company.GET("/:id", controller.GetById)
-	company.GET("/", controller.GetAll)
-	company.PUT("/:id", controller.Update)
-	company.DELETE("/:id", controller.Delete)
+	{
+		company.POST("/", controller.Create)
+		company.GET("/:id", controller.GetById)
+		company.GET("/", controller.GetAll)
+		company.PUT("/:id", controller.Update)
+		company.DELETE("/:id", controller.Delete)
+	}
 }

@@ -1,4 +1,3 @@
-// Package middlewares contains the middlewares for the rest api
 package middlewares
 
 import (
@@ -11,7 +10,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-// AuthJWTMiddleware is a function that validates the jwt token
 func AuthJWTMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		viper.SetConfigFile("config.json")

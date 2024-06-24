@@ -9,7 +9,6 @@ import (
 	"time"
 )
 
-// ServiceController handles service-related endpoints
 type ServiceController struct {
 	Service *usecases.EntityService[domain.Service]
 }
