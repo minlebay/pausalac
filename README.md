@@ -1,10 +1,3 @@
 
-1. add customer entity - done
-2. add company entity
-2. add invoices entity
-3. add multilanguage support
-4. add calculations
-5. add pdf generation 
-6. add email sending 
-7. add attachments support
-8. add tests
+Simple CRUD application. User can add, delete, update and view the list of items.
+Gin, MongoDB, Docker, Docker-compose, Swagger, JWT, CORS, Viper using example.
